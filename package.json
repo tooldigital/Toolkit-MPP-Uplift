@@ -1,0 +1,14 @@
+{
+  "name": "mpp-pipeline",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "pipeline": "node --env-file=.env scripts/run_pipeline.mjs"
+  },
+  "dependencies": {
+    "@google/genai": "^1.0.0",
+    "sharp": "^0.33.0"
+  }
+}

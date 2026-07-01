@@ -1,0 +1,10 @@
+node_modules/
+.env
+.DS_Store
+
+# heavy source photos + per-SKU intermediates — do NOT commit.
+# Keep only the final deliverables (outputs/finals/) and the contact sheet.
+inputs/
+outputs/*
+!outputs/finals/
+!outputs/contact_sheet.jpg
