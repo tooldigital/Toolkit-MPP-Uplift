@@ -21,8 +21,9 @@ const arg = (k, d) => { const i = process.argv.indexOf(k); return i >= 0 ? proce
 const BG = arg("--bg", "FFFFFF");
 const STRENGTH = parseFloat(arg("--strength", "0.25"));
 const SRC = "inputs";
-const WORK = "outputs/work";       // per-SKU intermediates (cached)
-const FINALS = "outputs/finals";   // flat folder of final images
+const WORK = "outputs/work";                                  // per-SKU intermediates (cached)
+const FINALS = arg("--out", "outputs/finals");                // flat folder of final images
+const SHEET = arg("--sheet", "outputs/contact_sheet.jpg");    // contact sheet path
 const W = 4000;
 const prKey = process.env.PHOTOROOM_KEY, gemKey = process.env.GEMINI_KEY;
 const clamp = (v) => (v < 0 ? 0 : v > 255 ? 255 : v);
@@ -53,7 +54,7 @@ const ok = [], failed = [];
 for (let i = 0; i < files.length; i++) {
   const sku = basename(files[i], extname(files[i]));
   const dir = join(WORK, sku); await mkdir(dir, { recursive: true });
-  const finalPath = join(dir, "final.jpg");
+  const finalPath = join(dir, `final_${BG}.jpg`);   // cache per background so bg changes regenerate
   process.stdout.write(`[${i + 1}/${files.length}] ${sku} ... `);
   if (await exists(finalPath)) { await copyFile(finalPath, join(FINALS, `${sku}.jpg`)); console.log("skip"); ok.push(sku); continue; }
   try {
@@ -134,8 +135,8 @@ if (cells.length) {
   const C = 300, L = 22, COLS = 6, ROWS = Math.ceil(cells.length / COLS);
   await sharp({ create: { width: C * COLS, height: (C + L) * ROWS, channels: 3, background: "#222" } })
     .composite(cells.map((c, i) => ({ input: c, left: (i % COLS) * C, top: Math.floor(i / COLS) * (C + L) }))).jpeg({ quality: 88 })
-    .toFile("outputs/contact_sheet.jpg");
-  console.log(`\ncontact sheet → outputs/contact_sheet.jpg`);
+    .toFile(SHEET);
+  console.log(`\ncontact sheet → ${SHEET}`);
 }
 console.log(`\nDone. ${ok.length} ok, ${failed.length} failed${failed.length ? ": " + failed.join(", ") : ""}`);
 console.log(`Finals: outputs/finals/  (flat, one image per SKU)`);

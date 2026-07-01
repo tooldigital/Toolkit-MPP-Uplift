@@ -3,7 +3,9 @@ node_modules/
 .DS_Store
 
 # per-SKU intermediates + node_modules — do NOT commit.
-# Keep the source photos (inputs/) and the final deliverables (outputs/finals/).
+# Keep the source photos (inputs/) and the final deliverables (white + gray).
 outputs/*
 !outputs/finals/
+!outputs/finals_gray/
 !outputs/contact_sheet.jpg
+!outputs/contact_sheet_gray.jpg

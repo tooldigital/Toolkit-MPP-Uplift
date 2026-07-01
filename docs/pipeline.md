@@ -60,11 +60,6 @@ decontamination step**. They come from:
 2. **Straight anti-aliased alpha** — Photoroom's matte alpha carries sub-pixel edge coverage and the subject
    is kept on straight (non-premultiplied) alpha, so the over-blend `subject·a + bg·shadowF·(1−a)` feathers
    the subject's decontaminated edge into the **chosen background** — clean on white *and* non-white.
-3. **Lightmap is edge-irrelevant** — the relight is low-frequency and only multiplies the subject; a small
-   lightmap misalignment shifts shading slightly, it cannot create an edge.
-
-Caveat: no blend fixes a **wrong matte** (e.g. Photoroom mis-segmenting a white-on-white product) — that
-needs a better matte, not edge math.
 
 ## Parameters
 

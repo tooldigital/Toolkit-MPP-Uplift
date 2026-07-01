@@ -19,15 +19,21 @@ Put input images in `inputs/` (one product per file, e.g. `PE1016720.jpg`), on c
 npm run pipeline                       # all inputs, white background
 npm run pipeline -- --skus PE1016720   # one (or a few, comma-separated)
 npm run pipeline -- --strength 0.4     # stronger relight (default 0.25 = gentle)
-npm run pipeline -- --bg E8E8E8        # light-gray background instead of white
+
+# any background color — subject decontaminates onto it, cast shadow carried over.
+# use --out / --sheet so a non-white run doesn't overwrite the white deliverables:
+npm run pipeline -- --bg E8E8E8 --out outputs/finals_gray --sheet outputs/contact_sheet_gray.jpg
 ```
 
 Outputs:
-- `outputs/finals/<sku>.jpg` — the finished images, flat folder (easy to browse)
-- `outputs/contact_sheet.jpg` — all finals on one sheet
+- `outputs/finals/<sku>.jpg` — finished images, flat folder (white background)
+- `outputs/finals_gray/<sku>.jpg` — light-gray background set
+- `outputs/contact_sheet.jpg` / `outputs/contact_sheet_gray.jpg` — all finals on one sheet
 - `outputs/work/<sku>/` — per-SKU intermediates (`matte.png`, `shadow.jpg`, `relit.jpg`), cached
 
-Re-runs skip finished SKUs. If Photoroom rate-limits (429), the run stops cleanly — just re-run to resume.
+Composites cache per background (`final_<bg>.jpg`), so switching `--bg` regenerates instead of
+reusing a stale composite. Re-runs skip finished SKUs. If Photoroom rate-limits (429), the run
+stops cleanly — just re-run to resume.
 
 ## How it works (per SKU)
 
@@ -38,16 +44,20 @@ Re-runs skip finished SKUs. If Photoroom rate-limits (429), the run stops cleanl
    shadow, light from front-left. This is the base; its shadow is used untouched.
 4. **Relight** (`src/gemini.mjs`, Gemini at temperature 0) — its grayscale is a low-frequency
    lighting map.
-5. **Composite** — the shadow base is relit in place, gated by the matte: only the product
-   region gets the gentle directional shading; the cast shadow is left exactly as Photoroom
-   produced it.
+5. **Composite** — the crisp original subject (from the matte) is composited over the shadow
+   base with the matte alpha. Matte and shadow share the exact frame (both `padding:0.10`), so
+   it's a straight blend — no alignment. The subject is kept on straight alpha, so its edge
+   decontaminates onto any `--bg`; the cast shadow is carried onto that background as a
+   proportional darkening.
 
 ## Config
 
 | Flag | Default | Meaning |
 |---|---|---|
 | `--strength` | `0.25` | how much of the Gemini lighting swing is applied (gentle) |
-| `--bg` | `FFFFFF` | background hex (white for the no-shadow deliverable) |
+| `--bg` | `FFFFFF` | output background hex (any color) |
 | `--skus` | all | comma-separated SKU list |
+| `--out` | `outputs/finals` | output folder for finals |
+| `--sheet` | `outputs/contact_sheet.jpg` | contact-sheet path |
 
 Requires: Node ≥20, `sharp`, `@google/genai`. Photoroom + Gemini API keys.
