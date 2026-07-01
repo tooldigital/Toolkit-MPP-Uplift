@@ -64,10 +64,3 @@ node --env-file=.env scripts/run_pipeline.mjs [--skus a,b] [--bg FFFFFF] [--stre
 ```
 Skips finished SKUs; stops on Photoroom 429 (re-run to resume). Outputs: `outputs/finals/<sku>.jpg` (flat),
 `outputs/contact_sheet.jpg`, intermediates cached under `outputs/work/<sku>/`.
-
-## Limitations
-
-- Shadow params are per-class but the classifier isn't built — currently defaulted to standing.
-- Transparent/glass: matte is an opaque silhouette; refraction isn't recomposited — keep on white.
-- Relight is deliberately low-influence to protect texture/logo fidelity.
-- No automated QA gate (shadow neutrality, margin checks) yet.
