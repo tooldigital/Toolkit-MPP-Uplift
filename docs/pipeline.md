@@ -38,12 +38,16 @@ output size, else the model tiles/hallucinates the background.
 
 **[5] Composite** — matte and shadow share the frame, so:
 ```
-a        = matte alpha
+a        = matte alpha                                   # straight, anti-aliased
 meanGray = alpha-weighted mean of lightmap over the product
 factor   = 1 + ((lightmap − meanGray) / 128) · strength
-final    = subject·factor·a + shadow·(1 − a)     # clamped 0..255
+shadowF  = (a·255 + (1−a)·luminance(shadowBase)) / 255   # cast-shadow darkening; product masked out
+final    = subject·factor·a + bg·shadowF·(1 − a)         # clamped 0..255
 ```
-`a≈1` → crisp original subject, gently relit. `a≈0` → cast shadow + background, untouched.
+`a≈1` → crisp original subject, gently relit. `a≈0` → `bg` darkened by the cast shadow. Works for any `bg`
+hex; with `bg = FFFFFF` the second term reduces to the raw shadow base. The subject is kept on **straight
+alpha** (not flattened), so its edge decontaminates onto whatever `bg` is chosen — non-white backgrounds
+composite with no dark halo or white fringe.
 
 ### Edge handling — no fringing, no feather/erode
 
@@ -53,15 +57,14 @@ decontamination step**. They come from:
 1. **Shared frame** — matte and shadow register to within ~6 px, so the subject sits exactly over the base's
    product. No misregistration → no halo / double-edge ring (this was the failure mode of every
    align-after-the-fact approach).
-2. **Anti-aliased alpha** — Photoroom's matte alpha carries sub-pixel edge coverage; the linear over-blend
-   `subject·a + shadow·(1−a)` feathers the subject into the **real base** (shadow/white) behind it, not a
-   mismatched fill. So the boundary blends into correct content instead of leaving a fringe.
+2. **Straight anti-aliased alpha** — Photoroom's matte alpha carries sub-pixel edge coverage and the subject
+   is kept on straight (non-premultiplied) alpha, so the over-blend `subject·a + bg·shadowF·(1−a)` feathers
+   the subject's decontaminated edge into the **chosen background** — clean on white *and* non-white.
 3. **Lightmap is edge-irrelevant** — the relight is low-frequency and only multiplies the subject; a small
    lightmap misalignment shifts shading slightly, it cannot create an edge.
 
-Caveat: the subject is flattened on white, so a partial-alpha edge leans white — invisible on the white
-deliverable, but a gray/dark background would need edge decontamination. And no blend fixes a **wrong matte**
-(e.g. Photoroom mis-segmenting a white-on-white product) — that needs a better matte, not edge math.
+Caveat: no blend fixes a **wrong matte** (e.g. Photoroom mis-segmenting a white-on-white product) — that
+needs a better matte, not edge math.
 
 ## Parameters
 
@@ -73,7 +76,7 @@ deliverable, but a gray/dark background would need edge decontamination. And no 
 | shadow.softness / intensity / spread | 0.6 / 0.55 / long | shadow | standing defaults |
 | shadow.direction / subjectPose | behindRight / upright | shadow | light front-left |
 | strength | 0.25 | composite | relight amount (gentle) |
-| bg | FFFFFF | shadow | background hex |
+| bg | FFFFFF | composite | output background hex (any color; shadow generated on white, recolored here) |
 
 ## Run
 

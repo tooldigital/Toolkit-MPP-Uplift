@@ -88,25 +88,28 @@ for (let i = 0; i < files.length; i++) {
 
     // 5. Composite — matte, original, and shadow all share ONE Photoroom frame, so NO alignment.
     //    Verified: matte product bbox == shadow product bbox (both fit-to-frame by Photoroom).
-    //    - Subject = the MATTE itself (removeBackground returns the ORIGINAL crisp pixels + alpha,
-    //      already in the shadow's frame). Flatten on white for defined RGB outside the product.
-    //    - Base = shadow (product-in-place + cast shadow). Its soft product is erased under the
-    //      matte (they coincide) and replaced by the crisp original. The shadow is untouched.
+    //    - Subject = the MATTE itself (removeBackground returns the ORIGINAL crisp pixels + a straight
+    //      anti-aliased alpha). Kept straight (NOT flattened) so the edge decontaminates onto ANY bg.
+    //    - Background = `bg` darkened by the cast shadow: shadowFactor = luminance of the shadow-on-
+    //      white base / 255 (1 = no shadow, <1 = shadow). The product's own darkness is masked out of
+    //      that factor via the alpha, so a non-white bg gets no dark edge halo. For white bg this
+    //      reduces exactly to the original shadow base.
     //    - Relight is the shadow-base lightmap (same frame), applied to the product only.
-    const subj = await sharp(matteBytes).resize(W, W).flatten({ background: "#fff" }).removeAlpha().raw().toBuffer();
+    const subj = await sharp(matteBytes).resize(W, W).removeAlpha().raw().toBuffer();   // straight RGB
     const base = await sharp(Buffer.from(shadowBytes)).resize(W, W).removeAlpha().raw().toBuffer();
-    // Matte and shadow product coincide, so composite the crisp subject straight OVER the full
-    // shadow base with the matte alpha: interior = crisp original, exterior = the cast shadow
-    // (untouched). No whiten/dilation — that was cutting a gap in the shadow near the contact.
+    const bgR = parseInt(BG.slice(0, 2), 16), bgG = parseInt(BG.slice(2, 4), 16), bgB = parseInt(BG.slice(4, 6), 16);
     let gs = 0, aw = 0; for (let p = 0; p < lm.length; p++) { const a = sAlpha[p] / 255; gs += lm[p] * a; aw += a; }
     const mean = aw > 0 ? gs / aw : 128;
     const out = Buffer.alloc(W * W * 3);
     for (let p = 0, i2 = 0; p < lm.length; p++, i2 += 3) {
       const a = sAlpha[p] / 255;                            // crisp subject coverage
       const f = 1 + ((lm[p] - mean) / 128) * STRENGTH;      // gentle directional relight
-      out[i2] = clamp(subj[i2] * f * a + base[i2] * (1 - a));
-      out[i2 + 1] = clamp(subj[i2 + 1] * f * a + base[i2 + 1] * (1 - a));
-      out[i2 + 2] = clamp(subj[i2 + 2] * f * a + base[i2 + 2] * (1 - a));
+      // cast-shadow darkening of the chosen bg; product region (a→1) excluded so no edge halo
+      const sf = (a * 255 + (1 - a) * gray(base[i2], base[i2 + 1], base[i2 + 2])) / 255;
+      const br = bgR * sf, bg2 = bgG * sf, bb2 = bgB * sf;
+      out[i2] = clamp(subj[i2] * f * a + br * (1 - a));
+      out[i2 + 1] = clamp(subj[i2 + 1] * f * a + bg2 * (1 - a));
+      out[i2 + 2] = clamp(subj[i2 + 2] * f * a + bb2 * (1 - a));
     }
     // Padding (400 px margin) already comes from Photoroom's padding:0.10 framing — write as-is.
     await sharp(out, { raw: { width: W, height: W, channels: 3 } }).jpeg({ quality: 95 }).toFile(finalPath);
