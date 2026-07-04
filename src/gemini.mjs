@@ -5,10 +5,12 @@ import { GoogleGenAI } from "@google/genai";
 
 export const DEFAULT_MODEL = "gemini-3-pro-image-preview";
 export const ASPECT_RATIO = "1:1";
-// IMPORTANT: requesting 4K output makes the model TILE the canvas and hallucinate texture
-// (checkerboard artifacts) — verified: the identical prompt at 2K is clean, while 4K tiles
-// regardless of input size. The relight output is consumed as a LOW-FREQUENCY lighting map
-// only, so 2K is plenty; the runner upscales + low-passes it. Do not raise this back to 4K.
+// IMPORTANT: at temperature 0, large flat-white regions degenerate into repeating
+// checkerboard/tile artifacts — greedy sampling locks into a loop. It manifests at 4K
+// (4× the flat area) and not at 2K. Verified A/B: 4K+temp0 tiles, 4K+temp0.7 is clean,
+// 2K+temp0 is clean. We need temp 0 (deterministic lightmap), so we use 2K. The relight
+// is consumed as a LOW-FREQUENCY lighting map only — the runner upscales + low-passes it —
+// so 2K loses nothing. If you raise this to 4K you must also raise the temperature.
 export const IMAGE_SIZE = "2K"; // 1K | 2K | 4K — uppercase K required
 export const PREPROCESS = {
   maxDim: 2048,            // match the 2K output request

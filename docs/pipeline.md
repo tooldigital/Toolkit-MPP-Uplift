@@ -33,12 +33,13 @@ fails on fur/glass.
 long, direction behindRight, subjectPose upright`. Supplies the cast shadow + background.
 
 **[4] Relight** — used as a grayscale **lighting map only**, never as pixels. Input is the shadow base (so
-the prompt's "product with a cast shadow" matches the image). Generated at **2K** (`IMAGE_SIZE = "2K"`,
-input downscaled to 2048): requesting 4K output makes the model **tile the canvas and hallucinate texture**
-(checkerboard artifacts) regardless of input size — verified by A/B; the same prompt at 2K is clean. The
-runner upscales the 2K map to 4000 and **low-passes it** (`blur(20)`) so only the smooth lighting gradient
-transfers — never Gemini texture, JPEG noise, or tiling residue. 2K costs nothing here: the map is
-low-frequency by design.
+the prompt's "product with a cast shadow" matches the image). Generated at **2K, temperature 0**
+(`IMAGE_SIZE = "2K"`, input downscaled to 2048). Why: at **temperature 0**, greedy sampling over large
+flat-white regions degenerates into repeating checkerboard/tile artifacts; it manifests at 4K (4× the flat
+area) but not at 2K. A/B verified: 4K+temp0 tiles, 4K+temp0.7 clean, 2K+temp0 clean. Temp 0 is required
+(deterministic lightmap), so 2K it is — the map is low-frequency by design, so 2K loses nothing. The runner
+upscales it to 4000 and **low-passes it** (`blur(20)`) so only the smooth lighting gradient transfers —
+never Gemini texture, JPEG noise, or artifact residue. Raising to 4K requires raising the temperature.
 
 **[5] Composite** — matte and shadow share the frame, so:
 ```
