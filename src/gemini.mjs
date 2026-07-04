@@ -5,9 +5,13 @@ import { GoogleGenAI } from "@google/genai";
 
 export const DEFAULT_MODEL = "gemini-3-pro-image-preview";
 export const ASPECT_RATIO = "1:1";
-export const IMAGE_SIZE = "4K"; // 1K | 2K | 4K — uppercase K required
+// IMPORTANT: requesting 4K output makes the model TILE the canvas and hallucinate texture
+// (checkerboard artifacts) — verified: the identical prompt at 2K is clean, while 4K tiles
+// regardless of input size. The relight output is consumed as a LOW-FREQUENCY lighting map
+// only, so 2K is plenty; the runner upscales + low-passes it. Do not raise this back to 4K.
+export const IMAGE_SIZE = "2K"; // 1K | 2K | 4K — uppercase K required
 export const PREPROCESS = {
-  maxDim: 4000,            // send full-res: input must match the 4K output request or the model tiles/hallucinates
+  maxDim: 2048,            // match the 2K output request
   fit: "contain",          // letterbox to square (preserve subject)
   padColor: "#FFFFFF",     // white padding for letterbox
   jpegQuality: 92,

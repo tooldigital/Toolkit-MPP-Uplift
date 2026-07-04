@@ -33,12 +33,17 @@ fails on fur/glass.
 long, direction behindRight, subjectPose upright`. Supplies the cast shadow + background.
 
 **[4] Relight** — used as a grayscale **lighting map only**, never as pixels. Input is the shadow base (so
-the prompt's "product with a cast shadow" matches the image). `PREPROCESS.maxDim = 4000` must equal the 4K
-output size, else the model tiles/hallucinates the background.
+the prompt's "product with a cast shadow" matches the image). Generated at **2K** (`IMAGE_SIZE = "2K"`,
+input downscaled to 2048): requesting 4K output makes the model **tile the canvas and hallucinate texture**
+(checkerboard artifacts) regardless of input size — verified by A/B; the same prompt at 2K is clean. The
+runner upscales the 2K map to 4000 and **low-passes it** (`blur(20)`) so only the smooth lighting gradient
+transfers — never Gemini texture, JPEG noise, or tiling residue. 2K costs nothing here: the map is
+low-frequency by design.
 
 **[5] Composite** — matte and shadow share the frame, so:
 ```
 a        = matte alpha                                   # straight, anti-aliased
+lightmap = relit.jpg upscaled to 4000² + blur(20)        # low-pass: lighting only, no texture
 meanGray = alpha-weighted mean of lightmap over the product
 factor   = 1 + ((lightmap − meanGray) / 128) · strength
 shadowF  = (a·255 + (1−a)·luminance(shadowBase)) / 255   # cast-shadow darkening; product masked out

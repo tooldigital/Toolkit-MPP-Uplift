@@ -20,6 +20,16 @@ import { generateShadowGemini, RELIGHT_VARIANTS } from "../src/gemini.mjs";
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i >= 0 ? process.argv[i + 1] : d; };
 const BG = arg("--bg", "FFFFFF");
 const STRENGTH = parseFloat(arg("--strength", "0.25"));
+// Shadow preset. `long` = directional cast (dramatic, but diverges per-leg on legged furniture).
+// `short` = soft grounding shadow (consistent, immune to per-leg wrong-direction). Cached separately
+// (shadow_<preset>.jpg / relit_<preset>.jpg / final_<preset>_<bg>.jpg) so presets coexist per SKU.
+const SHADOW = arg("--shadow", "long");
+const SUF = SHADOW === "long" ? "" : `_${SHADOW}`;
+const SHADOW_PARAMS = {
+  long:  { mode: "ai.auto-with-overrides", softness: 0.6,  intensity: 0.55, spread: "long",  direction: "behindRight", subjectPose: "upright" },
+  short: { mode: "ai.auto-with-overrides", softness: 0.75, intensity: 0.5,  spread: "short",                           subjectPose: "upright" },
+}[SHADOW];
+if (!SHADOW_PARAMS) { console.error(`unknown --shadow "${SHADOW}" (use long|short)`); process.exit(1); }
 const SRC = "inputs";
 const WORK = "outputs/work";                                  // per-SKU intermediates (cached)
 const FINALS = arg("--out", "outputs/finals");                // flat folder of final images
@@ -54,7 +64,7 @@ const ok = [], failed = [];
 for (let i = 0; i < files.length; i++) {
   const sku = basename(files[i], extname(files[i]));
   const dir = join(WORK, sku); await mkdir(dir, { recursive: true });
-  const finalPath = join(dir, `final_${BG}.jpg`);   // cache per background so bg changes regenerate
+  const finalPath = join(dir, `final${SUF}_${BG}.jpg`);   // cache per shadow-preset + background
   process.stdout.write(`[${i + 1}/${files.length}] ${sku} ... `);
   if (await exists(finalPath)) { await copyFile(finalPath, join(FINALS, `${sku}.jpg`)); console.log("skip"); ok.push(sku); continue; }
   try {
@@ -66,10 +76,10 @@ for (let i = 0; i < files.length; i++) {
     //    PRODUCT (400 px margin) and lets the cast shadow fall into the margin, so the product
     //    framing matches the matte exactly (verified: same product bbox within ~6 px) while the
     //    shadow still has room. Cached.
-    const sp = join(dir, "shadow.jpg");
+    const sp = join(dir, `shadow${SUF}.jpg`);
     let shadowBytes;
     if (await exists(sp)) shadowBytes = await readFile(sp);
-    else { shadowBytes = await generateShadow({ apiKey: prKey, image: plateWhite, filename: `${sku}.jpg`, background: "FFFFFF", outputSize: "4000x4000", padding: 0.10, format: "jpeg", shadow: { mode: "ai.auto-with-overrides", softness: 0.6, intensity: 0.55, spread: "long", direction: "behindRight", subjectPose: "upright" } }); await writeFile(sp, Buffer.from(shadowBytes)); await sleep(1100); }
+    else { shadowBytes = await generateShadow({ apiKey: prKey, image: plateWhite, filename: `${sku}.jpg`, background: "FFFFFF", outputSize: "4000x4000", padding: 0.10, format: "jpeg", shadow: SHADOW_PARAMS }); await writeFile(sp, Buffer.from(shadowBytes)); await sleep(1100); }
 
     // 3. Matte — removeBackground(plateWhite, 4000², padding 0.10): crisp original pixels + alpha
     //    at the SAME product framing as the shadow base (both pad around the product). Cached.
@@ -79,12 +89,16 @@ for (let i = 0; i < files.length; i++) {
     else { matteBytes = await cutout({ apiKey: prKey, image: plateWhite, filename: `${sku}.png`, outputSize: "4000x4000", padding: 0.10 }); await writeFile(ocp, Buffer.from(matteBytes)); await sleep(1100); }
     const sAlpha = await sharp(matteBytes).resize(W, W).ensureAlpha().extractChannel("alpha").raw().toBuffer();
 
-    // 4. Gemini relight of the shadow base → low-freq grayscale LIGHTING MAP only (never pixels). Cached.
-    const rp = join(dir, "relit.jpg");
+    // 4. Gemini relight of the shadow base → LIGHTING MAP only (never pixels). Cached.
+    //    Generated at 2K — requesting 4K makes the model tile/hallucinate texture (verified:
+    //    same prompt is clean at 2K, tiles at 4K regardless of input size; see src/gemini.mjs).
+    //    Upscaled to working res, then LOW-PASSED (blur) so only the smooth lighting gradient
+    //    transfers to the composite — never Gemini texture, JPEG noise, or tiling residue.
+    const rp = join(dir, `relit${SUF}.jpg`);
     let relit;
     if (await exists(rp)) relit = await readFile(rp);
     else { relit = await generateShadowGemini({ apiKey: gemKey, image: Buffer.from(shadowBytes), instruction: RELIGHT_VARIANTS.standard, temperature: 0 }); await writeFile(rp, Buffer.from(relit)); }
-    const g = await sharp(relit).resize(W, W, { fit: "fill" }).removeAlpha().raw().toBuffer();
+    const g = await sharp(relit).resize(W, W, { fit: "fill" }).blur(20).removeAlpha().raw().toBuffer();
     const lm = new Float32Array(W * W); for (let p = 0, k = 0; p < lm.length; p++, k += 3) lm[p] = gray(g[k], g[k + 1], g[k + 2]);
 
     // 5. Composite — matte, original, and shadow all share ONE Photoroom frame, so NO alignment.
