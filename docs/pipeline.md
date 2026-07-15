@@ -78,6 +78,7 @@ decontamination step**. They come from:
 | shadow.direction / subjectPose | behindRight / upright | shadow | light front-left |
 | strength | 0.25 | composite | relight amount (gentle) |
 | bg | FFFFFF | composite | output background hex (any color; shadow generated on white, recolored here) |
+| shadow | long | shadow | preset: `long` (directional) or `short` (soft grounding); cached per preset |
 
 ## Run
 

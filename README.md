@@ -57,7 +57,19 @@ stops cleanly — just re-run to resume.
 | `--strength` | `0.25` | how much of the Gemini lighting swing is applied (gentle) |
 | `--bg` | `FFFFFF` | output background hex (any color) |
 | `--skus` | all | comma-separated SKU list |
+| `--shadow` | `long` | shadow preset: `long` (directional, dramatic) or `short` (soft grounding) — cached separately per preset |
 | `--out` | `outputs/finals` | output folder for finals |
 | `--sheet` | `outputs/contact_sheet.jpg` | contact-sheet path |
 
-Requires: Node ≥20, `sharp`, `@google/genai`. Photoroom + Gemini API keys.
+If a shadow comes out wrong on one SKU (Photoroom is non-deterministic — occasionally a leg's
+shadow goes the wrong direction), delete that SKU's `outputs/work/<sku>/shadow*.jpg`, `relit*.jpg`
+and `final*.jpg` and re-run just that SKU.
+
+## Experiments (not part of the pipeline)
+
+`scripts/exp_*.mjs` + `src/shadow-patch.mjs` are side experiments that write only to
+`outputs/experiments/`. Current state: Gemini "improve this shadow crop" (patch mode) is a dead
+end — the model erases shadows; Gemini shadow **harvest** (full-scene generation, keep only the
+shadow under the real product) works well and is a candidate alternative shadow source.
+
+Requires: Node ≥20, `sharp`, `@google/genai`. Photoroom + Gemini API keys (see `.env.example`).
