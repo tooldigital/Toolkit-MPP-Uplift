@@ -18,3 +18,13 @@ outputs/*
 !outputs/qc_group_sofa_texture.jpg
 !outputs/client_sofa_f7f7f7/
 !outputs/client_sofa_f7f7f7.zip
+
+# local review bundles (large, regenerated on demand)
+/plush_review/
+/sofa_review/
+/plush_f7f7f7_review.zip
+
+# Source photos for group_chair are NOT committed — manifest.json records the SKU,
+# product page and CDN URL for each, so the set is refetchable. Keeps image blobs
+# out of the history (the repo is already ~200 MB of committed finals).
+inputs/group_chair/*.jpg

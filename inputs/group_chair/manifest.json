@@ -1,0 +1,90 @@
+{
+  "source": "IKEA product images: 11 fetched from ikea.com via the public search API (main studio shot, max CDN resolution 2000x2000) + the yellow armchair already in inputs/group_all (4000x4000, copied)",
+  "fetched": "2026-08-02",
+  "items": [
+    {
+      "sku": "PE870153",
+      "name": "EKENÄSET",
+      "type": "Armchair",
+      "product": "https://www.ikea.com/us/en/p/ekenaeset-armchair-kilanda-light-beige-30533493/",
+      "image": "https://www.ikea.com/us/en/images/products/ekenaeset-armchair-kilanda-light-beige__1109687_pe870153_s5.jpg?imwidth=4000"
+    },
+    {
+      "sku": "PE999897",
+      "name": "STRANDMON",
+      "type": "Wing chair",
+      "product": "https://www.ikea.com/us/en/p/strandmon-wing-chair-tommaboda-brown-red-40613173/",
+      "image": "https://www.ikea.com/us/en/images/products/strandmon-wing-chair-tommaboda-brown-red__1478942_pe999897_s5.jpg?imwidth=4000"
+    },
+    {
+      "sku": "PE977697",
+      "name": "SALTSJÖBADEN",
+      "type": "Armchair",
+      "product": "https://www.ikea.com/us/en/p/saltsjoebaden-armchair-blekinge-white-s59578565/",
+      "image": "https://www.ikea.com/us/en/images/products/saltsjoebaden-armchair-blekinge-white__1421508_pe977697_s5.jpg?imwidth=4000"
+    },
+    {
+      "sku": "PE922624",
+      "name": "ROCKSJÖN",
+      "type": "Armchair",
+      "product": "https://www.ikea.com/us/en/p/rocksjoen-armchair-kilanda-light-beige-s49508851/",
+      "image": "https://www.ikea.com/us/en/images/products/rocksjoen-armchair-kilanda-light-beige__1247350_pe922624_s5.jpg?imwidth=4000"
+    },
+    {
+      "sku": "PE1009198",
+      "name": "POÄNG",
+      "type": "Armchair",
+      "product": "https://www.ikea.com/us/en/p/poaeng-armchair-birch-veneer-grann-golden-brown-s99625254/",
+      "image": "https://www.ikea.com/us/en/images/products/poaeng-armchair-birch-veneer-grann-golden-brown__1507256_pe1009198_s5.jpg?imwidth=4000"
+    },
+    {
+      "sku": "PE955313",
+      "name": "STOCKHOLM 2025",
+      "type": "Armchair",
+      "product": "https://www.ikea.com/us/en/p/stockholm-2025-armchair-djurmo-gray-white-40594754/",
+      "image": "https://www.ikea.com/us/en/images/products/stockholm-2025-armchair-djurmo-gray-white__1362740_pe955313_s5.jpg?imwidth=4000"
+    },
+    {
+      "sku": "PE680160",
+      "name": "MORABO",
+      "type": "Armchair",
+      "product": "https://www.ikea.com/us/en/p/morabo-armchair-gunnared-light-green-wood-s59318327/",
+      "image": "https://www.ikea.com/us/en/images/products/morabo-armchair-gunnared-light-green-wood__0602091_pe680160_s5.jpg?imwidth=4000"
+    },
+    {
+      "sku": "PE926999",
+      "name": "SOTENÄS",
+      "type": "Armchair",
+      "product": "https://www.ikea.com/us/en/p/sotenaes-armchair-hakebo-yellow-90570821/",
+      "image": "https://www.ikea.com/us/en/images/products/sotenaes-armchair-hakebo-yellow__1262234_pe926999_s5.jpg?imwidth=4000"
+    },
+    {
+      "sku": "PE680490",
+      "name": "TULLSTA",
+      "type": "Armchair",
+      "product": "https://www.ikea.com/us/en/p/tullsta-armchair-lofallet-beige-s89272714/",
+      "image": "https://www.ikea.com/us/en/images/products/tullsta-armchair-lofallet-beige__0602718_pe680490_s5.jpg?imwidth=4000"
+    },
+    {
+      "sku": "PE638683",
+      "name": "VEDBO",
+      "type": "Armchair",
+      "product": "https://www.ikea.com/us/en/p/vedbo-armchair-gunnared-dark-gray-50424129/",
+      "image": "https://www.ikea.com/us/en/images/products/vedbo-armchair-gunnared-dark-gray__0512767_pe638683_s5.jpg?imwidth=4000"
+    },
+    {
+      "sku": "PE716932",
+      "name": "ULRIKSBERG",
+      "type": "Armchair",
+      "product": "https://www.ikea.com/us/en/p/ulriksberg-armchair-rattan-anthracite-90434310/",
+      "image": "https://www.ikea.com/us/en/images/products/ulriksberg-armchair-rattan-anthracite__0672896_pe716932_s5.jpg?imwidth=4000"
+    },
+    {
+      "sku": "PE1016720",
+      "name": "Yellow armchair (from group_all)",
+      "type": "Armchair",
+      "product": "n/a — already in inputs/group_all",
+      "image": "copied from inputs/group_all/PE1016720.jpg"
+    }
+  ]
+}
