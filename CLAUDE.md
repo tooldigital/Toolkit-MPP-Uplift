@@ -36,7 +36,35 @@ npm run pipeline -- --debug --skus PE1016720             # log every API request
 
 Each category folder may hold a `group.json` that sets its defaults, so a plain `npm run pipeline`
 renders every group correctly in one pass (no remembering flags). Keys (all optional):
-`{ "mode": "opaque|transparent|render-only", "strength": 0.08, "shadow": "long|short", "bg": "FFFFFF", "relight": true }`.
+`{ "mode": "opaque|transparent|render-only", "strength": 0.08, "shadow": "long|short", "bg": "FFFFFF", "relight": true, "highlights": "on|off|auto" }`.
+`highlights` (CLI `--highlights on|off|auto`) controls the BRIGHT half of the lighting map; the dark
+half always applies at full `strength`. The relight is multiplicative, so the bright half needs
+headroom a light product may not have — white fabric already sits at 230-250 and `f > 1` just drives
+it into the ceiling (measured: UPPLAND white went from 0.01% of source pixels at ≥254 to 12.4% of
+final pixels at strength 0.25). `on` (default) = both halves, right for mid/dark goods. `off` =
+shading only, `f ≤ 1`, lit side stays exactly the source pixels (`--shade-only` is an alias; cached
+`final*_s_*`). `auto` = scale the bright half per SKU by the product's measured headroom, so beige
+gets most of the lift and near-white gets almost none, with no hand-labelling (cached `final*_ha_*`).
+Auto measures the **p90** of the product's max channel, not p99 — on beige goods p99 is set by a few
+specular highlights and scored a mid-beige sofa the same as a white one. See `headroomScale()`.
+Auto takes the SMALLER of a body-wide and an EDGE-BAND headroom (product pixels within 3 px of the
+alpha boundary). Studio shots carry rim light, so the edge runs 15-20 levels hotter than the body;
+lifting on the body number alone pushed FINNALA's edge p99 to 252 against a 247 backdrop and its
+arms lost their outline. Measured lifts: STOCKHOLM natural 1.00, LILLESÄTER off-white 0.56,
+UPPLAND white 0.32, STOCKHOLM 2025 beige 0.28, FINNALA beige 0.20, HYLTARP natural 0.12 — 0.00% of
+product pixels at >=254 on all six, vs up to 12.4% before.
+
+`shade` (CLI `--shade 0.65`, default 1) scales the DARK half of the lightmap — the mirror of
+`highlights`. `strength` moves both halves together, so raising it for modelling also deepens the
+shaded side; on a product with a genuinely dark recess that crushes (STOCKHOLM 2025's under-frame
+void hit p01 72 at strength 0.55). Lower `shade` to keep the highlight modelling and open the
+shadows back up; it ships at 0.65 there (p01 72 -> 83). Cached as `_sh<nn>`.
+
+`exposure` (CLI `--exposure 0.97`, default 1) is a flat multiplier on the PRODUCT only — never the
+backdrop or the cast shadow — applied before the highlight shoulder. It is not a relight knob: the
+lightmap only redistributes light across the product, so a subject that is uniformly too bright for
+the backdrop cannot be fixed by `highlights` at any setting. STOCKHOLM 2025 beige ships at 0.97
+(body p90 242 -> 236 against a 247 bg). Cached as `_e<nnn>`. Use sparingly.
 Resolution precedence per SKU: **explicit CLI flag > group.json > built-in default** (mode opaque,
 strength 0.25, shadow long, bg FFFFFF, relight on). `--mode` is the CLI form of `mode` (the old
 `--transparent`/`--render-only` flags still work). Configs are validated up front (bad mode/shadow,
@@ -80,7 +108,9 @@ Inputs are collected recursively and **finals mirror the input structure** — a
 `--no-relight` skips stage 4 entirely (no Gemini call, product kept flat, relight factor = 1);
 the Photoroom cast shadow and compositing still run. NOTE: the work-cache final key does NOT
 encode relight on/off, so switching modes for a SKU that already has a cached final reuses the old
-one — delete `outputs/work/<sku>/final*` to force a re-render in the other mode.
+one — delete `outputs/work/<sku>/final*` to force a re-render in the other mode. `strength` IS in
+the key (`_st<nnn>`, omitted at the 0.25 default) — it was not until 2026-08-07, and a re-run at a
+new `--strength` silently returned the previously cached composite.
 
 `--no-cache` ignores ALL cached intermediates/finals and regenerates every stage from scratch
 (re-fetches Photoroom + Gemini). Stages are still written to `outputs/work/`, so a later normal run
@@ -120,8 +150,13 @@ contact sheet(s) and commit both sets.
 
 ## Invariants — each one was learned the hard way; do not re-break them
 
-1. **One shared frame via `padding: 0.10`.** Matte and shadow are both generated at 4000² with
-   `padding: 0.10`; Photoroom pads around the *product*, so both frame it identically (~6 px) and
+1. **One shared frame via `padding: 0.0838`.** Matte and shadow are both generated at 4000² with
+   the single `PADDING` constant in `run_pipeline.mjs`; Photoroom's padding is NOT a fraction of the
+   output (it adds its own ~81 px inset), so the subject box measures `3838 - 7675*padding` px —
+   calibrated against removeBackground at 0 / 0.05 / 0.10. 0.0838 is what puts the product inside
+   3200² with a ≥400 px margin (measured 401-407 px on the tight axis across 12 chairs). Was 0.10
+   (≈465 px margin) until 2026-08-02. Never let the two calls use different values.
+   Photoroom pads around the *product*, so both frame it identically (~6 px) and
    the composite is a straight per-pixel blend. NO alignment, resampling, bbox-matching, dilation,
    or feathering in the composite — every one of those was tried and caused halos, ghosts, cropped
    shadows, or gaps. Never use `outputSize: originalImage` for output (full-bleed, kills margin + shadow).

@@ -7,7 +7,7 @@ Runner: [`scripts/run_pipeline.mjs`](../scripts/run_pipeline.mjs). One SKU at a 
 
 ## Key invariant
 
-Matte and shadow are both generated at `padding: 0.10`, 4000×4000. Photoroom pads around the **product**
+Matte and shadow are both generated at `padding: 0.0838`, 4000×4000. Photoroom pads around the **product**
 (→ 400 px margin) and lets the shadow fall into the margin, so `removeBackground` and `generateShadow`
 frame the product identically (bbox match within ~6 px). Same frame → the composite is a straight per-pixel
 blend, no alignment/resampling/dilation.
@@ -20,8 +20,8 @@ clips the shadow.
 | # | Stage | Code | In → Out |
 |---|-------|------|----------|
 | 1 | Plate | `src/plate.mjs · makePlate` | original.jpg → `plate` (subject scaled so longest side ≤3200, centered on 4000² white) |
-| 2 | Matte | `src/cutout.mjs · cutout` | plateWhite → `matte.png` (Photoroom `removeBackground`, 4000², padding 0.10) |
-| 3 | Shadow | `src/photoroom.mjs · generateShadow` | plateWhite → `shadow.jpg` (product + cast shadow, 4000², padding 0.10) |
+| 2 | Matte | `src/cutout.mjs · cutout` | plateWhite → `matte.png` (Photoroom `removeBackground`, 4000², padding 0.0838) |
+| 3 | Shadow | `src/photoroom.mjs · generateShadow` | plateWhite → `shadow.jpg` (product + cast shadow, 4000², padding 0.0838) |
 | 4 | Relight | `src/gemini.mjs · generateShadowGemini` | shadow.jpg → `relit.jpg` (Gemini 3 Pro, temp 0, 4K) |
 | 5 | Composite | `scripts/run_pipeline.mjs` | matte + shadow + relit → `final.jpg` |
 
@@ -73,7 +73,7 @@ decontamination step**. They come from:
 |---|---|---|---|
 | frame | 4000 | plate | canvas size |
 | maxSubject | 3200 | plate | longest subject side (→ 400 px margin) |
-| padding | 0.10 | matte, shadow | Photoroom pads around the product; matte & shadow agree |
+| padding | 0.0838 | matte, shadow | Photoroom pads around the product; matte & shadow agree |
 | shadow.softness / intensity / spread | 0.6 / 0.55 / long | shadow | standing defaults |
 | shadow.direction / subjectPose | behindRight / upright | shadow | light front-left |
 | strength | 0.25 | composite | relight amount (gentle) |

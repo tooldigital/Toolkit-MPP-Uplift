@@ -45,7 +45,7 @@ stops cleanly — just re-run to resume.
 4. **Relight** (`src/gemini.mjs`, Gemini at temperature 0) — its grayscale is a low-frequency
    lighting map.
 5. **Composite** — the crisp original subject (from the matte) is composited over the shadow
-   base with the matte alpha. Matte and shadow share the exact frame (both `padding:0.10`), so
+   base with the matte alpha. Matte and shadow share the exact frame (both `padding:0.0838`), so
    it's a straight blend — no alignment. The subject is kept on straight alpha, so its edge
    decontaminates onto any `--bg`; the cast shadow is carried onto that background as a
    proportional darkening.
