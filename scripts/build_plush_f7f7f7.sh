@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
-# Build the plush F7F7F7 deliverables — THREE versions per SKU, in ONE folder:
-#   <sku>_normal.jpg   standard pipeline (opaque composite + Photoroom shadow + 0.08 relight) = baseline
-#   <sku>_furedge.jpg  de-halo'd edge WITH drawn fur strands
-#   <sku>_nofur.jpg    de-halo'd edge, NO strands
+# Build the plush F7F7F7 deliverables — FOUR versions per SKU, in ONE folder:
+#   <sku>_normal.jpg    standard pipeline (opaque composite + Photoroom shadow + 0.08 relight) = baseline
+#   <sku>_normalhd.jpg  same, but Photoroom HD background removal (crisper fur-strand edges)
+#   <sku>_furedge.jpg   de-halo'd edge WITH drawn fur strands
+#   <sku>_nofur.jpg     de-halo'd edge, NO strands
 # All on F7F7F7, all relit 0.08. Output: outputs/finals_plush_f7f7f7_all/group_plush/
 #
 # Default: regenerate every composite from scratch (no final cache), reusing cached Photoroom/Gemini
@@ -37,7 +38,7 @@ if [ "$NOCACHE" = "1" ]; then
          outputs/experiments/dehalo_${BG} outputs/experiments/dehalo_nostrand_${BG}
 fi
 
-echo "== 1/5  pipeline intermediates + NORMAL baseline =="
+echo "== 1/6  pipeline intermediates + NORMAL baseline =="
 for s in $SKUS3 $OTTER; do
   # matte + shadow + relit + relit final_FFFFFF (Gemini edge input). Skip if relit.jpg already cached.
   if [ "$NOCACHE" = "1" ] || [ ! -f "outputs/work/$s/relit.jpg" ]; then
@@ -55,22 +56,29 @@ for s in $SKUS3 $OTTER; do
     --out "$SCRATCH" --sheet "$SCRATCH/sheet_grey.jpg"
 done
 
-echo "== 2/5  Gemini edge outputs (gem_A recolor, gem_B strands) =="
+echo "== 2/6  NORMAL-HD (Photoroom HD background removal) =="
+# Same opaque composite as NORMAL, but an HD-removal matte (crisper fur-strand edges). Reuses the
+# cached shadow + relit; the HD matte is cached at outputs/work/<sku>/matte_hd.png.
+HDFORCE=""; [ "$NOCACHE" = "1" ] && HDFORCE="--force"
+$NODE scripts/exp_hd_removal.mjs $SKUS3 $OTTER --bg "$BG" --strength 0.08 $HDFORCE
+for s in $SKUS3 $OTTER; do cp "outputs/experiments/hd_removal/${s}_normalhd.jpg" "$ALL/${s}_normalhd.jpg"; done
+
+echo "== 3/6  Gemini edge outputs (gem_A recolor, gem_B strands) =="
 $NODE scripts/exp_fur_edge.mjs $SKUS3 $OTTER   # cache-first; regenerated only under --no-cache
 
-echo "== 3/5  FUR EDGES =="
+echo "== 4/6  FUR EDGES =="
 $NODE scripts/exp_fur_edge_finalize_shadow.mjs $SKUS3 --bg "$BG" --R 90 --strength 0.08 --gem B
 for s in $SKUS3; do cp "$BAND/$s.jpg" "$ALL/${s}_furedge.jpg"; done
 $NODE scripts/exp_dehalo.mjs "$OTTER" --bg "$BG" --relight 0.08
 cp "outputs/experiments/dehalo_${BG}/${OTTER}_hybrid.jpg" "$ALL/${OTTER}_furedge.jpg"
 
-echo "== 4/5  NO FUR =="
+echo "== 5/6  NO FUR =="
 $NODE scripts/exp_fur_edge_finalize_shadow.mjs $SKUS3 --bg "$BG" --R 90 --strength 0.08 --gem A --nostrands
 for s in $SKUS3; do cp "$BAND/$s.jpg" "$ALL/${s}_nofur.jpg"; done
 $NODE scripts/exp_dehalo.mjs "$OTTER" --bg "$BG" --nostrands --relight 0.08
 cp "outputs/experiments/dehalo_nostrand_${BG}/${OTTER}_hybrid.jpg" "$ALL/${OTTER}_nofur.jpg"
 
-echo "== 5/5  QC + 3-column compare sheet =="
+echo "== 6/6  QC + 4-column compare sheet =="
 $NODE scripts/qc_plush_f7f7f7.mjs
 
 echo "done."

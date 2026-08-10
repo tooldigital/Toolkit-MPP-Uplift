@@ -13,10 +13,14 @@ const ENDPOINT = "https://image-api.photoroom.com/v2/edit";
  * @param {string} [opts.filename]
  * @param {string} [opts.outputSize="4000x4000"]
  * @param {number} [opts.padding=0]
+ * @param {boolean} [opts.hd=false]  HD background removal (Plus plan) — crisper edges on ≥2K images.
+ * @param {string} [opts.referenceBox]  Photoroom framing: "originalImage" fits the WHOLE input into
+ *   the target (minus padding), keeping the subject's original position/scale — the "no-plate" path.
+ *   Default (unset = subjectBox) reframes the subject to fill the target.
  * @returns {Promise<Uint8Array>}
  */
 export async function cutout(opts) {
-  const { apiKey, image, filename, outputSize = "4000x4000", padding = 0, sku } = opts;
+  const { apiKey, image, filename, outputSize = "4000x4000", padding = 0, sku, hd = false, referenceBox } = opts;
   if (!apiKey) throw new Error("apiKey required");
   if (!image) throw new Error("image required");
 
@@ -37,15 +41,20 @@ export async function cutout(opts) {
   fd.append("removeBackground", "true");
   fd.append("outputSize", outputSize);
   fd.append("padding", String(padding));
+  if (referenceBox) fd.append("referenceBox", referenceBox);
   fd.append("export.format", "png");
+
+  // HD background removal is a request HEADER (not a form field), Plus plan; crisper subject edges ≥2K.
+  const headers = { "x-api-key": apiKey };
+  if (hd) headers["pr-hd-background-removal"] = "auto";
 
   return logCall(
     { service: "photoroom", op: "removeBackground", sku },
-    { endpoint: ENDPOINT, filename: name, inputBytes: blob.size, fields: { removeBackground: true, outputSize, padding, "export.format": "png" } },
+    { endpoint: ENDPOINT, filename: name, inputBytes: blob.size, fields: { removeBackground: true, outputSize, padding, referenceBox, "export.format": "png", hd } },
     async () => {
       const res = await fetch(ENDPOINT, {
         method: "POST",
-        headers: { "x-api-key": apiKey },
+        headers,
         body: fd,
       });
       if (!res.ok) {

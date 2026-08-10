@@ -36,6 +36,7 @@ export async function generateShadow(opts) {
     padding,
     format,
     sku,
+    referenceBox,
   } = opts;
 
   if (!apiKey) throw new Error("apiKey required");
@@ -67,11 +68,12 @@ export async function generateShadow(opts) {
   fd.append("background.color", background);
   if (outputSize) fd.append("outputSize", outputSize);
   if (padding != null) fd.append("padding", String(padding));
+  if (referenceBox) fd.append("referenceBox", referenceBox);
   if (format) fd.append("export.format", format);
 
   return logCall(
     { service: "photoroom", op: "generateShadow", sku },
-    { endpoint: ENDPOINT, filename: name, inputBytes: blob.size, modelVersion: MODEL_VERSION, fields: { shadow, background, outputSize, padding, "export.format": format } },
+    { endpoint: ENDPOINT, filename: name, inputBytes: blob.size, modelVersion: MODEL_VERSION, fields: { shadow, background, outputSize, padding, referenceBox, "export.format": format } },
     async () => {
       const res = await fetch(ENDPOINT, {
         method: "POST",
