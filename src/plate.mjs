@@ -118,6 +118,25 @@ export async function makePlate({
 }
 
 /**
+ * Square plate WITHOUT luminance bbox detection — for transparent/bright products (glass).
+ * makePlate() finds the subject by luminance (< threshold), which crops off bright glass
+ * edges/clips (they read as background) and truncates the product. Here we skip detection
+ * entirely: the whole source is `contain`-fit onto a frame×frame canvas over `bg`, and
+ * Photoroom (real subject detection, padding:0.10) does the reframing downstream.
+ * @param {string|Buffer} source  clean-white product image (any size/aspect)
+ * @param {number} [frame=4000]    output square size
+ * @param {string} [bg="FFFFFF"]   background hex
+ */
+export async function squarePlate(source, frame = 4000, bg = "FFFFFF") {
+  const { r, g, b } = hexToRgb(bg);
+  return sharp(source)
+    .resize(frame, frame, { fit: "contain", background: { r, g, b }, kernel: "lanczos3" })
+    .flatten({ background: { r, g, b } })
+    .png()
+    .toBuffer();
+}
+
+/**
  * Flatten a transparent plate (RGBA product) onto a solid background color.
  * This is the Step-5 background choice in isolation (no shadow) — used for the
  * no-shadow white output and for previewing white/gray/dark backdrops.

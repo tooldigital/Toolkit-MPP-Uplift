@@ -9,3 +9,12 @@ outputs/*
 !outputs/finals_gray/
 !outputs/contact_sheet.jpg
 !outputs/contact_sheet_gray.jpg
+!outputs/finals_plush_f7f7f7_all/
+!outputs/compare_plush_normal_fur_nofur.jpg
+!outputs/contact_sheet_group_sofa.jpg
+!outputs/qc_group_sofa_consistency.jpg
+!outputs/finals_sofa_f7f7f7/
+!outputs/contact_sheet_sofa_f7f7f7_group_sofa.jpg
+!outputs/qc_group_sofa_texture.jpg
+!outputs/client_sofa_f7f7f7/
+!outputs/client_sofa_f7f7f7.zip

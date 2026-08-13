@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import { basename, extname } from "node:path";
 import sharp from "sharp";
 import { GoogleGenAI } from "@google/genai";
+import { logCall } from "./debuglog.mjs";
 
 export const DEFAULT_MODEL = "gemini-3-pro-image-preview";
 export const ASPECT_RATIO = "1:1";
@@ -27,14 +28,14 @@ export const INSTRUCTION = `Apply lighting and shadow to the product in the firs
 - Keep the product in the EXACT same position and at the EXACT same scale as the input. Do not re-center, re-crop, or resize it. White background.
 - Keep the product pixel-for-pixel: textures, logos, seams, weave intact.`;
 
-export const INSTRUCTION_RELIGHT = `The image shows a product with a soft cast shadow on a white background.
+export const INSTRUCTION_RELIGHT = `The image shows a product with a soft cast shadow on a plain solid-color background.
 
 Apply lighting to the PRODUCT only:
 - Soft front-left key light, slightly above the product.
 - Mild ambient fill so the right side of the product is darker than the left but still readable.
 - Preserve the product's contrast, color, and material.
 
-DO NOT modify the cast shadow on the ground. DO NOT modify the white background. The shadow must stay exactly as it is in the input — same shape, same position, same opacity, same colour.
+DO NOT modify the cast shadow on the ground. DO NOT modify the background — keep its exact color. The shadow must stay exactly as it is in the input — same shape, same position, same opacity, same colour.
 
 Keep the product in the EXACT same position and at the EXACT same scale as the input.`;
 
@@ -43,36 +44,51 @@ Keep the product in the EXACT same position and at the EXACT same scale as the i
 // Input is the Photoroom shadow base: the product WITH its soft cast shadow on white.
 // The prompt matches that — relight the product, keep the shadow and white background.
 export const RELIGHT_VARIANTS = {
-  subtle: `The image shows a product with a soft cast shadow on a white background.
+  subtle: `The image shows a product with a soft cast shadow on a plain solid-color background.
 
 Apply VERY GENTLE lighting to the PRODUCT only:
 - Subtle front-left key light. Almost flat — only a hint of directional shading.
 - High ambient fill so the right side of the product remains nearly as bright as the left.
 - Preserve the product's contrast, color, and material — do not deepen any shadows on it.
 
-DO NOT modify the cast shadow on the ground. DO NOT modify the white background. The shadow must stay exactly as it is in the input — same shape, same position, same opacity, same colour.
+DO NOT modify the cast shadow on the ground. DO NOT modify the background — keep its exact color. The shadow must stay exactly as it is in the input — same shape, same position, same opacity, same colour.
 
 Keep the product in the EXACT same position and at the EXACT same scale as the input.`,
 
-  standard: `The image shows a product with a soft cast shadow on a white background.
+  // GLASS: consumed as a DELTA lightmap (relit − base) in the render-only path, so what matters is
+  // WHERE Gemini adds light (rim/edge speculars), not absolute brightness. Explicitly leaves the
+  // see-through body untouched so the plain background seen through the glass is not washed out.
+  glass: `The image shows a transparent GLASS product with a soft cast shadow on a plain solid-color background. The plain background is visible THROUGH the clear glass walls.
+
+Relight to bring out the GLASS itself, NOT the background seen through it:
+- Soft front-left key light, slightly above. Let crisp specular catches form along the top rims, lids, and left-facing edges — these bright edge highlights are what make glass read as glass.
+- Where the background shows THROUGH the transparent walls, keep it at its TRUE brightness — do NOT brighten, glow, or wash out the see-through areas. Clear glass should stay clear, never milky.
+- Strengthen edge definition: keep the outlines of walls, rims, and bases crisp; give the thick glass at the base and any liquid line a touch more depth and a subtly cooler tone.
+- Preserve refraction, internal reflections, and any embossed marks.
+
+DO NOT modify the cast shadow on the ground. DO NOT modify the background — keep its exact color. The shadow must stay exactly as it is in the input — same shape, same position, same opacity, same colour.
+
+Keep the product in the EXACT same position and at the EXACT same scale as the input.`,
+
+  standard: `The image shows a product with a soft cast shadow on a plain solid-color background.
 
 Apply lighting to the PRODUCT only:
 - Soft front-left key light, slightly above the product.
 - Mild ambient fill so the right side of the product is darker than the left but still readable.
 - Preserve the product's contrast, color, and material.
 
-DO NOT modify the cast shadow on the ground. DO NOT modify the white background. The shadow must stay exactly as it is in the input — same shape, same position, same opacity, same colour.
+DO NOT modify the cast shadow on the ground. DO NOT modify the background — keep its exact color. The shadow must stay exactly as it is in the input — same shape, same position, same opacity, same colour.
 
 Keep the product in the EXACT same position and at the EXACT same scale as the input.`,
 
-  strong: `The image shows a product with a soft cast shadow on a white background.
+  strong: `The image shows a product with a soft cast shadow on a plain solid-color background.
 
 Apply PRONOUNCED directional lighting to the PRODUCT only:
 - Bright front-left key light, slightly above the product. Clearly visible falloff across the product.
 - Low ambient fill so the right side of the product is noticeably darker than the left, with deeper self-shadowing on the right-facing surfaces.
 - Brighten the highlights on the left-facing surfaces. Keep colors saturated; do not crush the blacks.
 
-DO NOT modify the cast shadow on the ground. DO NOT modify the white background. The shadow must stay exactly as it is in the input — same shape, same position, same opacity, same colour.
+DO NOT modify the cast shadow on the ground. DO NOT modify the background — keep its exact color. The shadow must stay exactly as it is in the input — same shape, same position, same opacity, same colour.
 
 Keep the product in the EXACT same position and at the EXACT same scale as the input.`,
 };
@@ -98,6 +114,7 @@ export async function generateShadowGemini(opts) {
     instruction = INSTRUCTION,
     model = DEFAULT_MODEL,
     temperature = 0.2,
+    sku,
   } = opts;
 
   if (!apiKey) throw new Error("apiKey required");
@@ -111,24 +128,30 @@ export async function generateShadowGemini(opts) {
   }
   parts.push({ text: instruction });
 
-  const ai = new GoogleGenAI({ apiKey });
-  const response = await ai.models.generateContent({
-    model,
-    contents: [{ role: "user", parts }],
-    config: {
-      temperature,
-      imageConfig: { aspectRatio: ASPECT_RATIO, imageSize: IMAGE_SIZE },
-    },
-  });
+  return logCall(
+    { service: "gemini", op: "relight", sku },
+    { model, imageSize: IMAGE_SIZE, aspectRatio: ASPECT_RATIO, temperature, hasReference: !!reference, instruction },
+    async () => {
+      const ai = new GoogleGenAI({ apiKey });
+      const response = await ai.models.generateContent({
+        model,
+        contents: [{ role: "user", parts }],
+        config: {
+          temperature,
+          imageConfig: { aspectRatio: ASPECT_RATIO, imageSize: IMAGE_SIZE },
+        },
+      });
 
-  const respParts = response.candidates?.[0]?.content?.parts ?? [];
-  for (const p of respParts) {
-    if (p.inlineData?.data) {
-      return new Uint8Array(Buffer.from(p.inlineData.data, "base64"));
-    }
-  }
-  const text = respParts.map((p) => p.text).filter(Boolean).join("\n");
-  throw new Error(`Gemini returned no image. Text: ${text || "(empty)"}`);
+      const respParts = response.candidates?.[0]?.content?.parts ?? [];
+      for (const p of respParts) {
+        if (p.inlineData?.data) {
+          return new Uint8Array(Buffer.from(p.inlineData.data, "base64"));
+        }
+      }
+      const text = respParts.map((p) => p.text).filter(Boolean).join("\n");
+      throw new Error(`Gemini returned no image. Text: ${text || "(empty)"}`);
+    },
+  );
 }
 
 async function loadImagePart(image, fallbackName) {

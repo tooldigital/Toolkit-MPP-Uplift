@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { basename } from "node:path";
+import { logCall } from "./debuglog.mjs";
 
 const ENDPOINT = "https://image-api.photoroom.com/v2/edit";
 
@@ -15,7 +16,7 @@ const ENDPOINT = "https://image-api.photoroom.com/v2/edit";
  * @returns {Promise<Uint8Array>}
  */
 export async function cutout(opts) {
-  const { apiKey, image, filename, outputSize = "4000x4000", padding = 0 } = opts;
+  const { apiKey, image, filename, outputSize = "4000x4000", padding = 0, sku } = opts;
   if (!apiKey) throw new Error("apiKey required");
   if (!image) throw new Error("image required");
 
@@ -38,14 +39,20 @@ export async function cutout(opts) {
   fd.append("padding", String(padding));
   fd.append("export.format", "png");
 
-  const res = await fetch(ENDPOINT, {
-    method: "POST",
-    headers: { "x-api-key": apiKey },
-    body: fd,
-  });
-  if (!res.ok) {
-    const text = await res.text().catch(() => "");
-    throw new Error(`Photoroom ${res.status}: ${text || res.statusText}`);
-  }
-  return new Uint8Array(await res.arrayBuffer());
+  return logCall(
+    { service: "photoroom", op: "removeBackground", sku },
+    { endpoint: ENDPOINT, filename: name, inputBytes: blob.size, fields: { removeBackground: true, outputSize, padding, "export.format": "png" } },
+    async () => {
+      const res = await fetch(ENDPOINT, {
+        method: "POST",
+        headers: { "x-api-key": apiKey },
+        body: fd,
+      });
+      if (!res.ok) {
+        const text = await res.text().catch(() => "");
+        throw new Error(`Photoroom ${res.status}: ${text || res.statusText}`);
+      }
+      return new Uint8Array(await res.arrayBuffer());
+    },
+  );
 }

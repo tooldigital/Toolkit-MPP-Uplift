@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { basename } from "node:path";
+import { logCall } from "./debuglog.mjs";
 
 const ENDPOINT = "https://image-api.photoroom.com/v2/edit";
 const MODEL_VERSION = "2026-04-15";
@@ -34,6 +35,7 @@ export async function generateShadow(opts) {
     outputSize,
     padding,
     format,
+    sku,
   } = opts;
 
   if (!apiKey) throw new Error("apiKey required");
@@ -67,19 +69,25 @@ export async function generateShadow(opts) {
   if (padding != null) fd.append("padding", String(padding));
   if (format) fd.append("export.format", format);
 
-  const res = await fetch(ENDPOINT, {
-    method: "POST",
-    headers: {
-      "x-api-key": apiKey,
-      "pr-ai-shadows-model-version": MODEL_VERSION,
+  return logCall(
+    { service: "photoroom", op: "generateShadow", sku },
+    { endpoint: ENDPOINT, filename: name, inputBytes: blob.size, modelVersion: MODEL_VERSION, fields: { shadow, background, outputSize, padding, "export.format": format } },
+    async () => {
+      const res = await fetch(ENDPOINT, {
+        method: "POST",
+        headers: {
+          "x-api-key": apiKey,
+          "pr-ai-shadows-model-version": MODEL_VERSION,
+        },
+        body: fd,
+      });
+
+      if (!res.ok) {
+        const text = await res.text().catch(() => "");
+        throw new Error(`Photoroom ${res.status}: ${text || res.statusText}`);
+      }
+
+      return new Uint8Array(await res.arrayBuffer());
     },
-    body: fd,
-  });
-
-  if (!res.ok) {
-    const text = await res.text().catch(() => "");
-    throw new Error(`Photoroom ${res.status}: ${text || res.statusText}`);
-  }
-
-  return new Uint8Array(await res.arrayBuffer());
+  );
 }

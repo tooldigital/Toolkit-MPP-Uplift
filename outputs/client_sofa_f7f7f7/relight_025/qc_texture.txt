@@ -1,0 +1,41 @@
+PE1000158 ok  bg255 thr245  364²src → 560²final (×1.66)  align dx-7 dy0 s×1.005  corr 0.903
+PE1032801 ok  bg247 thr239  335²src → 560²final (×1.80)  align dx-13 dy23 s×1.01  corr 0.009
+PE1033445 ok  bg247 thr239  338²src → 560²final (×1.78)  align dx24 dy23 s×1.01  corr 0.004
+PE1033680 ok  bg247 thr239  386²src → 560²final (×1.59)  align dx4 dy4 s×0.99  corr 0.005
+PE334809 ok  bg255 thr245  366²src → 560²final (×1.66)  align dx-1 dy2 s×1  corr 0.902
+PE639439 ok  bg255 thr245  364²src → 560²final (×1.66)  align dx0 dy2 s×1.005  corr 0.826
+PE680184 ok  bg255 thr245  365²src → 560²final (×1.67)  align dx1 dy1 s×1  corr 0.907
+PE774487 ok  bg255 thr245  325²src → 560²final (×1.87)  align dx-3 dy0 s×1  corr 0.927
+PE848277 ok  bg255 thr245  366²src → 560²final (×1.66)  align dx-1 dy2 s×1  corr 0.874
+PE917261 ok  bg255 thr245  365²src → 560²final (×1.67)  align dx-1 dy2 s×1  corr 0.891
+PE979531 ok  bg255 thr245  670²src → 560²final (×0.91)  align dx1 dy1 s×0.995  corr 0.837
+PE989302 ok  bg255 thr245  581²src → 560²final (×1.05)  align dx-2 dy2 s×1  corr 0.867
+
+=== group_sofa: texture preservation, 560² native-res window per SKU ===
+
+SKU         │  n/a   PR×  total× │ align dx  dy   s×   │ hp rms src  final  ratio │  corr   beta   gain  resid%
+────────────┼────────────────────┼──────────────────────────┼─────────────────────
+PE1000158   │    1.00    1.66    1.66 │   -7    0   1.005 │   10.82    8.78    0.81 │   0.903   0.733   0.933    43.1
+PE1032801   │    1.00    1.80    1.80 │  -13   23   1.010 │    5.90    4.95    0.84 │   0.009   0.008   0.971   100.0
+PE1033445   │    1.00    1.78    1.78 │   24   23   1.010 │    8.08    7.53    0.93 │   0.004   0.004   1.105   100.0
+PE1033680   │    1.00    1.59    1.59 │    4    4   0.990 │   13.37    9.83    0.74 │   0.005   0.004   1.130   100.0
+PE334809    │    1.00    1.66    1.66 │   -1    2   1.000 │    7.95    6.81    0.86 │   0.902   0.772   0.977    43.1
+PE639439    │    1.00    1.66    1.66 │    0    2   1.005 │    8.16    7.37    0.90 │   0.826   0.747   1.033    56.3
+PE680184    │    1.00    1.67    1.67 │    1    1   1.000 │   13.73   11.97    0.87 │   0.907   0.791   1.003    42.0
+PE774487    │    1.00    1.87    1.87 │   -3    0   1.000 │    4.12    3.51    0.85 │   0.927   0.789   0.954    37.6
+PE848277    │    1.00    1.66    1.66 │   -1    2   1.000 │   16.42   13.88    0.85 │   0.874   0.739   1.011    48.6
+PE917261    │    1.00    1.67    1.67 │   -1    2   1.000 │   15.44   12.58    0.81 │   0.891   0.726   0.985    45.4
+PE979531    │    1.00    0.91    0.91 │    1    1   0.995 │    5.90    5.17    0.88 │   0.837   0.734   1.027    54.8
+PE989302    │    1.00    1.05    1.05 │   -2    2   1.000 │   11.44   10.67    0.93 │   0.867   0.808   1.014    49.9
+
+high-pass corr           mean 0.663  sd 0.380  range 0.004 … 0.927
+
+detail ratio final/src   mean 0.856×  sd 0.053  range 0.735 … 0.933
+
+relight gain             mean 1.012×  sd 0.055  range 0.933 … 1.130
+
+unexplained residual     mean 60.064%  sd 23.598  range 37.616 … 99.999
+
+alignment shift px       mean 7.474px  sd 10.221  range 1.414 … 33.242
+
+sheet → outputs/client_sofa_f7f7f7/relight_025/qc_texture.jpg  (row 1 = source crop, row 2 = final crop, row 3 = difference ×4)

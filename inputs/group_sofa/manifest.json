@@ -1,0 +1,90 @@
+{
+  "source": "IKEA product images: 10 fetched from ikea.com (main studio shot, max CDN resolution 2000x2000) + 2 already in inputs/group_all (4000x4000, copied)",
+  "fetched": "2026-07-30",
+  "items": [
+    {
+      "sku": "PE917261",
+      "name": "GLOSTAD",
+      "type": "Sofa",
+      "product": "https://www.ikea.com/us/en/p/glostad-sofa-knisa-dark-gray-40595942/",
+      "image": "https://www.ikea.com/us/en/images/products/glostad-sofa-knisa-dark-gray__1234948_pe917261_s5.jpg?imwidth=4000"
+    },
+    {
+      "sku": "PE774487",
+      "name": "UPPLAND",
+      "type": "Sofa",
+      "product": "https://www.ikea.com/us/en/p/uppland-sofa-blekinge-white-s19384116/",
+      "image": "https://www.ikea.com/us/en/images/products/uppland-sofa-blekinge-white__0818565_pe774487_s5.jpg?imwidth=4000"
+    },
+    {
+      "sku": "PE680184",
+      "name": "MORABO",
+      "type": "Sofa",
+      "product": "https://www.ikea.com/us/en/p/morabo-sofa-gunnared-dark-gray-metal-s09318320/",
+      "image": "https://www.ikea.com/us/en/images/products/morabo-sofa-gunnared-dark-gray-metal__0602115_pe680184_s5.jpg?imwidth=4000"
+    },
+    {
+      "sku": "PE1033680",
+      "name": "STOCKHOLM 2025",
+      "type": "Sofa",
+      "product": "https://www.ikea.com/us/en/p/stockholm-2025-sofa-sundhamn-beige-00586096/",
+      "image": "https://www.ikea.com/us/en/images/products/stockholm-2025-sofa-sundhamn-beige__1577934_pe1033680_s5.jpg?imwidth=4000"
+    },
+    {
+      "sku": "PE1033445",
+      "name": "HYLTARP",
+      "type": "Sofa",
+      "product": "https://www.ikea.com/us/en/p/hyltarp-sofa-gransel-natural-s69489639/",
+      "image": "https://www.ikea.com/us/en/images/products/hyltarp-sofa-gransel-natural__1577698_pe1033445_s5.jpg?imwidth=4000"
+    },
+    {
+      "sku": "PE848277",
+      "name": "KIVIK",
+      "type": "Sofa",
+      "product": "https://www.ikea.com/us/en/p/kivik-sofa-tibbleby-beige-gray-s39440593/",
+      "image": "https://www.ikea.com/us/en/images/products/kivik-sofa-tibbleby-beige-gray__1056144_pe848277_s5.jpg?imwidth=4000"
+    },
+    {
+      "sku": "PE1032801",
+      "name": "KLIPPAN",
+      "type": "Loveseat",
+      "product": "https://www.ikea.com/us/en/p/klippan-loveseat-vissle-gray-s09010617/",
+      "image": "https://www.ikea.com/us/en/images/products/klippan-loveseat-vissle-gray__1576907_pe1032801_s5.jpg?imwidth=4000"
+    },
+    {
+      "sku": "PE639439",
+      "name": "FINNALA",
+      "type": "Sofa",
+      "product": "https://www.ikea.com/us/en/p/finnala-sofa-gunnared-beige-s19319060/",
+      "image": "https://www.ikea.com/us/en/images/products/finnala-sofa-gunnared-beige__0514366_pe639439_s5.jpg?imwidth=4000"
+    },
+    {
+      "sku": "PE334809",
+      "name": "STOCKHOLM",
+      "type": "Sofa",
+      "product": "https://www.ikea.com/us/en/p/stockholm-sofa-seglora-natural-20245049/",
+      "image": "https://www.ikea.com/us/en/images/products/stockholm-sofa-seglora-natural__0183763_pe334809_s5.jpg?imwidth=4000"
+    },
+    {
+      "sku": "PE1000158",
+      "name": "LILLESÄTER",
+      "type": "Sofa",
+      "product": "https://www.ikea.com/us/en/p/lillesaeter-sofa-axvall-off-white-40619085/",
+      "image": "https://www.ikea.com/us/en/images/products/lillesaeter-sofa-axvall-off-white__1480254_pe1000158_s5.jpg?imwidth=4000"
+    },
+    {
+      "sku": "PE979531",
+      "name": "(from inputs/group_all)",
+      "type": "Sofa",
+      "product": null,
+      "image": null
+    },
+    {
+      "sku": "PE989302",
+      "name": "(from inputs/group_all)",
+      "type": "Sectional sofa",
+      "product": null,
+      "image": null
+    }
+  ]
+}
