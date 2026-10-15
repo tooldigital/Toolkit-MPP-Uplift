@@ -150,12 +150,18 @@ contact sheet(s) and commit both sets.
 
 ## Invariants — each one was learned the hard way; do not re-break them
 
-1. **One shared frame via `padding: 0.0838`.** Matte and shadow are both generated at 4000² with
-   the single `PADDING` constant in `run_pipeline.mjs`; Photoroom's padding is NOT a fraction of the
-   output (it adds its own ~81 px inset), so the subject box measures `3838 - 7675*padding` px —
-   calibrated against removeBackground at 0 / 0.05 / 0.10. 0.0838 is what puts the product inside
-   3200² with a ≥400 px margin (measured 401-407 px on the tight axis across 12 chairs). Was 0.10
-   (≈465 px margin) until 2026-08-02. Never let the two calls use different values.
+1. **One shared frame via `PADDING`** (`0.10` plated, `0.0838` with `--no-plate`). Matte and shadow
+   are both generated at 4000² with the single `PADDING` constant in `run_pipeline.mjs`. What
+   Photoroom pads is its referenceBox, so the value depends on the framing mode. Plated (default):
+   padding is a plain fraction of the output per side, subject box = `4000 * (1 - 2*padding)`, the
+   same on 4000² and 2000² inputs (measured 2026-10-15: 0.10 → 3200 px / 400 px; 0.0838 → 3328-3330 px /
+   335-336 px, which breaks the spec; shipped finals at 0.10 measure 3195-3202 px / 401-407 px).
+   `--no-plate` (referenceBox=originalImage): Photoroom fits the whole source image, so the subject box
+   is `fill * 4000 * (1 - 2*padding)` where fill = subject/source; the CDN chairs fill ~0.96, which is
+   the `3838 - 7675*padding` fit behind 0.0838 (12 chairs 401-407 px; PE870153 re-measured 3194 px /
+   403 px on 2026-10-15). 0.0838 is only right for sources with that fill. Between 2026-08-10 and
+   2026-10-15 the plated path also ran at 0.0838 and was 65 px under spec.
+   Never let the two calls use different values.
    Photoroom pads around the *product*, so both frame it identically (~6 px) and
    the composite is a straight per-pixel blend. NO alignment, resampling, bbox-matching, dilation,
    or feathering in the composite — every one of those was tried and caused halos, ghosts, cropped

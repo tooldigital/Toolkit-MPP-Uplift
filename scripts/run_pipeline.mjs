@@ -89,14 +89,20 @@ const PLATE_SUF = NO_PLATE ? "_np" : "";      // framing variant → shadow/matt
 const HD_SUF = HD ? "_hd" : "";               // HD matte variant → matte/final
 // Photoroom `padding` for BOTH the shadow render and the matte (invariant 1 — same value on both,
 // or the two frames diverge and the composite stops being a straight per-pixel blend).
-// It is NOT a fraction of the output: Photoroom applies its own ~81 px inset on top of it, so the
-// subject box measures 3838 - 7675*padding px on a 4000² frame (calibrated 2026-08-02 against
-// removeBackground at padding 0, 0.05, 0.10 — 3838 / 3454 / 3071 px, linear).
-// The spec is a 400 px margin => a 3200 px subject box => padding = 638/7675 = 0.0831. Photoroom
-// scatters ±3 px around that, so 0.0831 measured 398-399 px on two of 12 chairs — 1-2 px UNDER.
-// Use 0.0838 (subject box ~3195) to keep the whole scatter band at or above 400 px.
-// Verified on 12 chairs: min margin 401 px, max subject box 3197 px. Was 0.10 (≈465 px margin).
-const PADDING = 0.0838;
+// The value depends on the FRAMING MODE, because Photoroom pads whatever its referenceBox is:
+//  - plated (default): the plate is a detected, centered subject, so padding is a plain fraction
+//    of the output per side: subject box = 4000 * (1 - 2*padding). Measured 2026-10-15 against
+//    removeBackground on 4000² plated inputs AND a 2000² CDN chair: 0.10 -> 3200 px / 400 px
+//    (the finals shipped 2026-07 measure 3195 / 402-403); 0.0838 -> 3328-3330 px / 335-336 px,
+//    which breaks the 400 px spec. So the plated path uses 0.10.
+//  - --no-plate (referenceBox=originalImage): Photoroom fits the WHOLE source image into the frame
+//    minus padding, so the subject box is (subject/source fill) * 4000 * (1 - 2*padding). The CDN
+//    chairs fill ~0.96 of their 2000² source, hence Iman's 3838 - 7675*padding fit (2026-08-02,
+//    12 chairs) and 0.0838 -> 3194 px / 403 px measured 2026-10-15 on PE870153 (0.10 would give
+//    ~3067 / ~466). 0.0838 is only right for sources with that fill; a subject that fills less of
+//    its source lands smaller. HD removal (--hd) does not change framing (3000 vs 3001 px).
+// Matte and shadow agree within ~7 px at either value.
+const PADDING = NO_PLATE ? 0.0838 : 0.10;
 // highlights:"auto" — how much of the BRIGHT half of the lightmap this product can absorb, 0..1.
 // Measured on the product's own pixels (alpha >= 200) as the 90th percentile of the max channel:
 // where the BODY of the fabric tops out, and 255 minus it is the room left before a lift shows as
