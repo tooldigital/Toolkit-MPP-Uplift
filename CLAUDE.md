@@ -12,7 +12,7 @@ Read `docs/pipeline.md` for the full stage-by-stage spec. `README.md` has setup 
 - `src/plate.mjs` — subject → centered 4000² canvas (plate). `makePlate` detects the subject by
   LUMINANCE threshold — opaque-only; on clear glass it crops off bright edges/clips. Glass modes use
   `squarePlate` instead (no detection: `contain`-fit the whole source on white, let Photoroom reframe).
-- `src/cutout.mjs` / `src/photoroom.mjs` — Photoroom removeBackground / generateShadow.
+- `src/cutout.mjs` / `src/photoroom.mjs` — Photoroom removeBackground (HD by default, `--no-hd` to opt out) / generateShadow.
 - `src/gemini.mjs` — Gemini relight (lighting map). Read the comment on `IMAGE_SIZE` before touching it.
 - `src/shadow-patch.mjs` + `scripts/exp_*.mjs` — EXPERIMENTS, separate from the pipeline.
   They write only to `outputs/experiments/`. Do not wire them into the pipeline unprompted.
@@ -29,6 +29,7 @@ npm run pipeline -- --no-relight                   # skip Gemini; compositing + 
 npm run pipeline -- --transparent --group group_glass   # clear-glass composite (white bg only)
 npm run pipeline -- --render-only --group group_glass    # very-clear glass: pure Photoroom render (white bg only)
 npm run pipeline -- --no-cache --skus PE1016720          # ignore all caches; regenerate every stage from scratch
+npm run pipeline -- --no-hd --skus PE1016720             # standard (non-HD) Photoroom removal; HD is the default
 npm run pipeline -- --debug --skus PE1016720             # log every API request/response + save every stage's I/O images
 ```
 

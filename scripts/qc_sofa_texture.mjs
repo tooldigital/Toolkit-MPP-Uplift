@@ -29,7 +29,7 @@ import { join } from "node:path";
 const GROUP = process.argv[process.argv.indexOf("--group") + 1] || "group_sofa";
 const FINALS = process.argv.includes("--finals") ? process.argv[process.argv.indexOf("--finals") + 1] : join("outputs/finals", GROUP);
 const NP = process.argv.includes("--no-plate") || process.argv.includes("--np");
-const HD = process.argv.includes("--hd");
+const HD = !process.argv.includes("--no-hd");
 const MATTE = `matte${NP ? "_np" : ""}${HD ? "_hd" : ""}.png`;
 const CROP = 560;                                  // window size, final-resolution pixels
 const W = 4000;

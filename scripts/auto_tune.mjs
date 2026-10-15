@@ -1,7 +1,7 @@
 // AUTO-TUNE — render a batch with NO per-SKU rules.
 //
 //   node --env-file=.env scripts/auto_tune.mjs --group group_sofa --bg F7F7F7 \
-//     --out outputs/finals_auto --sheet outputs/contact_sheet_auto.jpg [--hd --no-plate]
+//     --out outputs/finals_auto --sheet outputs/contact_sheet_auto.jpg [--no-hd --no-plate]
 //
 // Every knob that was being set by hand (strength, exposure, shade) is solved per SKU from
 // measurements of that SKU's own pixels, against THREE global targets. `highlights:auto` already
@@ -36,7 +36,7 @@ const GROUP = arg("--group", "group_sofa");
 const BG = arg("--bg", "F7F7F7").toUpperCase();
 const OUT = arg("--out", "outputs/finals_auto");
 const SHEET = arg("--sheet", "outputs/contact_sheet_auto.jpg");
-const HD = process.argv.includes("--hd"), NP = process.argv.includes("--no-plate");
+const HD = !process.argv.includes("--no-hd"), NP = process.argv.includes("--no-plate");   // HD is the pipeline default
 const DRY = process.argv.includes("--dry-run");           // solve + report, do not write the set
 
 // ---- the three targets (the only taste input) -------------------------------------------------
@@ -92,7 +92,7 @@ async function render(sku, { strength, exposure, shade }, out) {
   const a = ["--env-file=.env", "scripts/run_pipeline.mjs", "--group", GROUP, "--skus", sku,
     "--highlights", "auto", "--bg", BG, "--strength", String(strength),
     "--exposure", String(exposure), "--shade", String(shade), "--out", out, "--sheet", join(out, "_s.jpg")];
-  if (HD) a.push("--hd");
+  if (!HD) a.push("--no-hd");
   if (NP) a.push("--no-plate");
   await run("node", a, { maxBuffer: 1 << 26 });
   return join(out, GROUP, `${sku}.jpg`);

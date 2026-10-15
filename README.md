@@ -39,7 +39,7 @@ stops cleanly — just re-run to resume.
 
 1. **Plate** (`src/plate.mjs`) — detect the subject, scale to ≤3200 px and center it on a
    4000² canvas (400 px margin, brief spec).
-2. **Matte** (`src/cutout.mjs`, Photoroom) — clean product cutout with a sharp edge.
+2. **Matte** (`src/cutout.mjs`, Photoroom, HD removal by default; `--no-hd` for standard) — clean product cutout with a sharp edge.
 3. **Shadow** (`src/photoroom.mjs`, Photoroom `generateShadow`) — product + neutral cast
    shadow, light from front-left. This is the base; its shadow is used untouched.
 4. **Relight** (`src/gemini.mjs`, Gemini at temperature 0) — its grayscale is a low-frequency

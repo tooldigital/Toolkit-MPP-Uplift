@@ -25,10 +25,10 @@ const GROUP = process.argv[process.argv.indexOf("--group") + 1] || "group_sofa";
 const STRENGTH = Number(process.argv[process.argv.indexOf("--strength") + 1] || 0.25);
 const FINALS = process.argv.includes("--finals") ? process.argv[process.argv.indexOf("--finals") + 1] : join("outputs/finals", GROUP);
 // Stage-variant selectors, mirroring run_pipeline: --no-plate writes matte_np/shadow_np/relit_np,
-// --hd writes matte_hd. Without these the QC would silently read the STANDARD stages while the
+// HD (the default) writes matte_hd, --no-hd writes matte. Without these the QC would silently read the WRONG stage while the
 // --finals folder holds a variant render.
 const NP = process.argv.includes("--no-plate") || process.argv.includes("--np");
-const HD = process.argv.includes("--hd");
+const HD = !process.argv.includes("--no-hd");
 const MATTE = `matte${NP ? "_np" : ""}${HD ? "_hd" : ""}.png`;
 const STAGE = `${NP ? "_np" : ""}`;
 const W = 4000;

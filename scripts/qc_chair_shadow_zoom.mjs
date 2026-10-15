@@ -1,6 +1,6 @@
 // Rogue-shadow zoom sheet.
 //
-//   node scripts/qc_chair_shadow_zoom.mjs [--group group_chair] [--np] [--hd]
+//   node scripts/qc_chair_shadow_zoom.mjs [--group group_chair] [--np] [--no-hd]
 //     [--finals outputs/finals_chair_f7f7f7_hd_noplate] [--out outputs/qc_chair_shadow_zoom.jpg]
 //
 // Photoroom's generateShadow is non-deterministic (CLAUDE.md invariant 4): on legged furniture an
@@ -27,7 +27,7 @@ const GROUP = arg("--group", "group_chair");
 const FINALS = arg("--finals", "outputs/finals_chair_f7f7f7_hd_noplate");
 const OUT = arg("--out", "outputs/qc_chair_shadow_zoom.jpg");
 // Which cached matte variant to read the bbox from — must match how the finals were rendered.
-const SUF = `${process.argv.includes("--np") ? "_np" : ""}${process.argv.includes("--hd") ? "_hd" : ""}`;
+const SUF = `${process.argv.includes("--np") ? "_np" : ""}${process.argv.includes("--no-hd") ? "" : "_hd"}`;
 
 const BOOST = process.argv.includes("--boost");
 const TW = 620, TH = 420;        // sub-tile size (the crop is ~3:2 landscape)

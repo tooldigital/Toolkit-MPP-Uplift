@@ -20,7 +20,7 @@ clips the shadow.
 | # | Stage | Code | In → Out |
 |---|-------|------|----------|
 | 1 | Plate | `src/plate.mjs · makePlate` | original.jpg → `plate` (subject scaled so longest side ≤3200, centered on 4000² white) |
-| 2 | Matte | `src/cutout.mjs · cutout` | plateWhite → `matte.png` (Photoroom `removeBackground`, 4000², padding 0.10) |
+| 2 | Matte | `src/cutout.mjs · cutout` | plateWhite → `matte_hd.png` (Photoroom `removeBackground`, HD header by default, 4000², padding 0.10; `--no-hd` → `matte.png`) |
 | 3 | Shadow | `src/photoroom.mjs · generateShadow` | plateWhite → `shadow.jpg` (product + cast shadow, 4000², padding 0.10) |
 | 4 | Relight | `src/gemini.mjs · generateShadowGemini` | shadow.jpg → `relit.jpg` (Gemini 3 Pro, temp 0, 4K) |
 | 5 | Composite | `scripts/run_pipeline.mjs` | matte + shadow + relit → `final.jpg` |

@@ -50,7 +50,11 @@ const TRANSPARENT = process.argv.includes("--transparent");
 const RENDER_ONLY = process.argv.includes("--render-only");
 // HD background removal — Photoroom `pr-hd-background-removal: auto` header (Plus plan), crisper
 // subject edges on >=2K images. Affects the matte only (the shadow render is soft regardless).
-const HD = process.argv.includes("--hd");
+// DEFAULT ON since 2026-10-15; `--no-hd` opts out (`--hd` is accepted and does nothing). It does
+// not change framing: plated 0.10 measured 3200 px / 400 px with and without it, no-plate 0.0838
+// 3194 px / 403 px with and without it. Cache suffix `_hd` is kept so older non-HD `matte.png`
+// caches are never mistaken for HD ones.
+const HD = !process.argv.includes("--no-hd");
 // NO-PLATE framing — skip makePlate/squarePlate and send the RAW input to Photoroom with
 // referenceBox=originalImage (fits the WHOLE image into the frame minus padding, keeping the
 // subject's original position/scale) instead of pre-compositing a detected/centered plate.
@@ -86,7 +90,7 @@ const REFBOX = NO_PLATE ? "originalImage" : undefined;
 // no-plate changes the FRAMING (shadow, matte, relit, final all differ); HD changes only the matte
 // (and thus the final). Applied to every cached filename below.
 const PLATE_SUF = NO_PLATE ? "_np" : "";      // framing variant → shadow/matte/relit/final
-const HD_SUF = HD ? "_hd" : "";               // HD matte variant → matte/final
+const HD_SUF = HD ? "_hd" : "";               // HD matte (the default) → matte_hd/final_hd; --no-hd → unsuffixed
 // Photoroom `padding` for BOTH the shadow render and the matte (invariant 1 — same value on both,
 // or the two frames diverge and the composite stops being a straight per-pixel blend).
 // The value depends on the FRAMING MODE, because Photoroom pads whatever its referenceBox is:
@@ -275,7 +279,7 @@ async function dbgImg(dir, sku, name, bytes) {
   logEvent({ event: "artifact", sku, name, path, bytes: bytes.length });
 }
 const ov = Object.entries(CLI).filter(([, v]) => v !== undefined).map(([k, v]) => `${k}=${v}`).join(" ");
-console.log(`Pipeline: ${files.length} SKUs · settings=per-group${ov ? ` · CLI:[${ov}]` : ""}${NO_PLATE ? " · no-plate(referenceBox=originalImage)" : ""}${HD ? " · HD-removal" : ""}${NO_CACHE ? " · cache=off" : ""}${DEBUG ? " · debug=on" : ""}\n`);
+console.log(`Pipeline: ${files.length} SKUs · settings=per-group${ov ? ` · CLI:[${ov}]` : ""}${NO_PLATE ? " · no-plate(referenceBox=originalImage)" : ""}${HD ? "" : " · no-HD"}${NO_CACHE ? " · cache=off" : ""}${DEBUG ? " · debug=on" : ""}\n`);
 
 const ok = [], failed = [];
 for (let i = 0; i < files.length; i++) {
