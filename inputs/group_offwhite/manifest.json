@@ -1,0 +1,73 @@
+{
+  "source": "IKEA product images fetched from ikea.com via the public search API (main studio shot, ?imwidth=4000; most assets top out at 2000x2000)",
+  "fetched": "2026-10-15",
+  "group": "offwhite",
+  "note": "",
+  "difficulty": "backdrop is not 255 white: makePlate threshold 245 sees the whole frame as subject; composite assumes a white base; need bg normalisation or detection before plate",
+  "items": [
+    {
+      "sku": "PE1038945",
+      "name": "BILLY",
+      "type": "Bookcase",
+      "product": "https://www.ikea.com/us/en/p/billy-bookcase-white-90522043/",
+      "image": "https://www.ikea.com/us/en/images/products/billy-bookcase-white__1590306_pe1038945_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "off-white backdrop (newer IKEA render, edges ~242-247) — white open bookcase: near-white + interior shelves"
+    },
+    {
+      "sku": "PE1038931",
+      "name": "LAIVA",
+      "type": "Bookcase",
+      "product": "https://www.ikea.com/us/en/p/laiva-bookcase-black-brown-40178591/",
+      "image": "https://www.ikea.com/us/en/images/products/laiva-bookcase-black-brown__1590292_pe1038931_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "off-white backdrop (newer IKEA render, edges ~242-247) — black open bookcase: dark, shade crush risk"
+    },
+    {
+      "sku": "PE1038938",
+      "name": "HEMNES",
+      "type": "Bookcase",
+      "product": "https://www.ikea.com/us/en/p/hemnes-bookcase-black-brown-light-brown-20452294/",
+      "image": "https://www.ikea.com/us/en/images/products/hemnes-bookcase-black-brown-light-brown__1590299_pe1038938_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "off-white backdrop (newer IKEA render, edges ~242-247) — black pine bookcase: dark with wood grain"
+    },
+    {
+      "sku": "PE1042532",
+      "name": "ÄNGSLILJA",
+      "type": "Duvet cover and pillowcase(s)",
+      "product": "https://www.ikea.com/us/en/p/aengslilja-duvet-cover-and-pillowcase-s-dark-blue-20636632/",
+      "image": "https://www.ikea.com/us/en/images/products/aengslilja-duvet-cover-and-pillowcase-s-dark-blue__1599699_pe1042532_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "off-white backdrop (newer IKEA render, edges ~242-247) — folded blue bedding set: stack, soft folds"
+    },
+    {
+      "sku": "PE1042241",
+      "name": "NATTJASMIN",
+      "type": "Duvet cover and pillowcase(s)",
+      "product": "https://www.ikea.com/us/en/p/nattjasmin-duvet-cover-and-pillowcase-s-white-60337155/",
+      "image": "https://www.ikea.com/us/en/images/products/nattjasmin-duvet-cover-and-pillowcase-s-white__1599408_pe1042241_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "off-white backdrop (newer IKEA render, edges ~242-247) — white bedding stack: near-white folds"
+    },
+    {
+      "sku": "PE1043245",
+      "name": "BILLY",
+      "type": "Bookcase with height extension unit",
+      "product": "https://www.ikea.com/us/en/p/billy-bookcase-with-height-extension-unit-white-s59638673/",
+      "image": "https://www.ikea.com/us/en/images/products/billy-bookcase-with-height-extension-unit-white__1602153_pe1043245_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "off-white backdrop (newer IKEA render, edges ~242-247) — white bookcase with extension: tallest aspect"
+    },
+    {
+      "sku": "PE1038929",
+      "name": "GERSBY",
+      "type": "Bookcase",
+      "product": "https://www.ikea.com/us/en/p/gersby-bookcase-white-70261131/",
+      "image": "https://www.ikea.com/us/en/images/products/gersby-bookcase-white__1590290_pe1038929_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "off-white backdrop (newer IKEA render, edges ~242-247) — white 5-shelf bookcase: tall + white"
+    }
+  ],
+  "rejected": []
+}

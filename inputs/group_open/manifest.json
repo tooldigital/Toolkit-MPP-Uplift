@@ -1,0 +1,73 @@
+{
+  "source": "IKEA product images fetched from ikea.com via the public search API (main studio shot, ?imwidth=4000; most assets top out at 2000x2000)",
+  "fetched": "2026-10-15",
+  "group": "open",
+  "note": "",
+  "difficulty": "open/wire structure: background shows through; matte must cut many holes; shadow falls through gaps; white wire on white",
+  "items": [
+    {
+      "sku": "PE727906",
+      "name": "RISATORP",
+      "type": "Wire basket",
+      "product": "https://www.ikea.com/us/en/p/risatorp-wire-basket-white-90281618/",
+      "image": "https://www.ikea.com/us/en/images/products/risatorp-wire-basket-white__0711025_pe727906_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "white wire basket: holes show background"
+    },
+    {
+      "sku": "PE692566",
+      "name": "OMAR",
+      "type": "1 section shelving unit",
+      "product": "https://www.ikea.com/us/en/p/omar-1-section-shelving-unit-s69829083/",
+      "image": "https://www.ikea.com/us/en/images/products/omar-1-section-shelving-unit__0626066_pe692566_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "silver wire shelving: thin members, huge see-through area"
+    },
+    {
+      "sku": "PE704408",
+      "name": "HYLLIS",
+      "type": "Shelf unit",
+      "product": "https://www.ikea.com/us/en/p/hyllis-shelf-unit-indoor-outdoor-30428326/",
+      "image": "https://www.ikea.com/us/en/images/products/hyllis-shelf-unit-indoor-outdoor__0639121_pe704408_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "galvanised steel shelving: open + reflective"
+    },
+    {
+      "sku": "PE828336",
+      "name": "OLIVBLAD",
+      "type": "Plant stand",
+      "product": "https://www.ikea.com/us/en/p/olivblad-plant-stand-indoor-outdoor-black-50486650/",
+      "image": "https://www.ikea.com/us/en/images/products/olivblad-plant-stand-indoor-outdoor-black__1010787_pe828336_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "black metal plant stand: thin rods"
+    },
+    {
+      "sku": "PE727742",
+      "name": "RIGGA",
+      "type": "Clothes rack",
+      "product": "https://www.ikea.com/us/en/p/rigga-clothes-rack-white-50231630/",
+      "image": "https://www.ikea.com/us/en/images/products/rigga-clothes-rack-white__0710721_pe727742_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "white clothes rack on wheels: thin white frame on white"
+    },
+    {
+      "sku": "PE957173",
+      "name": "RÅSKOG",
+      "type": "Utility cart",
+      "product": "https://www.ikea.com/us/en/p/raskog-utility-cart-white-30586783/",
+      "image": "https://www.ikea.com/us/en/images/products/raskog-utility-cart-white__1366882_pe957173_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "white 3-tier cart: open + near-white"
+    },
+    {
+      "sku": "PE727670",
+      "name": "EKRAR",
+      "type": "Hat and coat stand",
+      "product": "https://www.ikea.com/us/en/p/ekrar-hat-and-coat-stand-white-10415594/",
+      "image": "https://www.ikea.com/us/en/images/products/ekrar-hat-and-coat-stand-white__0710637_pe727670_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "white tripod coat stand: thin, tall, white on white"
+    }
+  ],
+  "rejected": []
+}

@@ -1,0 +1,70 @@
+{
+  "source": "IKEA product images fetched from ikea.com via the public search API (main studio shot, ?imwidth=4000; most assets top out at 2000x2000)",
+  "fetched": "2026-10-15",
+  "group": "white",
+  "note": "",
+  "difficulty": "near-white product: makePlate threshold 245 misses it; relight has no highlight headroom (highlights auto/off); bg contrast",
+  "items": [
+    {
+      "sku": "PE932624",
+      "name": "GULLABERG",
+      "type": "Nightstand",
+      "product": "https://www.ikea.com/us/en/p/gullaberg-nightstand-with-1-drawer-with-shelf-white-20561740/",
+      "image": "https://www.ikea.com/us/en/images/products/gullaberg-nightstand-with-1-drawer-with-shelf-white__1283770_pe932624_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "white nightstand: near-white box"
+    },
+    {
+      "sku": "PE960815",
+      "name": "NYMÅNE",
+      "type": "Table lamp",
+      "product": "https://www.ikea.com/us/en/p/nymane-table-lamp-white-70594328/",
+      "image": "https://www.ikea.com/us/en/images/products/nymane-table-lamp-white__1377230_pe960815_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "white lamp: near-white, thin stem"
+    },
+    {
+      "sku": "PE774419",
+      "name": "UPPLAND",
+      "type": "Armchair",
+      "product": "https://www.ikea.com/us/en/p/uppland-armchair-blekinge-white-s89384108/",
+      "image": "https://www.ikea.com/us/en/images/products/uppland-armchair-blekinge-white__0818464_pe774419_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "white upholstered armchair: known 12% clip case"
+    },
+    {
+      "sku": "PE729106",
+      "name": "LEGITIM",
+      "type": "Cutting board",
+      "product": "https://www.ikea.com/us/en/p/legitim-cutting-board-white-40577976/",
+      "image": "https://www.ikea.com/us/en/images/products/legitim-cutting-board-white__0712856_pe729106_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "white plastic board: flat + near-white"
+    },
+    {
+      "sku": "PE727998",
+      "name": "IKEA 365+",
+      "type": "Mug",
+      "product": "https://www.ikea.com/us/en/p/ikea-365-mug-white-80278367/",
+      "image": "https://www.ikea.com/us/en/images/products/ikea-365-mug-white__0711130_pe727998_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "white porcelain mug: small + near-white"
+    },
+    {
+      "sku": "PE722641",
+      "name": "ALSTERN",
+      "type": "Bath mat",
+      "product": "https://www.ikea.com/us/en/p/alstern-bath-mat-white-00447350/",
+      "image": "https://www.ikea.com/us/en/images/products/alstern-bath-mat-white__0688673_pe722641_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "white cotton bath mat: flat + white textured"
+    }
+  ],
+  "rejected": [
+    {
+      "sku": "PE1038945",
+      "name": "BILLY",
+      "why": "edge not white (min 240) — kept in group_offwhite instead"
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "source": "IKEA product images fetched from ikea.com via the public search API (main studio shot, ?imwidth=4000; most assets top out at 2000x2000)",
+  "fetched": "2026-10-15",
+  "group": "tall",
+  "note": "",
+  "difficulty": "extreme aspect ratio: subject fits 3200 on one axis, tiny on the other (PE870292 precedent); wide empty margins",
+  "items": [
+    {
+      "sku": "PE771436",
+      "name": "TÅGARP",
+      "type": "Floor uplighter",
+      "product": "https://www.ikea.com/us/en/p/tagarp-floor-uplighter-black-white-60464049/",
+      "image": "https://www.ikea.com/us/en/images/products/tagarp-floor-uplighter-black-white__0810840_pe771436_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "black slender floor uplighter: extreme aspect"
+    },
+    {
+      "sku": "PE899535",
+      "name": "ÖKENSAND",
+      "type": "Floor lamp",
+      "product": "https://www.ikea.com/us/en/p/oekensand-floor-lamp-beech-white-90541536/",
+      "image": "https://www.ikea.com/us/en/images/products/oekensand-floor-lamp-beech-white__1187892_pe899535_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "white pleated floor lamp, 3 legs: tall + white"
+    },
+    {
+      "sku": "PE712536",
+      "name": "LAUTERS",
+      "type": "Floor lamp",
+      "product": "https://www.ikea.com/us/en/p/lauters-floor-lamp-ash-white-00405048/",
+      "image": "https://www.ikea.com/us/en/images/products/lauters-floor-lamp-ash-white__0663863_pe712536_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "wooden tripod floor lamp: tall + 3 legs"
+    },
+    {
+      "sku": "PE566328",
+      "name": "ÅRSTID",
+      "type": "Floor lamp",
+      "product": "https://www.ikea.com/us/en/p/arstid-floor-lamp-brass-white-60321324/",
+      "image": "https://www.ikea.com/us/en/images/products/arstid-floor-lamp-brass-white__0390610_pe566328_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "brass base floor lamp: tall + reflective base"
+    }
+  ],
+  "rejected": [
+    {
+      "sku": "PE1043245",
+      "name": "BILLY",
+      "why": "edge not white (min 240) — kept in group_offwhite instead"
+    },
+    {
+      "sku": "PE1038929",
+      "name": "GERSBY",
+      "why": "edge not white (min 242) — kept in group_offwhite instead"
+    }
+  ]
+}

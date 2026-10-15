@@ -1,0 +1,73 @@
+{
+  "source": "IKEA product images fetched from ikea.com via the public search API (main studio shot, ?imwidth=4000; most assets top out at 2000x2000)",
+  "fetched": "2026-10-15",
+  "group": "small",
+  "note": "",
+  "difficulty": "small round objects: ellipse base shadow; glossy glaze speculars; white on white at small scale",
+  "items": [
+    {
+      "sku": "PE727942",
+      "name": "FÄRGRIK",
+      "type": "Mug",
+      "product": "https://www.ikea.com/us/en/p/faergrik-mug-stoneware-white-60143992/",
+      "image": "https://www.ikea.com/us/en/images/products/faergrik-mug-stoneware-white__0711067_pe727942_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "white stoneware mug: small, white"
+    },
+    {
+      "sku": "PE817327",
+      "name": "GLADELIG",
+      "type": "Mug",
+      "product": "https://www.ikea.com/us/en/p/gladelig-mug-blue-40503626/",
+      "image": "https://www.ikea.com/us/en/images/products/gladelig-mug-blue__0986803_pe817327_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "blue reactive-glaze mug: small, glossy"
+    },
+    {
+      "sku": "PE701238",
+      "name": "DINERA",
+      "type": "Mug",
+      "product": "https://www.ikea.com/us/en/p/dinera-mug-dark-gray-30362820/",
+      "image": "https://www.ikea.com/us/en/images/products/dinera-mug-dark-gray__0642538_pe701238_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "dark grey matte mug: small, dark"
+    },
+    {
+      "sku": "PE934291",
+      "name": "GODMIDDAG",
+      "type": "Deep plate/bowl",
+      "product": "https://www.ikea.com/us/en/p/godmiddag-deep-plate-bowl-white-50585018/",
+      "image": "https://www.ikea.com/us/en/images/products/godmiddag-deep-plate-bowl-white__1288857_pe934291_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "white bowl: small, white, round"
+    },
+    {
+      "sku": "PE949598",
+      "name": "MOSSMAL",
+      "type": "Bowl",
+      "product": "https://www.ikea.com/us/en/p/mossmal-bowl-dot-pattern-light-green-90582777/",
+      "image": "https://www.ikea.com/us/en/images/products/mossmal-bowl-dot-pattern-light-green__1343630_pe949598_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "green speckled bowl: small, round"
+    },
+    {
+      "sku": "PE745645",
+      "name": "GODTAGBAR",
+      "type": "Candlestick",
+      "product": "https://www.ikea.com/us/en/p/godtagbar-candlestick-ceramic-white-70445673/",
+      "image": "https://www.ikea.com/us/en/images/products/godtagbar-candlestick-ceramic-white__0749277_pe745645_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "white stoneware candlestick: small, white"
+    },
+    {
+      "sku": "PE1011345",
+      "name": "BLOMSTER",
+      "type": "Candlestick, set of 2",
+      "product": "https://www.ikea.com/us/en/p/blomster-candlestick-set-of-2-brown-50630558/",
+      "image": "https://www.ikea.com/us/en/images/products/blomster-candlestick-set-of-2-brown__1515287_pe1011345_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "brown candlesticks set of 2: small pair"
+    }
+  ],
+  "rejected": []
+}

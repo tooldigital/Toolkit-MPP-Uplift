@@ -1,0 +1,57 @@
+{
+  "source": "IKEA product images fetched from ikea.com via the public search API (main studio shot, ?imwidth=4000; most assets top out at 2000x2000)",
+  "fetched": "2026-10-15",
+  "group": "dark",
+  "note": "",
+  "difficulty": "dark product: shade half crushes recesses (shade knob); matte decontamination dark rims",
+  "items": [
+    {
+      "sku": "PE729964",
+      "name": "NORDVIKEN",
+      "type": "Chair",
+      "product": "https://www.ikea.com/us/en/p/nordviken-chair-black-40369109/",
+      "image": "https://www.ikea.com/us/en/images/products/nordviken-chair-black__0714202_pe729964_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "black ladderback chair: dark + thin legs"
+    },
+    {
+      "sku": "PE741828",
+      "name": "ODGER",
+      "type": "Chair",
+      "product": "https://www.ikea.com/us/en/p/odger-chair-anthracite-50457313/",
+      "image": "https://www.ikea.com/us/en/images/products/odger-chair-anthracite__0739669_pe741828_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "black moulded shell chair: dark + 4 splayed legs"
+    },
+    {
+      "sku": "PE638683",
+      "name": "VEDBO",
+      "type": "Armchair",
+      "product": "https://www.ikea.com/us/en/p/vedbo-armchair-gunnared-dark-gray-50424129/",
+      "image": "https://www.ikea.com/us/en/images/products/vedbo-armchair-gunnared-dark-gray__0512767_pe638683_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "dark grey upholstered armchair"
+    },
+    {
+      "sku": "PE643714",
+      "name": "FULLTALIG",
+      "type": "Candlestick, set of 3",
+      "product": "https://www.ikea.com/us/en/p/fulltalig-candlestick-set-of-3-black-40342134/",
+      "image": "https://www.ikea.com/us/en/images/products/fulltalig-candlestick-set-of-3-black__0523288_pe643714_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "three black candlesticks: dark + thin + set"
+    }
+  ],
+  "rejected": [
+    {
+      "sku": "PE1038931",
+      "name": "LAIVA",
+      "why": "edge not white (min 241) — kept in group_offwhite instead"
+    },
+    {
+      "sku": "PE1038938",
+      "name": "HEMNES",
+      "why": "edge not white (min 242) — kept in group_offwhite instead"
+    }
+  ]
+}

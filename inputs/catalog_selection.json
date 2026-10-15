@@ -1,0 +1,713 @@
+{
+ "glassware": {
+  "note": "",
+  "difficulty": "transparent body: makePlate luminance bbox crops bright edges; opaque composite fries rims (invariant 2 exception); needs render-only/transparent",
+  "items": [
+   {
+    "image": "https://www.ikea.com/us/en/images/products/beraekna-vase-clear-glass__0490878_pe624750_s5.jpg",
+    "name": "BERÄKNA",
+    "type": "Vase",
+    "product": "https://www.ikea.com/us/en/p/beraekna-vase-clear-glass-20406297/",
+    "why": "clear cylinder: see-through body, bright rim"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/konstfull-vase-clear-glass-patterned__1030738_pe836342_s5.jpg",
+    "name": "KONSTFULL",
+    "type": "Vase",
+    "product": "https://www.ikea.com/us/en/p/konstfull-vase-clear-glass-patterned-20511953/",
+    "why": "clear textured glass: refraction noise at the edge"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/pokal-glass-clear-glass__0713251_pe729361_s5.jpg",
+    "name": "POKAL",
+    "type": "Glass",
+    "product": "https://www.ikea.com/us/en/p/pokal-glass-clear-glass-10270478/",
+    "why": "single faceted tumbler: many internal edges"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/ikea-365-glass-clear-glass__0928963_pe790099_s5.jpg",
+    "name": "IKEA 365+",
+    "type": "Glass",
+    "product": "https://www.ikea.com/us/en/p/ikea-365-glass-clear-glass-60279711/",
+    "why": "six clear glasses as a set: overlapping transparent silhouettes"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/korken-jar-with-lid-clear-glass__0713739_pe729738_s5.jpg",
+    "name": "KORKEN",
+    "type": "Jar with lid",
+    "product": "https://www.ikea.com/us/en/p/korken-jar-with-lid-clear-glass-90227985/",
+    "why": "clear jar + opaque metal clamp: mixed opaque/transparent"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/ikea-365-carafe-with-stopper-clear-glass-cork__0711284_pe728122_s5.jpg",
+    "name": "IKEA 365+",
+    "type": "Carafe with stopper",
+    "product": "https://www.ikea.com/us/en/p/ikea-365-carafe-with-stopper-clear-glass-cork-90279719/",
+    "why": "clear carafe + cork: thin neck, near-invisible body"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/tillbringare-pitcher-clear-glass__0711286_pe728103_s5.jpg",
+    "name": "TILLBRINGARE",
+    "type": "Pitcher",
+    "product": "https://www.ikea.com/us/en/p/tillbringare-pitcher-clear-glass-90362407/",
+    "why": "clear jug with handle: see-through loop"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/stockholm-2025-tealight-holder-clear-glass__1359451_pe954186_s5.jpg",
+    "name": "STOCKHOLM 2025",
+    "type": "Tealight holder",
+    "product": "https://www.ikea.com/us/en/p/stockholm-2025-tealight-holder-clear-glass-60590496/",
+    "why": "thick clear glass block: heavy refraction, no clean edge"
+   }
+  ],
+  "group_json": {
+   "mode": "render-only",
+   "shadow": "long",
+   "bg": "FFFFFF"
+  }
+ },
+ "fur": {
+  "note": "",
+  "difficulty": "fur silhouette: matte alpha halo at the edge; flat-lying items get no Photoroom shadow (otter case)",
+  "items": [
+   {
+    "image": "https://www.ikea.com/us/en/images/products/djungelskog-soft-toy-brown-bear__0710168_pe727370_s5.jpg",
+    "name": "DJUNGELSKOG",
+    "type": "Soft toy",
+    "product": "https://www.ikea.com/us/en/p/djungelskog-soft-toy-brown-bear-00402832/",
+    "why": "brown plush upright: fur silhouette"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/blahaj-soft-toy-shark__0710175_pe727378_s5.jpg",
+    "name": "BLÅHAJ",
+    "type": "Soft toy",
+    "product": "https://www.ikea.com/us/en/p/blahaj-soft-toy-shark-90373590/",
+    "why": "blue plush lying flat: flat pose, soft edge"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/alptall-soft-toy-snow-leopard-patterned-white__1533072_pe1015855_s5.jpg",
+    "name": "ALPTALL",
+    "type": "Soft toy",
+    "product": "https://www.ikea.com/us/en/p/alptall-soft-toy-snow-leopard-patterned-white-70620624/",
+    "why": "near-white patterned fur: fur + no contrast to bg"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/gosig-golden-soft-toy-dog-golden-retriever__0710169_pe727372_s5.jpg",
+    "name": "GOSIG GOLDEN",
+    "type": "Soft toy",
+    "product": "https://www.ikea.com/us/en/p/gosig-golden-soft-toy-dog-golden-retriever-70132790/",
+    "why": "beige plush lying down: flat, like the otter case"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/ullerslev-sheepskin-off-white__0603037_pe680644_s5.jpg",
+    "name": "ULLERSLEV",
+    "type": "Sheepskin",
+    "product": "https://www.ikea.com/us/en/p/ullerslev-sheepskin-off-white-30501053/",
+    "why": "white sheepskin on floor: flat + white fur, worst case"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/vollerslev-rug-high-pile-beige__1416376_pe975531_s5.jpg",
+    "name": "VOLLERSLEV",
+    "type": "Rug, high pile",
+    "product": "https://www.ikea.com/us/en/p/vollerslev-rug-high-pile-beige-20614258/",
+    "why": "beige high-pile rug: fur edge on a flat item"
+   }
+  ],
+  "group_json": {
+   "mode": "opaque",
+   "strength": 0.08,
+   "shadow": "long",
+   "bg": "FFFFFF"
+  }
+ },
+ "legs": {
+  "note": "",
+  "difficulty": "multiple thin legs: Photoroom per-leg shadow direction diverges on `long` (invariant 4); thin legs vs 6 px frame scatter",
+  "items": [
+   {
+    "image": "https://www.ikea.com/us/en/images/products/skogsta-chair-black__1243349_pe920580_s5.jpg",
+    "name": "SKOGSTA",
+    "type": "Chair",
+    "product": "https://www.ikea.com/us/en/p/skogsta-chair-black-50544867/",
+    "why": "black spindle chair: 4 thin legs + spindles, dark"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/lisabo-chair-ash-tallmyra-white-black__1243660_pe920705_s5.jpg",
+    "name": "LISABO",
+    "type": "Chair",
+    "product": "https://www.ikea.com/us/en/p/lisabo-chair-ash-tallmyra-white-black-90561044/",
+    "why": "light wood 4-leg chair: thin pale legs"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/teodores-chair-white__0727344_pe735616_s5.jpg",
+    "name": "TEODORES",
+    "type": "Chair",
+    "product": "https://www.ikea.com/us/en/p/teodores-chair-white-30486156/",
+    "why": "white plastic + steel legs: near-white body, thin metal legs"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/raevsten-bar-stool-counter-height-black__1447502_pe989132_s5.jpg",
+    "name": "RÄVSTEN",
+    "type": "Bar stool",
+    "product": "https://www.ikea.com/us/en/p/raevsten-bar-stool-counter-height-black-10602072/",
+    "why": "black 4-leg stool, no back: tall thin legs"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/dalfred-bar-stool-black__0727486_pe735711_s5.jpg",
+    "name": "DALFRED",
+    "type": "Bar stool",
+    "product": "https://www.ikea.com/us/en/p/dalfred-bar-stool-black-60155602/",
+    "why": "tripod base stool: three legs, shadow direction ambiguity"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/grimsarbo-side-table-pine-plywood-bright-red__1388878_pe965003_s5.jpg",
+    "name": "GRIMSARBO",
+    "type": "Side table",
+    "product": "https://www.ikea.com/us/en/p/grimsarbo-side-table-pine-plywood-bright-red-50606167/",
+    "why": "three splayed metal legs: per-leg shadow risk"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/kyrre-stool-birch__1488024_pe1003293_s5.jpg",
+    "name": "KYRRE",
+    "type": "Stool",
+    "product": "https://www.ikea.com/us/en/p/kyrre-stool-birch-60416925/",
+    "why": "three angled legs plywood stool"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/lack-side-table-black-brown__57544_pe163126_s5.jpg",
+    "name": "LACK",
+    "type": "Side table",
+    "product": "https://www.ikea.com/us/en/p/lack-side-table-black-brown-80104268/",
+    "why": "4 straight legs, dark, low: baseline control"
+   }
+  ]
+ },
+ "white": {
+  "note": "",
+  "difficulty": "near-white product: makePlate threshold 245 misses it; relight has no highlight headroom (highlights auto/off); bg contrast",
+  "items": [
+   {
+    "image": "https://www.ikea.com/us/en/images/products/gullaberg-nightstand-with-1-drawer-with-shelf-white__1283770_pe932624_s5.jpg",
+    "name": "GULLABERG",
+    "type": "Nightstand",
+    "product": "https://www.ikea.com/us/en/p/gullaberg-nightstand-with-1-drawer-with-shelf-white-20561740/",
+    "why": "white nightstand: near-white box"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/nymane-table-lamp-white__1377230_pe960815_s5.jpg",
+    "name": "NYMÅNE",
+    "type": "Table lamp",
+    "product": "https://www.ikea.com/us/en/p/nymane-table-lamp-white-70594328/",
+    "why": "white lamp: near-white, thin stem"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/uppland-armchair-blekinge-white__0818464_pe774419_s5.jpg",
+    "name": "UPPLAND",
+    "type": "Armchair",
+    "product": "https://www.ikea.com/us/en/p/uppland-armchair-blekinge-white-s89384108/",
+    "why": "white upholstered armchair: known 12% clip case"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/legitim-cutting-board-white__0712856_pe729106_s5.jpg",
+    "name": "LEGITIM",
+    "type": "Cutting board",
+    "product": "https://www.ikea.com/us/en/p/legitim-cutting-board-white-40577976/",
+    "why": "white plastic board: flat + near-white"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/ikea-365-mug-white__0711130_pe727998_s5.jpg",
+    "name": "IKEA 365+",
+    "type": "Mug",
+    "product": "https://www.ikea.com/us/en/p/ikea-365-mug-white-80278367/",
+    "why": "white porcelain mug: small + near-white"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/alstern-bath-mat-white__0688673_pe722641_s5.jpg",
+    "name": "ALSTERN",
+    "type": "Bath mat",
+    "product": "https://www.ikea.com/us/en/p/alstern-bath-mat-white-00447350/",
+    "why": "white cotton bath mat: flat + white textured"
+   }
+  ]
+ },
+ "dark": {
+  "note": "",
+  "difficulty": "dark product: shade half crushes recesses (shade knob); matte decontamination dark rims",
+  "items": [
+   {
+    "image": "https://www.ikea.com/us/en/images/products/nordviken-chair-black__0714202_pe729964_s5.jpg",
+    "name": "NORDVIKEN",
+    "type": "Chair",
+    "product": "https://www.ikea.com/us/en/p/nordviken-chair-black-40369109/",
+    "why": "black ladderback chair: dark + thin legs"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/odger-chair-anthracite__0739669_pe741828_s5.jpg",
+    "name": "ODGER",
+    "type": "Chair",
+    "product": "https://www.ikea.com/us/en/p/odger-chair-anthracite-50457313/",
+    "why": "black moulded shell chair: dark + 4 splayed legs"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/vedbo-armchair-gunnared-dark-gray__0512767_pe638683_s5.jpg",
+    "name": "VEDBO",
+    "type": "Armchair",
+    "product": "https://www.ikea.com/us/en/p/vedbo-armchair-gunnared-dark-gray-50424129/",
+    "why": "dark grey upholstered armchair"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/fulltalig-candlestick-set-of-3-black__0523288_pe643714_s5.jpg",
+    "name": "FULLTALIG",
+    "type": "Candlestick, set of 3",
+    "product": "https://www.ikea.com/us/en/p/fulltalig-candlestick-set-of-3-black-40342134/",
+    "why": "three black candlesticks: dark + thin + set"
+   }
+  ]
+ },
+ "reflective": {
+  "note": "",
+  "difficulty": "mirror/chrome: reflections read as background to the matte; speculars fight the lightmap; mirror face is near-white",
+  "items": [
+   {
+    "image": "https://www.ikea.com/us/en/images/products/hovet-mirror-black__1100010_pe866038_s5.jpg",
+    "name": "HOVET",
+    "type": "Mirror",
+    "product": "https://www.ikea.com/us/en/p/hovet-mirror-black-30515917/",
+    "why": "tall black-frame mirror: reflective face, extreme aspect"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/lindbyn-mirror-black__0798827_pe767399_s5.jpg",
+    "name": "LINDBYN",
+    "type": "Mirror",
+    "product": "https://www.ikea.com/us/en/p/lindbyn-mirror-black-60507204/",
+    "why": "round mirror: reflective disc"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/simrishamn-table-lamp-chrome-plated-opal-glass__0789483_pe763998_s5.jpg",
+    "name": "SIMRISHAMN",
+    "type": "Table lamp",
+    "product": "https://www.ikea.com/us/en/p/simrishamn-table-lamp-chrome-plated-opal-glass-40437684/",
+    "why": "chrome + white glass globes: specular + translucent"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/forsa-work-lamp-nickel-plated__0121576_pe278160_s5.jpg",
+    "name": "FORSÅ",
+    "type": "Work lamp",
+    "product": "https://www.ikea.com/us/en/p/forsa-work-lamp-nickel-plated-60146764/",
+    "why": "silver desk lamp: chrome arm and shade"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/kungsfors-wall-rack-stainless-steel__0713281_pe729389_s5.jpg",
+    "name": "KUNGSFORS",
+    "type": "Wall rack",
+    "product": "https://www.ikea.com/us/en/p/kungsfors-wall-rack-stainless-steel-80334919/",
+    "why": "stainless wall rack: brushed metal + open structure"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/tuvhaetta-serving-plate-stainless-steel__1156902_pe887330_s5.jpg",
+    "name": "TUVHÄTTA",
+    "type": "Serving plate",
+    "product": "https://www.ikea.com/us/en/p/tuvhaetta-serving-plate-stainless-steel-30637259/",
+    "why": "silver serving plate: flat + mirror finish"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/aftonhaj-serving-bowl-stainless-steel__1489993_pe1004035_s5.jpg",
+    "name": "AFTONHAJ",
+    "type": "Serving bowl",
+    "product": "https://www.ikea.com/us/en/p/aftonhaj-serving-bowl-stainless-steel-60624024/",
+    "why": "stainless bowl: curved mirror surface"
+   }
+  ]
+ },
+ "flat": {
+  "note": "",
+  "difficulty": "flatlay / floor items: subjectPose upright is wrong; cast shadow has no vertical object to anchor to",
+  "items": [
+   {
+    "image": "https://www.ikea.com/us/en/images/products/lohals-rug-flatwoven-natural__0280221_pe419173_s5.jpg",
+    "name": "LOHALS",
+    "type": "Rug, flatwoven",
+    "product": "https://www.ikea.com/us/en/p/lohals-rug-flatwoven-natural-50277393/",
+    "why": "jute rug flatwoven: flat, beige, textured"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/stoense-rug-low-pile-green__1405714_pe970548_s5.jpg",
+    "name": "STOENSE",
+    "type": "Rug, low pile",
+    "product": "https://www.ikea.com/us/en/p/stoense-rug-low-pile-green-90607688/",
+    "why": "low-pile rug: flat solid colour"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/aptitlig-cutting-board-bamboo__1377033_pe960693_s5.jpg",
+    "name": "APTITLIG",
+    "type": "Cutting board",
+    "product": "https://www.ikea.com/us/en/p/aptitlig-cutting-board-bamboo-80233430/",
+    "why": "bamboo board: flat, angled view"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/ostbit-tray-bamboo__0542354_pe654009_s5.jpg",
+    "name": "OSTBIT",
+    "type": "Tray",
+    "product": "https://www.ikea.com/us/en/p/ostbit-tray-bamboo-10376724/",
+    "why": "bamboo tray: flat with low rim"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/toftbo-bath-mat-gray-white-melange__0640938_pe700145_s5.jpg",
+    "name": "TOFTBO",
+    "type": "Bath mat",
+    "product": "https://www.ikea.com/us/en/p/toftbo-bath-mat-gray-white-melange-20610279/",
+    "why": "grey bath mat: flat textured"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/markblamme-rug-low-pile-multicolor-check-pattern__1468724_pe996250_s5.jpg",
+    "name": "MARKBLÅMME",
+    "type": "Rug, low pile",
+    "product": "https://www.ikea.com/us/en/p/markblamme-rug-low-pile-multicolor-check-pattern-90625705/",
+    "why": "check pattern rug: flat + busy pattern"
+   }
+  ]
+ },
+ "open": {
+  "note": "",
+  "difficulty": "open/wire structure: background shows through; matte must cut many holes; shadow falls through gaps; white wire on white",
+  "items": [
+   {
+    "image": "https://www.ikea.com/us/en/images/products/risatorp-wire-basket-white__0711025_pe727906_s5.jpg",
+    "name": "RISATORP",
+    "type": "Wire basket",
+    "product": "https://www.ikea.com/us/en/p/risatorp-wire-basket-white-90281618/",
+    "why": "white wire basket: holes show background"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/omar-1-section-shelving-unit__0626066_pe692566_s5.jpg",
+    "name": "OMAR",
+    "type": "1 section shelving unit",
+    "product": "https://www.ikea.com/us/en/p/omar-1-section-shelving-unit-s69829083/",
+    "why": "silver wire shelving: thin members, huge see-through area"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/hyllis-shelf-unit-indoor-outdoor__0639121_pe704408_s5.jpg",
+    "name": "HYLLIS",
+    "type": "Shelf unit",
+    "product": "https://www.ikea.com/us/en/p/hyllis-shelf-unit-indoor-outdoor-30428326/",
+    "why": "galvanised steel shelving: open + reflective"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/olivblad-plant-stand-indoor-outdoor-black__1010787_pe828336_s5.jpg",
+    "name": "OLIVBLAD",
+    "type": "Plant stand",
+    "product": "https://www.ikea.com/us/en/p/olivblad-plant-stand-indoor-outdoor-black-50486650/",
+    "why": "black metal plant stand: thin rods"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/rigga-clothes-rack-white__0710721_pe727742_s5.jpg",
+    "name": "RIGGA",
+    "type": "Clothes rack",
+    "product": "https://www.ikea.com/us/en/p/rigga-clothes-rack-white-50231630/",
+    "why": "white clothes rack on wheels: thin white frame on white"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/raskog-utility-cart-white__1366882_pe957173_s5.jpg",
+    "name": "RÅSKOG",
+    "type": "Utility cart",
+    "product": "https://www.ikea.com/us/en/p/raskog-utility-cart-white-30586783/",
+    "why": "white 3-tier cart: open + near-white"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/ekrar-hat-and-coat-stand-white__0710637_pe727670_s5.jpg",
+    "name": "EKRAR",
+    "type": "Hat and coat stand",
+    "product": "https://www.ikea.com/us/en/p/ekrar-hat-and-coat-stand-white-10415594/",
+    "why": "white tripod coat stand: thin, tall, white on white"
+   }
+  ]
+ },
+ "plant": {
+  "note": "",
+  "difficulty": "fine leaf/stem edges: matte precision; thin stems vanish at 2K lightmap; many small shadow casters",
+  "items": [
+   {
+    "image": "https://www.ikea.com/us/en/images/products/fejka-artificial-potted-plant-indoor-outdoor-bird-of-paradise__1034065_pe840176_s5.jpg",
+    "name": "FEJKA",
+    "type": "Artificial potted plant",
+    "product": "https://www.ikea.com/us/en/p/fejka-artificial-potted-plant-indoor-outdoor-bird-of-paradise-70610601/",
+    "why": "artificial plant large leaves: leaf edges"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/fejka-artificial-potted-plant-indoor-outdoor-bamboo__1423297_pe979093_s5.jpg",
+    "name": "FEJKA",
+    "type": "Artificial potted plant",
+    "product": "https://www.ikea.com/us/en/p/fejka-artificial-potted-plant-indoor-outdoor-bamboo-40610607/",
+    "why": "artificial bamboo: many thin leaves"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/fejka-artificial-potted-plant-indoor-outdoor-hanging-fern__1184652_pe898009_s5.jpg",
+    "name": "FEJKA",
+    "type": "Artificial potted plant",
+    "product": "https://www.ikea.com/us/en/p/fejka-artificial-potted-plant-indoor-outdoor-hanging-fern-80615231/",
+    "why": "artificial fern: fine fronds, hardest leaf edge"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/fejka-artificial-potted-plant-indoor-outdoor-hanging__0748917_pe745318_s5.jpg",
+    "name": "FEJKA",
+    "type": "Artificial potted plant",
+    "product": "https://www.ikea.com/us/en/p/fejka-artificial-potted-plant-indoor-outdoor-hanging-10615258/",
+    "why": "hanging plant: trailing thin stems"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/smycka-artificial-bouquet-poppy-indoor-outdoor-orange__1445439_pe988215_s5.jpg",
+    "name": "SMYCKA",
+    "type": "Artificial bouquet",
+    "product": "https://www.ikea.com/us/en/p/smycka-artificial-bouquet-poppy-indoor-outdoor-orange-60606242/",
+    "why": "pink bouquet: thin stems + petals"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/smycka-artificial-leaf-indoor-outdoor-eucalyptus-red__1515398_pe1011404_s5.jpg",
+    "name": "SMYCKA",
+    "type": "Artificial leaf",
+    "product": "https://www.ikea.com/us/en/p/smycka-artificial-leaf-indoor-outdoor-eucalyptus-red-60632948/",
+    "why": "eucalyptus stem: sparse, thin"
+   }
+  ]
+ },
+ "textile": {
+  "note": "",
+  "difficulty": "soft folded edges and fringe; sheer fabric is semi-transparent; near-white folds",
+  "items": [
+   {
+    "image": "https://www.ikea.com/us/en/images/products/fjaedrar-inner-cushion-off-white__0243140_pe382470_s5.jpg",
+    "name": "FJÄDRAR",
+    "type": "Inner cushion",
+    "product": "https://www.ikea.com/us/en/p/fjaedrar-inner-cushion-off-white-60262188/",
+    "why": "white square cushion: near-white soft edge"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/sanela-cushion-cover-dark-brown__1502335_pe1007600_s5.jpg",
+    "name": "SANELA",
+    "type": "Cushion cover",
+    "product": "https://www.ikea.com/us/en/p/sanela-cushion-cover-dark-brown-40636023/",
+    "why": "dark velvet cushion cover: dark soft edge"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/vallkrassing-throw-off-white__1207651_pe908114_s5.jpg",
+    "name": "VALLKRASSING",
+    "type": "Throw",
+    "product": "https://www.ikea.com/us/en/p/vallkrassing-throw-off-white-20570928/",
+    "why": "cream throw with fringe: fringe edge"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/silverloenn-sheer-curtains-1-pair-white-with-heading-tape__0913763_pe783726_s5.jpg",
+    "name": "SILVERLÖNN",
+    "type": "Sheer curtains, 1 pair",
+    "product": "https://www.ikea.com/us/en/p/silverloenn-sheer-curtains-1-pair-white-with-heading-tape-60491038/",
+    "why": "white sheer curtains: translucent + white on white"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/holmvi-throw-gray__1022849_pe832952_s5.jpg",
+    "name": "HOLMVI",
+    "type": "Throw",
+    "product": "https://www.ikea.com/us/en/p/holmvi-throw-gray-30513598/",
+    "why": "grey throw fringed: folded, fringe"
+   }
+  ]
+ },
+ "tall": {
+  "note": "",
+  "difficulty": "extreme aspect ratio: subject fits 3200 on one axis, tiny on the other (PE870292 precedent); wide empty margins",
+  "items": [
+   {
+    "image": "https://www.ikea.com/us/en/images/products/tagarp-floor-uplighter-black-white__0810840_pe771436_s5.jpg",
+    "name": "TÅGARP",
+    "type": "Floor uplighter",
+    "product": "https://www.ikea.com/us/en/p/tagarp-floor-uplighter-black-white-60464049/",
+    "why": "black slender floor uplighter: extreme aspect"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/oekensand-floor-lamp-beech-white__1187892_pe899535_s5.jpg",
+    "name": "ÖKENSAND",
+    "type": "Floor lamp",
+    "product": "https://www.ikea.com/us/en/p/oekensand-floor-lamp-beech-white-90541536/",
+    "why": "white pleated floor lamp, 3 legs: tall + white"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/lauters-floor-lamp-ash-white__0663863_pe712536_s5.jpg",
+    "name": "LAUTERS",
+    "type": "Floor lamp",
+    "product": "https://www.ikea.com/us/en/p/lauters-floor-lamp-ash-white-00405048/",
+    "why": "wooden tripod floor lamp: tall + 3 legs"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/arstid-floor-lamp-brass-white__0390610_pe566328_s5.jpg",
+    "name": "ÅRSTID",
+    "type": "Floor lamp",
+    "product": "https://www.ikea.com/us/en/p/arstid-floor-lamp-brass-white-60321324/",
+    "why": "brass base floor lamp: tall + reflective base"
+   }
+  ]
+ },
+ "small": {
+  "note": "",
+  "difficulty": "small round objects: ellipse base shadow; glossy glaze speculars; white on white at small scale",
+  "items": [
+   {
+    "image": "https://www.ikea.com/us/en/images/products/faergrik-mug-stoneware-white__0711067_pe727942_s5.jpg",
+    "name": "FÄRGRIK",
+    "type": "Mug",
+    "product": "https://www.ikea.com/us/en/p/faergrik-mug-stoneware-white-60143992/",
+    "why": "white stoneware mug: small, white"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/gladelig-mug-blue__0986803_pe817327_s5.jpg",
+    "name": "GLADELIG",
+    "type": "Mug",
+    "product": "https://www.ikea.com/us/en/p/gladelig-mug-blue-40503626/",
+    "why": "blue reactive-glaze mug: small, glossy"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/dinera-mug-dark-gray__0642538_pe701238_s5.jpg",
+    "name": "DINERA",
+    "type": "Mug",
+    "product": "https://www.ikea.com/us/en/p/dinera-mug-dark-gray-30362820/",
+    "why": "dark grey matte mug: small, dark"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/godmiddag-deep-plate-bowl-white__1288857_pe934291_s5.jpg",
+    "name": "GODMIDDAG",
+    "type": "Deep plate/bowl",
+    "product": "https://www.ikea.com/us/en/p/godmiddag-deep-plate-bowl-white-50585018/",
+    "why": "white bowl: small, white, round"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/mossmal-bowl-dot-pattern-light-green__1343630_pe949598_s5.jpg",
+    "name": "MOSSMAL",
+    "type": "Bowl",
+    "product": "https://www.ikea.com/us/en/p/mossmal-bowl-dot-pattern-light-green-90582777/",
+    "why": "green speckled bowl: small, round"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/godtagbar-candlestick-ceramic-white__0749277_pe745645_s5.jpg",
+    "name": "GODTAGBAR",
+    "type": "Candlestick",
+    "product": "https://www.ikea.com/us/en/p/godtagbar-candlestick-ceramic-white-70445673/",
+    "why": "white stoneware candlestick: small, white"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/blomster-candlestick-set-of-2-brown__1515287_pe1011345_s5.jpg",
+    "name": "BLOMSTER",
+    "type": "Candlestick, set of 2",
+    "product": "https://www.ikea.com/us/en/p/blomster-candlestick-set-of-2-brown-50630558/",
+    "why": "brown candlesticks set of 2: small pair"
+   }
+  ]
+ },
+ "lit": {
+  "note": "",
+  "difficulty": "self-illuminated or translucent shades: glow blends into white bg; relight contradicts the lamp's own light",
+  "items": [
+   {
+    "image": "https://www.ikea.com/us/en/images/products/gullsudare-pendant-lamp-shade-white-handmade__1385301_pe963263_s5.jpg",
+    "name": "GULLSUDARE",
+    "type": "Pendant lamp shade",
+    "product": "https://www.ikea.com/us/en/p/gullsudare-pendant-lamp-shade-white-handmade-90603869/",
+    "why": "white paper lantern: white sphere, translucent"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/vindkast-pendant-lamp-white__0805857_pe769703_s5.jpg",
+    "name": "VINDKAST",
+    "type": "Pendant lamp",
+    "product": "https://www.ikea.com/us/en/p/vindkast-pendant-lamp-white-00469120/",
+    "why": "white fabric pendant: glowing shade"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/stockholm-2025-pendant-lamp-white-textile-brass-plated__1285166_pe933237_s5.jpg",
+    "name": "STOCKHOLM 2025",
+    "type": "Pendant lamp",
+    "product": "https://www.ikea.com/us/en/p/stockholm-2025-pendant-lamp-white-textile-brass-plated-20585996/",
+    "why": "white wavy textile pendant + brass"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/sinnerlig-pendant-lamp-bamboo-handmade__0919001_pe786542_s5.jpg",
+    "name": "SINNERLIG",
+    "type": "Pendant lamp",
+    "product": "https://www.ikea.com/us/en/p/sinnerlig-pendant-lamp-bamboo-handmade-70315030/",
+    "why": "bamboo pendant: open weave + warm glow"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/pelarboj-led-table-lamp-multicolor__0689134_pe722837_s5.jpg",
+    "name": "PELARBOJ",
+    "type": "LED table lamp",
+    "product": "https://www.ikea.com/us/en/p/pelarboj-led-table-lamp-multicolor-10423023/",
+    "why": "white cylinder LED: self-lit white"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/groenoe-table-lamp-frosted-glass-white__0609359_pe684477_s5.jpg",
+    "name": "GRÖNÖ",
+    "type": "Table lamp",
+    "product": "https://www.ikea.com/us/en/p/groenoe-table-lamp-frosted-glass-white-10373221/",
+    "why": "frosted glass lamp: translucent white"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/varmblixt-led-table-wall-lamp-orange-glass-round__1116616_pe872535_s5.jpg",
+    "name": "VARMBLIXT",
+    "type": "LED table/wall lamp",
+    "product": "https://www.ikea.com/us/en/p/varmblixt-led-table-wall-lamp-orange-glass-round-90525150/",
+    "why": "orange glass donut lamp: coloured glass, lit"
+   }
+  ]
+ },
+ "offwhite": {
+  "minEdge": 236,
+  "difficulty": "backdrop is not 255 white: makePlate threshold 245 sees the whole frame as subject; composite assumes a white base; need bg normalisation or detection before plate",
+  "items": [
+   {
+    "image": "https://www.ikea.com/us/en/images/products/billy-bookcase-white__1590306_pe1038945_s5.jpg",
+    "name": "BILLY",
+    "type": "Bookcase",
+    "product": "https://www.ikea.com/us/en/p/billy-bookcase-white-90522043/",
+    "why": "off-white backdrop (newer IKEA render, edges ~242-247) — white open bookcase: near-white + interior shelves"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/laiva-bookcase-black-brown__1590292_pe1038931_s5.jpg",
+    "name": "LAIVA",
+    "type": "Bookcase",
+    "product": "https://www.ikea.com/us/en/p/laiva-bookcase-black-brown-40178591/",
+    "why": "off-white backdrop (newer IKEA render, edges ~242-247) — black open bookcase: dark, shade crush risk"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/hemnes-bookcase-black-brown-light-brown__1590299_pe1038938_s5.jpg",
+    "name": "HEMNES",
+    "type": "Bookcase",
+    "product": "https://www.ikea.com/us/en/p/hemnes-bookcase-black-brown-light-brown-20452294/",
+    "why": "off-white backdrop (newer IKEA render, edges ~242-247) — black pine bookcase: dark with wood grain"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/aengslilja-duvet-cover-and-pillowcase-s-dark-blue__1599699_pe1042532_s5.jpg",
+    "name": "ÄNGSLILJA",
+    "type": "Duvet cover and pillowcase(s)",
+    "product": "https://www.ikea.com/us/en/p/aengslilja-duvet-cover-and-pillowcase-s-dark-blue-20636632/",
+    "why": "off-white backdrop (newer IKEA render, edges ~242-247) — folded blue bedding set: stack, soft folds"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/nattjasmin-duvet-cover-and-pillowcase-s-white__1599408_pe1042241_s5.jpg",
+    "name": "NATTJASMIN",
+    "type": "Duvet cover and pillowcase(s)",
+    "product": "https://www.ikea.com/us/en/p/nattjasmin-duvet-cover-and-pillowcase-s-white-60337155/",
+    "why": "off-white backdrop (newer IKEA render, edges ~242-247) — white bedding stack: near-white folds"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/billy-bookcase-with-height-extension-unit-white__1602153_pe1043245_s5.jpg",
+    "name": "BILLY",
+    "type": "Bookcase with height extension unit",
+    "product": "https://www.ikea.com/us/en/p/billy-bookcase-with-height-extension-unit-white-s59638673/",
+    "why": "off-white backdrop (newer IKEA render, edges ~242-247) — white bookcase with extension: tallest aspect"
+   },
+   {
+    "image": "https://www.ikea.com/us/en/images/products/gersby-bookcase-white__1590290_pe1038929_s5.jpg",
+    "name": "GERSBY",
+    "type": "Bookcase",
+    "product": "https://www.ikea.com/us/en/p/gersby-bookcase-white-70261131/",
+    "why": "off-white backdrop (newer IKEA render, edges ~242-247) — white 5-shelf bookcase: tall + white"
+   }
+  ]
+ }
+}

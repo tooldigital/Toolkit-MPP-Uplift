@@ -1,0 +1,64 @@
+{
+  "source": "IKEA product images fetched from ikea.com via the public search API (main studio shot, ?imwidth=4000; most assets top out at 2000x2000)",
+  "fetched": "2026-10-15",
+  "group": "fur",
+  "note": "",
+  "difficulty": "fur silhouette: matte alpha halo at the edge; flat-lying items get no Photoroom shadow (otter case)",
+  "items": [
+    {
+      "sku": "PE727370",
+      "name": "DJUNGELSKOG",
+      "type": "Soft toy",
+      "product": "https://www.ikea.com/us/en/p/djungelskog-soft-toy-brown-bear-00402832/",
+      "image": "https://www.ikea.com/us/en/images/products/djungelskog-soft-toy-brown-bear__0710168_pe727370_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "brown plush upright: fur silhouette"
+    },
+    {
+      "sku": "PE727378",
+      "name": "BLÅHAJ",
+      "type": "Soft toy",
+      "product": "https://www.ikea.com/us/en/p/blahaj-soft-toy-shark-90373590/",
+      "image": "https://www.ikea.com/us/en/images/products/blahaj-soft-toy-shark__0710175_pe727378_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "blue plush lying flat: flat pose, soft edge"
+    },
+    {
+      "sku": "PE1015855",
+      "name": "ALPTALL",
+      "type": "Soft toy",
+      "product": "https://www.ikea.com/us/en/p/alptall-soft-toy-snow-leopard-patterned-white-70620624/",
+      "image": "https://www.ikea.com/us/en/images/products/alptall-soft-toy-snow-leopard-patterned-white__1533072_pe1015855_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "near-white patterned fur: fur + no contrast to bg"
+    },
+    {
+      "sku": "PE727372",
+      "name": "GOSIG GOLDEN",
+      "type": "Soft toy",
+      "product": "https://www.ikea.com/us/en/p/gosig-golden-soft-toy-dog-golden-retriever-70132790/",
+      "image": "https://www.ikea.com/us/en/images/products/gosig-golden-soft-toy-dog-golden-retriever__0710169_pe727372_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "beige plush lying down: flat, like the otter case"
+    },
+    {
+      "sku": "PE680644",
+      "name": "ULLERSLEV",
+      "type": "Sheepskin",
+      "product": "https://www.ikea.com/us/en/p/ullerslev-sheepskin-off-white-30501053/",
+      "image": "https://www.ikea.com/us/en/images/products/ullerslev-sheepskin-off-white__0603037_pe680644_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "white sheepskin on floor: flat + white fur, worst case"
+    },
+    {
+      "sku": "PE975531",
+      "name": "VOLLERSLEV",
+      "type": "Rug, high pile",
+      "product": "https://www.ikea.com/us/en/p/vollerslev-rug-high-pile-beige-20614258/",
+      "image": "https://www.ikea.com/us/en/images/products/vollerslev-rug-high-pile-beige__1416376_pe975531_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "beige high-pile rug: fur edge on a flat item"
+    }
+  ],
+  "rejected": []
+}

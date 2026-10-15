@@ -1,0 +1,73 @@
+{
+  "source": "IKEA product images fetched from ikea.com via the public search API (main studio shot, ?imwidth=4000; most assets top out at 2000x2000)",
+  "fetched": "2026-10-15",
+  "group": "lit",
+  "note": "",
+  "difficulty": "self-illuminated or translucent shades: glow blends into white bg; relight contradicts the lamp's own light",
+  "items": [
+    {
+      "sku": "PE963263",
+      "name": "GULLSUDARE",
+      "type": "Pendant lamp shade",
+      "product": "https://www.ikea.com/us/en/p/gullsudare-pendant-lamp-shade-white-handmade-90603869/",
+      "image": "https://www.ikea.com/us/en/images/products/gullsudare-pendant-lamp-shade-white-handmade__1385301_pe963263_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "white paper lantern: white sphere, translucent"
+    },
+    {
+      "sku": "PE769703",
+      "name": "VINDKAST",
+      "type": "Pendant lamp",
+      "product": "https://www.ikea.com/us/en/p/vindkast-pendant-lamp-white-00469120/",
+      "image": "https://www.ikea.com/us/en/images/products/vindkast-pendant-lamp-white__0805857_pe769703_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "white fabric pendant: glowing shade"
+    },
+    {
+      "sku": "PE933237",
+      "name": "STOCKHOLM 2025",
+      "type": "Pendant lamp",
+      "product": "https://www.ikea.com/us/en/p/stockholm-2025-pendant-lamp-white-textile-brass-plated-20585996/",
+      "image": "https://www.ikea.com/us/en/images/products/stockholm-2025-pendant-lamp-white-textile-brass-plated__1285166_pe933237_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "white wavy textile pendant + brass"
+    },
+    {
+      "sku": "PE786542",
+      "name": "SINNERLIG",
+      "type": "Pendant lamp",
+      "product": "https://www.ikea.com/us/en/p/sinnerlig-pendant-lamp-bamboo-handmade-70315030/",
+      "image": "https://www.ikea.com/us/en/images/products/sinnerlig-pendant-lamp-bamboo-handmade__0919001_pe786542_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "bamboo pendant: open weave + warm glow"
+    },
+    {
+      "sku": "PE722837",
+      "name": "PELARBOJ",
+      "type": "LED table lamp",
+      "product": "https://www.ikea.com/us/en/p/pelarboj-led-table-lamp-multicolor-10423023/",
+      "image": "https://www.ikea.com/us/en/images/products/pelarboj-led-table-lamp-multicolor__0689134_pe722837_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "white cylinder LED: self-lit white"
+    },
+    {
+      "sku": "PE684477",
+      "name": "GRÖNÖ",
+      "type": "Table lamp",
+      "product": "https://www.ikea.com/us/en/p/groenoe-table-lamp-frosted-glass-white-10373221/",
+      "image": "https://www.ikea.com/us/en/images/products/groenoe-table-lamp-frosted-glass-white__0609359_pe684477_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "frosted glass lamp: translucent white"
+    },
+    {
+      "sku": "PE872535",
+      "name": "VARMBLIXT",
+      "type": "LED table/wall lamp",
+      "product": "https://www.ikea.com/us/en/p/varmblixt-led-table-wall-lamp-orange-glass-round-90525150/",
+      "image": "https://www.ikea.com/us/en/images/products/varmblixt-led-table-wall-lamp-orange-glass-round__1116616_pe872535_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "orange glass donut lamp: coloured glass, lit"
+    }
+  ],
+  "rejected": []
+}

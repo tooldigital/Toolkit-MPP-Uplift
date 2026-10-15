@@ -1,0 +1,73 @@
+{
+  "source": "IKEA product images fetched from ikea.com via the public search API (main studio shot, ?imwidth=4000; most assets top out at 2000x2000)",
+  "fetched": "2026-10-15",
+  "group": "reflective",
+  "note": "",
+  "difficulty": "mirror/chrome: reflections read as background to the matte; speculars fight the lightmap; mirror face is near-white",
+  "items": [
+    {
+      "sku": "PE866038",
+      "name": "HOVET",
+      "type": "Mirror",
+      "product": "https://www.ikea.com/us/en/p/hovet-mirror-black-30515917/",
+      "image": "https://www.ikea.com/us/en/images/products/hovet-mirror-black__1100010_pe866038_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "tall black-frame mirror: reflective face, extreme aspect"
+    },
+    {
+      "sku": "PE767399",
+      "name": "LINDBYN",
+      "type": "Mirror",
+      "product": "https://www.ikea.com/us/en/p/lindbyn-mirror-black-60507204/",
+      "image": "https://www.ikea.com/us/en/images/products/lindbyn-mirror-black__0798827_pe767399_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "round mirror: reflective disc"
+    },
+    {
+      "sku": "PE763998",
+      "name": "SIMRISHAMN",
+      "type": "Table lamp",
+      "product": "https://www.ikea.com/us/en/p/simrishamn-table-lamp-chrome-plated-opal-glass-40437684/",
+      "image": "https://www.ikea.com/us/en/images/products/simrishamn-table-lamp-chrome-plated-opal-glass__0789483_pe763998_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "chrome + white glass globes: specular + translucent"
+    },
+    {
+      "sku": "PE278160",
+      "name": "FORSÅ",
+      "type": "Work lamp",
+      "product": "https://www.ikea.com/us/en/p/forsa-work-lamp-nickel-plated-60146764/",
+      "image": "https://www.ikea.com/us/en/images/products/forsa-work-lamp-nickel-plated__0121576_pe278160_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "silver desk lamp: chrome arm and shade"
+    },
+    {
+      "sku": "PE729389",
+      "name": "KUNGSFORS",
+      "type": "Wall rack",
+      "product": "https://www.ikea.com/us/en/p/kungsfors-wall-rack-stainless-steel-80334919/",
+      "image": "https://www.ikea.com/us/en/images/products/kungsfors-wall-rack-stainless-steel__0713281_pe729389_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "stainless wall rack: brushed metal + open structure"
+    },
+    {
+      "sku": "PE887330",
+      "name": "TUVHÄTTA",
+      "type": "Serving plate",
+      "product": "https://www.ikea.com/us/en/p/tuvhaetta-serving-plate-stainless-steel-30637259/",
+      "image": "https://www.ikea.com/us/en/images/products/tuvhaetta-serving-plate-stainless-steel__1156902_pe887330_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "silver serving plate: flat + mirror finish"
+    },
+    {
+      "sku": "PE1004035",
+      "name": "AFTONHAJ",
+      "type": "Serving bowl",
+      "product": "https://www.ikea.com/us/en/p/aftonhaj-serving-bowl-stainless-steel-60624024/",
+      "image": "https://www.ikea.com/us/en/images/products/aftonhaj-serving-bowl-stainless-steel__1489993_pe1004035_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "stainless bowl: curved mirror surface"
+    }
+  ],
+  "rejected": []
+}

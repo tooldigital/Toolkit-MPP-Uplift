@@ -1,0 +1,66 @@
+{
+  "source": "IKEA product images fetched from ikea.com via the public search API (main studio shot, ?imwidth=4000; most assets top out at 2000x2000)",
+  "fetched": "2026-10-15",
+  "group": "textile",
+  "note": "",
+  "difficulty": "soft folded edges and fringe; sheer fabric is semi-transparent; near-white folds",
+  "items": [
+    {
+      "sku": "PE382470",
+      "name": "FJÄDRAR",
+      "type": "Inner cushion",
+      "product": "https://www.ikea.com/us/en/p/fjaedrar-inner-cushion-off-white-60262188/",
+      "image": "https://www.ikea.com/us/en/images/products/fjaedrar-inner-cushion-off-white__0243140_pe382470_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "white square cushion: near-white soft edge"
+    },
+    {
+      "sku": "PE1007600",
+      "name": "SANELA",
+      "type": "Cushion cover",
+      "product": "https://www.ikea.com/us/en/p/sanela-cushion-cover-dark-brown-40636023/",
+      "image": "https://www.ikea.com/us/en/images/products/sanela-cushion-cover-dark-brown__1502335_pe1007600_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "dark velvet cushion cover: dark soft edge"
+    },
+    {
+      "sku": "PE908114",
+      "name": "VALLKRASSING",
+      "type": "Throw",
+      "product": "https://www.ikea.com/us/en/p/vallkrassing-throw-off-white-20570928/",
+      "image": "https://www.ikea.com/us/en/images/products/vallkrassing-throw-off-white__1207651_pe908114_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "cream throw with fringe: fringe edge"
+    },
+    {
+      "sku": "PE783726",
+      "name": "SILVERLÖNN",
+      "type": "Sheer curtains, 1 pair",
+      "product": "https://www.ikea.com/us/en/p/silverloenn-sheer-curtains-1-pair-white-with-heading-tape-60491038/",
+      "image": "https://www.ikea.com/us/en/images/products/silverloenn-sheer-curtains-1-pair-white-with-heading-tape__0913763_pe783726_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "white sheer curtains: translucent + white on white"
+    },
+    {
+      "sku": "PE832952",
+      "name": "HOLMVI",
+      "type": "Throw",
+      "product": "https://www.ikea.com/us/en/p/holmvi-throw-gray-30513598/",
+      "image": "https://www.ikea.com/us/en/images/products/holmvi-throw-gray__1022849_pe832952_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "grey throw fringed: folded, fringe"
+    }
+  ],
+  "rejected": [
+    {
+      "sku": "PE1042532",
+      "name": "ÄNGSLILJA",
+      "why": "edge not white (min 244) — kept in group_offwhite instead"
+    },
+    {
+      "sku": "PE1042241",
+      "name": "NATTJASMIN",
+      "why": "edge not white (min 242) — kept in group_offwhite instead"
+    }
+  ]
+}

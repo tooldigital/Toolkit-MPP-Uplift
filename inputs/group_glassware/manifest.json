@@ -1,0 +1,82 @@
+{
+  "source": "IKEA product images fetched from ikea.com via the public search API (main studio shot, ?imwidth=4000; most assets top out at 2000x2000)",
+  "fetched": "2026-10-15",
+  "group": "glassware",
+  "note": "",
+  "difficulty": "transparent body: makePlate luminance bbox crops bright edges; opaque composite fries rims (invariant 2 exception); needs render-only/transparent",
+  "items": [
+    {
+      "sku": "PE624750",
+      "name": "BERÄKNA",
+      "type": "Vase",
+      "product": "https://www.ikea.com/us/en/p/beraekna-vase-clear-glass-20406297/",
+      "image": "https://www.ikea.com/us/en/images/products/beraekna-vase-clear-glass__0490878_pe624750_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "clear cylinder: see-through body, bright rim"
+    },
+    {
+      "sku": "PE836342",
+      "name": "KONSTFULL",
+      "type": "Vase",
+      "product": "https://www.ikea.com/us/en/p/konstfull-vase-clear-glass-patterned-20511953/",
+      "image": "https://www.ikea.com/us/en/images/products/konstfull-vase-clear-glass-patterned__1030738_pe836342_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "clear textured glass: refraction noise at the edge"
+    },
+    {
+      "sku": "PE729361",
+      "name": "POKAL",
+      "type": "Glass",
+      "product": "https://www.ikea.com/us/en/p/pokal-glass-clear-glass-10270478/",
+      "image": "https://www.ikea.com/us/en/images/products/pokal-glass-clear-glass__0713251_pe729361_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "single faceted tumbler: many internal edges"
+    },
+    {
+      "sku": "PE790099",
+      "name": "IKEA 365+",
+      "type": "Glass",
+      "product": "https://www.ikea.com/us/en/p/ikea-365-glass-clear-glass-60279711/",
+      "image": "https://www.ikea.com/us/en/images/products/ikea-365-glass-clear-glass__0928963_pe790099_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "six clear glasses as a set: overlapping transparent silhouettes"
+    },
+    {
+      "sku": "PE729738",
+      "name": "KORKEN",
+      "type": "Jar with lid",
+      "product": "https://www.ikea.com/us/en/p/korken-jar-with-lid-clear-glass-90227985/",
+      "image": "https://www.ikea.com/us/en/images/products/korken-jar-with-lid-clear-glass__0713739_pe729738_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "clear jar + opaque metal clamp: mixed opaque/transparent"
+    },
+    {
+      "sku": "PE728122",
+      "name": "IKEA 365+",
+      "type": "Carafe with stopper",
+      "product": "https://www.ikea.com/us/en/p/ikea-365-carafe-with-stopper-clear-glass-cork-90279719/",
+      "image": "https://www.ikea.com/us/en/images/products/ikea-365-carafe-with-stopper-clear-glass-cork__0711284_pe728122_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "clear carafe + cork: thin neck, near-invisible body"
+    },
+    {
+      "sku": "PE728103",
+      "name": "TILLBRINGARE",
+      "type": "Pitcher",
+      "product": "https://www.ikea.com/us/en/p/tillbringare-pitcher-clear-glass-90362407/",
+      "image": "https://www.ikea.com/us/en/images/products/tillbringare-pitcher-clear-glass__0711286_pe728103_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "clear jug with handle: see-through loop"
+    },
+    {
+      "sku": "PE954186",
+      "name": "STOCKHOLM 2025",
+      "type": "Tealight holder",
+      "product": "https://www.ikea.com/us/en/p/stockholm-2025-tealight-holder-clear-glass-60590496/",
+      "image": "https://www.ikea.com/us/en/images/products/stockholm-2025-tealight-holder-clear-glass__1359451_pe954186_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "thick clear glass block: heavy refraction, no clean edge"
+    }
+  ],
+  "rejected": []
+}

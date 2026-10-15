@@ -28,3 +28,7 @@ outputs/*
 # product page and CDN URL for each, so the set is refetchable. Keeps image blobs
 # out of the history (the repo is already ~200 MB of committed finals).
 inputs/group_chair/*.jpg
+
+# Categorization set (docs/categories.md): manifests + selection are tracked, the fetched JPEGs are not —
+# `node scripts/fetch_ikea.mjs fetch inputs/catalog_selection.json` re-downloads them.
+inputs/group_*/*.jpg

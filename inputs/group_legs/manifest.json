@@ -1,0 +1,82 @@
+{
+  "source": "IKEA product images fetched from ikea.com via the public search API (main studio shot, ?imwidth=4000; most assets top out at 2000x2000)",
+  "fetched": "2026-10-15",
+  "group": "legs",
+  "note": "",
+  "difficulty": "multiple thin legs: Photoroom per-leg shadow direction diverges on `long` (invariant 4); thin legs vs 6 px frame scatter",
+  "items": [
+    {
+      "sku": "PE920580",
+      "name": "SKOGSTA",
+      "type": "Chair",
+      "product": "https://www.ikea.com/us/en/p/skogsta-chair-black-50544867/",
+      "image": "https://www.ikea.com/us/en/images/products/skogsta-chair-black__1243349_pe920580_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "black spindle chair: 4 thin legs + spindles, dark"
+    },
+    {
+      "sku": "PE920705",
+      "name": "LISABO",
+      "type": "Chair",
+      "product": "https://www.ikea.com/us/en/p/lisabo-chair-ash-tallmyra-white-black-90561044/",
+      "image": "https://www.ikea.com/us/en/images/products/lisabo-chair-ash-tallmyra-white-black__1243660_pe920705_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "light wood 4-leg chair: thin pale legs"
+    },
+    {
+      "sku": "PE735616",
+      "name": "TEODORES",
+      "type": "Chair",
+      "product": "https://www.ikea.com/us/en/p/teodores-chair-white-30486156/",
+      "image": "https://www.ikea.com/us/en/images/products/teodores-chair-white__0727344_pe735616_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "white plastic + steel legs: near-white body, thin metal legs"
+    },
+    {
+      "sku": "PE989132",
+      "name": "RÄVSTEN",
+      "type": "Bar stool",
+      "product": "https://www.ikea.com/us/en/p/raevsten-bar-stool-counter-height-black-10602072/",
+      "image": "https://www.ikea.com/us/en/images/products/raevsten-bar-stool-counter-height-black__1447502_pe989132_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "black 4-leg stool, no back: tall thin legs"
+    },
+    {
+      "sku": "PE735711",
+      "name": "DALFRED",
+      "type": "Bar stool",
+      "product": "https://www.ikea.com/us/en/p/dalfred-bar-stool-black-60155602/",
+      "image": "https://www.ikea.com/us/en/images/products/dalfred-bar-stool-black__0727486_pe735711_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "tripod base stool: three legs, shadow direction ambiguity"
+    },
+    {
+      "sku": "PE965003",
+      "name": "GRIMSARBO",
+      "type": "Side table",
+      "product": "https://www.ikea.com/us/en/p/grimsarbo-side-table-pine-plywood-bright-red-50606167/",
+      "image": "https://www.ikea.com/us/en/images/products/grimsarbo-side-table-pine-plywood-bright-red__1388878_pe965003_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "three splayed metal legs: per-leg shadow risk"
+    },
+    {
+      "sku": "PE1003293",
+      "name": "KYRRE",
+      "type": "Stool",
+      "product": "https://www.ikea.com/us/en/p/kyrre-stool-birch-60416925/",
+      "image": "https://www.ikea.com/us/en/images/products/kyrre-stool-birch__1488024_pe1003293_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "three angled legs plywood stool"
+    },
+    {
+      "sku": "PE163126",
+      "name": "LACK",
+      "type": "Side table",
+      "product": "https://www.ikea.com/us/en/p/lack-side-table-black-brown-80104268/",
+      "image": "https://www.ikea.com/us/en/images/products/lack-side-table-black-brown__57544_pe163126_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "4 straight legs, dark, low: baseline control"
+    }
+  ],
+  "rejected": []
+}

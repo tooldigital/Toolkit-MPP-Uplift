@@ -1,0 +1,64 @@
+{
+  "source": "IKEA product images fetched from ikea.com via the public search API (main studio shot, ?imwidth=4000; most assets top out at 2000x2000)",
+  "fetched": "2026-10-15",
+  "group": "flat",
+  "note": "",
+  "difficulty": "flatlay / floor items: subjectPose upright is wrong; cast shadow has no vertical object to anchor to",
+  "items": [
+    {
+      "sku": "PE419173",
+      "name": "LOHALS",
+      "type": "Rug, flatwoven",
+      "product": "https://www.ikea.com/us/en/p/lohals-rug-flatwoven-natural-50277393/",
+      "image": "https://www.ikea.com/us/en/images/products/lohals-rug-flatwoven-natural__0280221_pe419173_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "jute rug flatwoven: flat, beige, textured"
+    },
+    {
+      "sku": "PE970548",
+      "name": "STOENSE",
+      "type": "Rug, low pile",
+      "product": "https://www.ikea.com/us/en/p/stoense-rug-low-pile-green-90607688/",
+      "image": "https://www.ikea.com/us/en/images/products/stoense-rug-low-pile-green__1405714_pe970548_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "low-pile rug: flat solid colour"
+    },
+    {
+      "sku": "PE960693",
+      "name": "APTITLIG",
+      "type": "Cutting board",
+      "product": "https://www.ikea.com/us/en/p/aptitlig-cutting-board-bamboo-80233430/",
+      "image": "https://www.ikea.com/us/en/images/products/aptitlig-cutting-board-bamboo__1377033_pe960693_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "bamboo board: flat, angled view"
+    },
+    {
+      "sku": "PE654009",
+      "name": "OSTBIT",
+      "type": "Tray",
+      "product": "https://www.ikea.com/us/en/p/ostbit-tray-bamboo-10376724/",
+      "image": "https://www.ikea.com/us/en/images/products/ostbit-tray-bamboo__0542354_pe654009_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "bamboo tray: flat with low rim"
+    },
+    {
+      "sku": "PE700145",
+      "name": "TOFTBO",
+      "type": "Bath mat",
+      "product": "https://www.ikea.com/us/en/p/toftbo-bath-mat-gray-white-melange-20610279/",
+      "image": "https://www.ikea.com/us/en/images/products/toftbo-bath-mat-gray-white-melange__0640938_pe700145_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "grey bath mat: flat textured"
+    },
+    {
+      "sku": "PE996250",
+      "name": "MARKBLÅMME",
+      "type": "Rug, low pile",
+      "product": "https://www.ikea.com/us/en/p/markblamme-rug-low-pile-multicolor-check-pattern-90625705/",
+      "image": "https://www.ikea.com/us/en/images/products/markblamme-rug-low-pile-multicolor-check-pattern__1468724_pe996250_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "check pattern rug: flat + busy pattern"
+    }
+  ],
+  "rejected": []
+}

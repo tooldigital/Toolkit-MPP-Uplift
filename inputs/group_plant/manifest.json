@@ -1,0 +1,64 @@
+{
+  "source": "IKEA product images fetched from ikea.com via the public search API (main studio shot, ?imwidth=4000; most assets top out at 2000x2000)",
+  "fetched": "2026-10-15",
+  "group": "plant",
+  "note": "",
+  "difficulty": "fine leaf/stem edges: matte precision; thin stems vanish at 2K lightmap; many small shadow casters",
+  "items": [
+    {
+      "sku": "PE840176",
+      "name": "FEJKA",
+      "type": "Artificial potted plant",
+      "product": "https://www.ikea.com/us/en/p/fejka-artificial-potted-plant-indoor-outdoor-bird-of-paradise-70610601/",
+      "image": "https://www.ikea.com/us/en/images/products/fejka-artificial-potted-plant-indoor-outdoor-bird-of-paradise__1034065_pe840176_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "artificial plant large leaves: leaf edges"
+    },
+    {
+      "sku": "PE979093",
+      "name": "FEJKA",
+      "type": "Artificial potted plant",
+      "product": "https://www.ikea.com/us/en/p/fejka-artificial-potted-plant-indoor-outdoor-bamboo-40610607/",
+      "image": "https://www.ikea.com/us/en/images/products/fejka-artificial-potted-plant-indoor-outdoor-bamboo__1423297_pe979093_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "artificial bamboo: many thin leaves"
+    },
+    {
+      "sku": "PE898009",
+      "name": "FEJKA",
+      "type": "Artificial potted plant",
+      "product": "https://www.ikea.com/us/en/p/fejka-artificial-potted-plant-indoor-outdoor-hanging-fern-80615231/",
+      "image": "https://www.ikea.com/us/en/images/products/fejka-artificial-potted-plant-indoor-outdoor-hanging-fern__1184652_pe898009_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "artificial fern: fine fronds, hardest leaf edge"
+    },
+    {
+      "sku": "PE745318",
+      "name": "FEJKA",
+      "type": "Artificial potted plant",
+      "product": "https://www.ikea.com/us/en/p/fejka-artificial-potted-plant-indoor-outdoor-hanging-10615258/",
+      "image": "https://www.ikea.com/us/en/images/products/fejka-artificial-potted-plant-indoor-outdoor-hanging__0748917_pe745318_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "hanging plant: trailing thin stems"
+    },
+    {
+      "sku": "PE988215",
+      "name": "SMYCKA",
+      "type": "Artificial bouquet",
+      "product": "https://www.ikea.com/us/en/p/smycka-artificial-bouquet-poppy-indoor-outdoor-orange-60606242/",
+      "image": "https://www.ikea.com/us/en/images/products/smycka-artificial-bouquet-poppy-indoor-outdoor-orange__1445439_pe988215_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "pink bouquet: thin stems + petals"
+    },
+    {
+      "sku": "PE1011404",
+      "name": "SMYCKA",
+      "type": "Artificial leaf",
+      "product": "https://www.ikea.com/us/en/p/smycka-artificial-leaf-indoor-outdoor-eucalyptus-red-60632948/",
+      "image": "https://www.ikea.com/us/en/images/products/smycka-artificial-leaf-indoor-outdoor-eucalyptus-red__1515398_pe1011404_s5.jpg?imwidth=4000",
+      "size": "2000x2000",
+      "why": "eucalyptus stem: sparse, thin"
+    }
+  ],
+  "rejected": []
+}
