@@ -153,16 +153,28 @@ function headroomScale(rgb, alpha) {
 const smoothstep = (e0, e1, x) => { const t = Math.min(1, Math.max(0, (x - e0) / (e1 - e0))); return t * t * (3 - 2 * t); };
 // Shadow presets. `long` = directional cast (dramatic, but diverges per-leg on legged furniture).
 // `short` = soft grounding shadow (consistent). Cached separately (shadow_<preset>.jpg etc.).
+// `subjectPose` is NOT in the preset: it is a separate setting (CLI --subject-pose > group.json
+// subjectPose > "upright") merged in by resolveSettings, so either preset can be rendered either way.
 const SHADOW_PRESETS = {
-  long:  { mode: "ai.auto-with-overrides", softness: 0.6,  intensity: 0.55, spread: "long",  direction: "behindRight", subjectPose: "upright" },
-  short: { mode: "ai.auto-with-overrides", softness: 0.75, intensity: 0.5,  spread: "short",                           subjectPose: "upright" },
+  long:  { mode: "ai.auto-with-overrides", softness: 0.6,  intensity: 0.55, spread: "long",  direction: "behindRight" },
+  short: { mode: "ai.auto-with-overrides", softness: 0.75, intensity: 0.5,  spread: "short" },
 };
+// subjectPose — Photoroom's shadow.subjectPoseOverride. `upright` (default) anchors the cast shadow
+// to a standing object; a top-down item (rug, bath mat, sheepskin) rendered upright gets a
+// standing-panel shadow reaching ~0.7 widths to the right (measured 2026-10-15, docs/categories.md).
+// `flatlay` gives the thin contact shadow such items should have; `--shadow short` does NOT fix it.
+// Cached as `_flatlay` on shadow/relit/final (upright = unsuffixed, so older caches stay valid).
+// Per group only — group.json has no per-SKU override, so a group mixing top-down and angled items
+// (group_flat: LOHALS/TOFTBO/MARKBLÅMME top-down, OSTBIT/APTITLIG angled) stays upright and the
+// top-down SKUs are re-run with `--skus ... --subject-pose flatlay`.
+const SUBJECT_POSES = ["upright", "flatlay"];
 // Settings resolve per SKU as: explicit CLI flag > inputs/<group>/group.json > built-in default.
 // CLI holds only the flags actually passed (undefined = "not passed" → fall through to group.json).
 const CLI = {
   bg:       process.argv.includes("--bg") ? BG.toUpperCase() : undefined,
   strength: process.argv.includes("--strength") ? STRENGTH : undefined,
   shadow:   process.argv.includes("--shadow") ? arg("--shadow", null) : undefined,
+  subjectPose: process.argv.includes("--subject-pose") ? arg("--subject-pose", null) : undefined,
   relight:  NO_RELIGHT ? false : (RELIGHT ? true : undefined),
   mode:     arg("--mode", null) || (RENDER_ONLY ? "render-only" : TRANSPARENT ? "transparent" : undefined),
   highlights: HIGHLIGHTS ?? undefined,
@@ -218,7 +230,7 @@ let files = await collectInputs(SRC);
 if (group) files = files.filter((f) => dirname(f).split("/")[0] === group);
 if (only) { const set = new Set(only.split(",")); files = files.filter((f) => set.has(basename(f, extname(f)))); }
 
-// Per-group config: inputs/<group>/group.json may set { mode, strength, shadow, bg, relight }.
+// Per-group config: inputs/<group>/group.json may set { mode, strength, shadow, subjectPose, bg, relight, highlights, exposure, shade }.
 // group.json is not an image, so collectInputs ignores it. Cached per top-level group folder.
 const groupCfgCache = new Map();
 async function groupConfig(cat) {
@@ -238,6 +250,8 @@ async function resolveSettings(cat) {
   const strength = CLI.strength ?? gc.strength ?? 0.25;
   const bg = String(CLI.bg ?? gc.bg ?? "FFFFFF").toUpperCase();
   const shadowName = CLI.shadow ?? gc.shadow ?? "long";
+  const subjectPose = CLI.subjectPose ?? gc.subjectPose ?? "upright";
+  if (!SUBJECT_POSES.includes(subjectPose)) throw new Error(`${cat}: bad subjectPose "${subjectPose}" (upright|flatlay)`);
   const relightPref = CLI.relight ?? gc.relight ?? true;
   // `shadeOnly: true` in an older group.json still means highlights:"off".
   const highlights = CLI.highlights ?? gc.highlights ?? (gc.shadeOnly ? "off" : "on");
@@ -248,14 +262,17 @@ async function resolveSettings(cat) {
   if (!["on", "off", "auto"].includes(highlights)) throw new Error(`${cat}: bad highlights "${highlights}" (on|off|auto)`);
   const transparent = mode === "transparent", renderOnly = mode === "render-only";
   if (!["opaque", "transparent", "render-only"].includes(mode)) throw new Error(`${cat}: bad mode "${mode}" (opaque|transparent|render-only)`);
-  const shadowParams = SHADOW_PRESETS[shadowName];
-  if (!shadowParams) throw new Error(`${cat}: unknown shadow "${shadowName}" (long|short)`);
+  if (!SHADOW_PRESETS[shadowName]) throw new Error(`${cat}: unknown shadow "${shadowName}" (long|short)`);
+  const shadowParams = { ...SHADOW_PRESETS[shadowName], subjectPose };   // pose applies to whichever preset is chosen
   // transparent blends against Photoroom's white render, so it stays white-only. render-only's final
   // IS the render, and Photoroom can render the shadow directly on any bg, so it supports non-white.
   if (transparent && bg !== "FFFFFF") throw new Error(`${cat}: ${mode} is white-bg only (got bg ${bg})`);
   if (!/^[0-9A-F]{6}$/.test(bg)) throw new Error(`${cat}: bad bg "${bg}" (6 hex digits)`);
-  return { mode, strength, bg, shadowName, shadowParams, transparent, renderOnly, highlights, exposure, shade,
-           noRelight: !relightPref, suf: shadowName === "long" ? "" : `_${shadowName}` };
+  // suf names the shadow render and everything derived from it (relit, final): preset + pose.
+  // A flatlay shadow is a different Photoroom output, so it must never reuse an upright cache.
+  const suf = (shadowName === "long" ? "" : `_${shadowName}`) + (subjectPose === "upright" ? "" : `_${subjectPose}`);
+  return { mode, strength, bg, shadowName, subjectPose, shadowParams, transparent, renderOnly, highlights, exposure, shade,
+           noRelight: !relightPref, suf };
 }
 // Pre-resolve + validate every group's settings once, so config errors fail fast before any work.
 const settings = new Map();
@@ -297,7 +314,7 @@ for (let i = 0; i < files.length; i++) {
   const STR_SUF = st.strength === 0.25 ? "" : `_st${Math.round(st.strength * 100)}`;
   const SHD_SUF = st.shade === 1 ? "" : `_sh${Math.round(st.shade * 100)}`;
   const finalPath = join(dir, `final${st.suf}${modeSuf}${PLATE_SUF}${HD_SUF}${SHADE_SUF}${EXP_SUF}${STR_SUF}${SHD_SUF}_${st.bg}.jpg`);   // cache per shadow-preset + bg (+ composite mode + plate/HD/shade variant)
-  process.stdout.write(`[${i + 1}/${files.length}] ${cat === "." ? "" : cat + "/"}${sku} [${st.mode} s=${st.strength}] ... `);
+  process.stdout.write(`[${i + 1}/${files.length}] ${cat === "." ? "" : cat + "/"}${sku} [${st.mode} s=${st.strength}${st.subjectPose === "upright" ? "" : " " + st.subjectPose}] ... `);
   if (!NO_CACHE && await exists(finalPath)) { await copyFile(finalPath, deliverable); console.log("skip"); ok.push({ sku, cat, path: deliverable }); continue; }
   try {
     // 1. plate — place the subject on a 4000² white canvas (brief-spec framing).

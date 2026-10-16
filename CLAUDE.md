@@ -24,6 +24,7 @@ npm run pipeline                                   # all SKUs, white bg
 npm run pipeline -- --skus PE1016720               # subset
 npm run pipeline -- --bg E8E8E8 --out outputs/finals_gray --sheet outputs/contact_sheet_gray.jpg
 npm run pipeline -- --shadow short                 # grounding-shadow preset (default: long)
+npm run pipeline -- --subject-pose flatlay --group group_flat --skus PE419173,PE700145   # top-down items: thin contact shadow (default: upright)
 npm run pipeline -- --group group_glass            # only inputs/group_glass/
 npm run pipeline -- --no-relight                   # skip Gemini; compositing + shadow only (no GEMINI_KEY needed)
 npm run pipeline -- --transparent --group group_glass   # clear-glass composite (white bg only)
@@ -37,7 +38,17 @@ npm run pipeline -- --debug --skus PE1016720             # log every API request
 
 Each category folder may hold a `group.json` that sets its defaults, so a plain `npm run pipeline`
 renders every group correctly in one pass (no remembering flags). Keys (all optional):
-`{ "mode": "opaque|transparent|render-only", "strength": 0.08, "shadow": "long|short", "bg": "FFFFFF", "relight": true, "highlights": "on|off|auto" }`.
+`{ "mode": "opaque|transparent|render-only", "strength": 0.08, "shadow": "long|short", "subjectPose": "upright|flatlay", "bg": "FFFFFF", "relight": true, "highlights": "on|off|auto", "exposure": 1, "shade": 1 }`.
+
+`subjectPose` (CLI `--subject-pose upright|flatlay`, default `upright`) is Photoroom's
+`shadow.subjectPoseOverride`, applied to whichever `shadow` preset is selected. `upright` anchors the
+cast shadow to a standing object; a top-down item (rug, bath mat, sheepskin) rendered upright gets a
+standing-panel shadow reaching ~0.7 widths to the right, and `--shadow short` does not fix it
+(measured 2026-10-15, `docs/categories.md`). `flatlay` gives the thin contact shadow such items should
+have. Cached as `_flatlay` on `shadow`, `relit` and `final` (upright is unsuffixed, so existing caches
+stay valid). group.json is per GROUP — there is no per-SKU override — so a group that mixes top-down
+and angled items (`group_flat`: LOHALS/TOFTBO/MARKBLÅMME top-down, OSTBIT/APTITLIG angled) stays
+`upright` in its group.json and the top-down SKUs are re-run with `--skus ... --subject-pose flatlay`.
 `highlights` (CLI `--highlights on|off|auto`) controls the BRIGHT half of the lighting map; the dark
 half always applies at full `strength`. The relight is multiplicative, so the bright half needs
 headroom a light product may not have — white fabric already sits at 230-250 and `f > 1` just drives
@@ -67,7 +78,7 @@ lightmap only redistributes light across the product, so a subject that is unifo
 the backdrop cannot be fixed by `highlights` at any setting. STOCKHOLM 2025 beige ships at 0.97
 (body p90 242 -> 236 against a 247 bg). Cached as `_e<nnn>`. Use sparingly.
 Resolution precedence per SKU: **explicit CLI flag > group.json > built-in default** (mode opaque,
-strength 0.25, shadow long, bg FFFFFF, relight on). `--mode` is the CLI form of `mode` (the old
+strength 0.25, shadow long, subjectPose upright, bg FFFFFF, relight on). `--mode` is the CLI form of `mode` (the old
 `--transparent`/`--render-only` flags still work). Configs are validated up front (bad mode/shadow,
 or a non-white bg with a white-bg-only mode, fails the run before any work). Committed:
 `group_glass/group.json` = render-only; `group_plush/group.json` = opaque, strength 0.08;
@@ -185,7 +196,8 @@ contact sheet(s) and commit both sets.
    alternative; patch-mode ("improve this shadow crop") is a dead end — Gemini erases shadows.
 5. **Finals are 4000², native res.** Never downsample deliverables.
 6. **Caching:** `outputs/work/<sku>/` holds `matte.png`, `shadow<suffix>.jpg`, `relit<suffix>.jpg`,
-   `final<suffix>_<bg>.jpg` (suffix = shadow preset, `long` = empty). Delete a file to regenerate
+   `final<suffix>_<bg>.jpg` (suffix = shadow preset then subject pose: `long`/`upright` = empty,
+   e.g. `shadow_short_flatlay.jpg`). Delete a file to regenerate
    that stage; runs skip SKUs whose final exists. Photoroom 429 stops the run — re-run to resume.
 7. **Photoroom API:** dotted form fields (`shadow.*`, `background.color`, `export.format`); let
    FormData set the Content-Type. Sandbox keys are rate-limited 60/min.

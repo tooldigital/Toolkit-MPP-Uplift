@@ -21,7 +21,7 @@ clips the shadow.
 |---|-------|------|----------|
 | 1 | Plate | `src/plate.mjs · makePlate` | original.jpg → `plate` (subject scaled so longest side ≤3200, centered on 4000² white) |
 | 2 | Matte | `src/cutout.mjs · cutout` | plateWhite → `matte_hd.png` (Photoroom `removeBackground`, HD header by default, 4000², padding 0.10; `--no-hd` → `matte.png`) |
-| 3 | Shadow | `src/photoroom.mjs · generateShadow` | plateWhite → `shadow.jpg` (product + cast shadow, 4000², padding 0.10) |
+| 3 | Shadow | `src/photoroom.mjs · generateShadow` | plateWhite → `shadow.jpg` (product + cast shadow, 4000², padding 0.10; `_flatlay` suffix with `subjectPose: flatlay`) |
 | 4 | Relight | `src/gemini.mjs · generateShadowGemini` | shadow.jpg → `relit.jpg` (Gemini 3 Pro, temp 0, 4K) |
 | 5 | Composite | `scripts/run_pipeline.mjs` | matte + shadow + relit → `final.jpg` |
 
@@ -30,7 +30,11 @@ both the mask and the subject-pixel source in [5]. Photoroom is used (not a loca
 fails on fur/glass.
 
 **[3] Shadow** params (standing default): `mode ai.auto-with-overrides, softness 0.6, intensity 0.55, spread
-long, direction behindRight, subjectPose upright`. Supplies the cast shadow + background.
+long, direction behindRight, subjectPose upright`. Supplies the cast shadow + background. `subjectPose`
+is its own setting (`--subject-pose` / group.json `subjectPose`, default `upright`), applied to either
+preset: top-down items (rugs, bath mats, sheepskins) need `flatlay` or they get a standing-panel shadow;
+`short` does not fix that. Flatlay renders cache as `shadow_flatlay.jpg` / `relit_flatlay.jpg` /
+`final_flatlay_<bg>.jpg` so they never reuse an upright shadow.
 
 **[4] Relight** — used as a grayscale **lighting map only**, never as pixels. Input is the shadow base (so
 the prompt's "product with a cast shadow" matches the image). Generated at **2K, temperature 0**
@@ -75,10 +79,12 @@ decontamination step**. They come from:
 | maxSubject | 3200 | plate | longest subject side (→ 400 px margin) |
 | padding | 0.10 (plated) · 0.0838 (`--no-plate`) | matte, shadow | Photoroom pads its referenceBox; matte & shadow agree |
 | shadow.softness / intensity / spread | 0.6 / 0.55 / long | shadow | standing defaults |
-| shadow.direction / subjectPose | behindRight / upright | shadow | light front-left |
+| shadow.direction | behindRight | shadow | light front-left |
+| subjectPose | upright | shadow | `upright` (standing) or `flatlay` (top-down: thin contact shadow); CLI `--subject-pose`, group.json `subjectPose`; cached `_flatlay` |
 | strength | 0.25 | composite | relight amount (gentle) |
 | bg | FFFFFF | composite | output background hex (any color; shadow generated on white, recolored here) |
 | shadow | long | shadow | preset: `long` (directional) or `short` (soft grounding); cached per preset |
+| group.json | — | all | per-GROUP keys: `mode, strength, shadow, subjectPose, bg, relight, highlights, exposure, shade`; no per-SKU override — mixed groups re-run the odd SKUs with `--skus` + the flag |
 
 ## Run
 
