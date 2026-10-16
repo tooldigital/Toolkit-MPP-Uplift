@@ -22,7 +22,7 @@ or the empty `group_glass` / `group_plush` folders.
 | fur | 6 | fur silhouette; three items lie flat (BLÅHAJ, GOSIG GOLDEN, sheepskin) | matte (halo at fur edge), shadow (flat items get none — the otter case) | strength 0.08; `docs/plush_f7f7f7.md` band/dehalo experiments | **4/6 OK**. Edges clean on white. 2 flat items (sheepskin, rug) get a standing-panel shadow → shadow stage; needs `flatlay` pose. |
 | legs | 8 | 3–4 thin legs, tripod bases, splayed metal legs | shadow (`long` preset sends one leg's shadow the wrong way — invariant 4); thin legs vs ±3 px Photoroom scatter | `--shadow short`; delete + re-run | **8/8 OK**. No wrong-way leg this run; cast behind-right on 8/8. Relight OK on 2/2 (LISABO clip 1.2% → 0.1% with `highlights auto`). |
 | white | 6 | near-white product on white (UPPLAND, white mug, bath mat) | plate (threshold 245 misses it), relight (no headroom → clipping), composite (no bg contrast) | `highlights: auto/off`, `exposure` | **6/6 OK** on white. Plate threshold held on all 6. Bath mat: standard matte 97% partial alpha (ghost on grey) → fixed by HD matte (now default); its shadow is a standing card. Relight OK, UPPLAND clip 0.05%. |
-| dark | 4 | black furniture, dark upholstery, black candlesticks | relight (shade half crushes recesses), matte (dark decontamination rim) | `shade` | not run (not in the task order). |
+| dark | 4 | black furniture, dark upholstery, black candlesticks | relight (shade half crushes recesses), matte (dark decontamination rim) | `shade` | **4/4 OK**. Shadows behind-right, framing 3149–3193 px. No crush at strength 0.25 (NORDVIKEN p01 35 → 32). VEDBO's pale wood legs clip 2.2% under relight → `highlights auto` 0.0%. |
 | reflective | 7 | mirror faces, chrome, brushed/polished steel | matte (reflections read as background), relight (speculars fight the lightmap), mirror face ≈ white | none yet | **7/7 OK on white**. Both mirror faces are 91–98% partial alpha in the matte → the backdrop shows through on any non-white bg. Relight blows chrome (bowl clip 8.2%) → `highlights auto` fixes (0.1%). |
 | flat | 6 | rugs shown top-down, boards, trays, bath mat | shadow (`subjectPose: upright` is wrong; nothing vertical to anchor a cast shadow) | `subjectPose: flatlay` exists in the Photoroom wrapper but is not wired to a config key | **2/6 OK** (the two angled boards). 3 top-down rugs get a standing-panel shadow (cast reaches 0.7 widths right); STOENSE standard matte 63% partial (pale cloud) → fixed by HD. `--shadow short` does not fix; `subjectPose: flatlay` does (not wired). |
 | open | 7 | wire shelving, racks, carts; white wire on white | matte (many holes), shadow (falls through gaps), plate (thin white frame below threshold) | none yet | **5/7 OK**. EKRAR + RIGGA (thin white frames) get no cast shadow (3k / 56k px vs 250k+); `--shadow short` does not help. Wire bodies 36–52% partial alpha (ghost on grey). |
@@ -94,12 +94,12 @@ margin), % of product pixels with partial alpha (5–249), cast-shadow area outs
 | tall | 4 | 4 | relight (1) | Framing 3192–3193 px; TÅGARP is 620 px wide in the frame (spec, not a fault). Base-only shadows. TÅGARP relight blows the uplighter shade: clip 0.00% → 10.70% (p90 248 → 254). | `highlights auto` → 0.00% | production-ready with `highlights auto` |
 | small | 7 | 7 | — | All framed 3189–3194 px, shadows under. GLADELIG relight clip 0.23%, FÄRGRIK 0.00%. | — | production-ready (control) |
 | lit | 7 | 3 | shadow (4) | Mattes fine on all 7 (frosted, paper, open weave). The four hanging pendants (VINDKAST, SINNERLIG, STOCKHOLM 2025, GULLSUDARE) get a floor-contact cast 0.44–0.71 widths right under a lamp on a cord. VARMBLIXT relight darkens the right side (p01 40 → 33), fine. | none: the shadow wrapper has no off switch and the preset is per group | needs new work (hanging-item rule: no cast) |
-| dark | 4 | — | — | not run | | |
+| dark | 4 | 4 | relight (1) | Run separately after the main pass (8 Photoroom + 2 Gemini calls). Framing 3149–3193 px, margins ≥ 402, cast behind-right 4/4 (0.19–0.65 widths). Partial alpha 3.5–10.3% (NORDVIKEN's slatted back). Relight at 0.25: no recess crush — NORDVIKEN p01 35 → 32, VEDBO p01 32 → 29 — so `shade` is not needed at this strength. VEDBO (dark seat on pale birch frame) clips 0.00% → 2.23% on the legs, p90 187 → 212. | `highlights auto` + `shade 0.65` → VEDBO clip 0.00%, p90 187; NORDVIKEN unchanged. | production-ready; `highlights auto` for dark-on-light-wood pieces |
 
 ### Ranked
 
 Production-ready as is (default opaque path, HD matte, `long` shadow): **legs, small, textile, plant, glassware
-(render-only), offwhite** — 41/41 on white. offwhite only because Photoroom reframes; the plate stage contributes
+(render-only), offwhite, dark** — 45/45 on white. offwhite only because Photoroom reframes; the plate stage contributes
 nothing there.
 
 Production-ready with an existing knob: **white, tall, reflective** (17/17 on white) with `highlights auto` in
@@ -117,5 +117,4 @@ Needs new work:
   the mirror face (91–98%) and the wire bodies (36–52%); white hides it, grey will not.
 - **plate on off-white sources**: detect on contrast, not absolute luminance, before mixed catalogs arrive.
 
-Not measured here: `dark` (not in the run order), the relight on the remaining 62 SKUs, and any non-white
-background.
+Not measured here: the relight on the remaining 60 SKUs, and any non-white background.
