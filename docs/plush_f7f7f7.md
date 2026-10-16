@@ -1,3 +1,14 @@
+> **Status: experimental workflow, separate from the pipeline.** Written by Iman, August 2026; content
+> unchanged since. The FUR EDGES and NO FUR versions put **Gemini-generated pixels at the product edge**
+> (and, for the otter, a Gemini cast shadow), which the main pipeline never does (`docs/pipeline.md`
+> invariants 2 to 4). Results depend on cached Gemini outputs that are not committed; a fresh run may
+> differ. Neither the plush source images nor these deliverables are in the repository. Scripts are
+> indexed in `docs/experiments.md`.
+>
+> Known drift: `scripts/build_plush_f7f7f7.sh` now builds **four** versions per SKU (adds `normalhd`,
+> HD matte), not three, and its cache handling predates the current cache file names
+> (`docs/configuration.md`). A fresh rebuild has not been verified since.
+
 # Plush finals on F7F7F7 — three versions (normal / fur edges / no fur)
 
 Finalized process for the `group_plush` SKUs on a light-grey **F7F7F7** background. Every plush is
