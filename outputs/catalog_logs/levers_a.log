@@ -12,6 +12,6 @@ Done. 1 ok, 0 failed
 [1/1] group_white/PE722641 [opaque s=0.25] ... ok
 Done. 1 ok, 0 failed
 ### flatlay pose experiment
-wrote /home/ariel/projects/danish-traitors.v2/outputs/experiments/catalog_flatlay/PE419173_long_flatlay.jpg 3198649
-wrote /home/ariel/projects/danish-traitors.v2/outputs/experiments/catalog_flatlay/PE700145_long_flatlay.jpg 2491354
-wrote /home/ariel/projects/danish-traitors.v2/outputs/experiments/catalog_flatlay/PE722641_long_flatlay.jpg 798713
+wrote outputs/experiments/catalog_flatlay/PE419173_long_flatlay.jpg 3198649
+wrote outputs/experiments/catalog_flatlay/PE700145_long_flatlay.jpg 2491354
+wrote outputs/experiments/catalog_flatlay/PE722641_long_flatlay.jpg 798713
