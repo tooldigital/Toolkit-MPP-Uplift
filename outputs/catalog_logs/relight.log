@@ -1,0 +1,52 @@
+##### relight group_legs PE920580,PE920705 16:40:49
+[1/2] group_legs/PE920580 [opaque s=0.25] ... ok
+[2/2] group_legs/PE920705 [opaque s=0.25] ... ok
+Done. 2 ok, 0 failed
+##### relight group_white PE774419,PE932624 16:41:33
+[1/2] group_white/PE774419 [opaque s=0.25] ... ok
+[2/2] group_white/PE932624 [opaque s=0.25] ... ok
+Done. 2 ok, 0 failed
+##### relight group_flat PE419173,PE996250 16:42:17
+[1/2] group_flat/PE419173 [opaque s=0.25] ... ok
+[2/2] group_flat/PE996250 [opaque s=0.25] ... ok
+Done. 2 ok, 0 failed
+##### relight group_open PE692566,PE957173 16:43:03
+[1/2] group_open/PE692566 [opaque s=0.25] ... ok
+[2/2] group_open/PE957173 [opaque s=0.25] ... ok
+Done. 2 ok, 0 failed
+##### relight group_offwhite PE1038931,PE1042241 16:43:46
+[1/2] group_offwhite/PE1038931 [opaque s=0.25] ... ok
+[2/2] group_offwhite/PE1042241 [opaque s=0.25] ... ok
+Done. 2 ok, 0 failed
+##### relight group_glassware PE729361,PE728122 16:44:29
+[1/2] group_glassware/PE728122 [render-only s=0.25] ... ok
+[2/2] group_glassware/PE729361 [render-only s=0.25] ... ok
+Done. 2 ok, 0 failed
+##### relight group_fur PE727370,PE680644 16:45:25
+[1/2] group_fur/PE680644 [opaque s=0.08] ... ok
+[2/2] group_fur/PE727370 [opaque s=0.08] ... ok
+Done. 2 ok, 0 failed
+##### relight group_reflective PE1004035,PE767399 16:46:17
+[1/2] group_reflective/PE1004035 [opaque s=0.25] ... ok
+[2/2] group_reflective/PE767399 [opaque s=0.25] ... ok
+Done. 2 ok, 0 failed
+##### relight group_plant PE840176,PE898009 16:47:04
+[1/2] group_plant/PE840176 [opaque s=0.25] ... ok
+[2/2] group_plant/PE898009 [opaque s=0.25] ... ok
+Done. 2 ok, 0 failed
+##### relight group_textile PE382470,PE783726 16:47:48
+[1/2] group_textile/PE382470 [opaque s=0.25] ... ok
+[2/2] group_textile/PE783726 [opaque s=0.25] ... ok
+Done. 2 ok, 0 failed
+##### relight group_tall PE771436,PE899535 16:48:31
+[1/2] group_tall/PE771436 [opaque s=0.25] ... ok
+[2/2] group_tall/PE899535 [opaque s=0.25] ... ok
+Done. 2 ok, 0 failed
+##### relight group_small PE817327,PE727942 16:49:14
+[1/2] group_small/PE727942 [opaque s=0.25] ... ok
+[2/2] group_small/PE817327 [opaque s=0.25] ... ok
+Done. 2 ok, 0 failed
+##### relight group_lit PE769703,PE872535 16:49:57
+[1/2] group_lit/PE769703 [opaque s=0.25] ... ok
+[2/2] group_lit/PE872535 [opaque s=0.25] ... ok
+Done. 2 ok, 0 failed

@@ -32,3 +32,13 @@ inputs/group_chair/*.jpg
 # Categorization set (docs/categories.md): manifests + selection are tracked, the fetched JPEGs are not —
 # `node scripts/fetch_ikea.mjs fetch inputs/catalog_selection.json` re-downloads them.
 inputs/group_*/*.jpg
+
+# Categorization-run evidence cited by docs/categories.md: contact sheets + QC inspection images
+# (~10 MB). The full-res category finals (outputs/catalog_finals/ etc., ~160 MB) stay local.
+!outputs/catalog_contact_sheet.jpg
+!outputs/catalog_sheet_*.jpg
+!outputs/catalog_relight_sheet_*.jpg
+!outputs/catalog_relight_ha_sheet_*.jpg
+!outputs/catalog_relight_dark_sh_sheet_*.jpg
+!outputs/catalog_qc_*.jpg
+!outputs/catalog_logs/

@@ -1,0 +1,89 @@
+##### group_legs 15:51:15
+
+> mpp-pipeline@1.0.0 pipeline
+> node --env-file=.env scripts/run_pipeline.mjs --group group_legs --no-relight --out outputs/catalog_finals --sheet outputs/catalog_sheet.jpg
+
+Pipeline: 8 SKUs · settings=per-group · CLI:[relight=false]
+
+[1/8] group_legs/PE1003293 [opaque s=0.25] ... ok
+[2/8] group_legs/PE163126 [opaque s=0.25] ... ok
+[3/8] group_legs/PE735616 [opaque s=0.25] ... ok
+[4/8] group_legs/PE735711 [opaque s=0.25] ... ok
+[5/8] group_legs/PE920580 [opaque s=0.25] ... ok
+[6/8] group_legs/PE920705 [opaque s=0.25] ... ok
+[7/8] group_legs/PE965003 [opaque s=0.25] ... ok
+[8/8] group_legs/PE989132 [opaque s=0.25] ... ok
+contact sheet → outputs/catalog_sheet_group_legs.jpg
+
+Done. 8 ok, 0 failed
+Finals: outputs/finals/  (flat, one image per SKU)
+##### group_white 15:52:34
+
+> mpp-pipeline@1.0.0 pipeline
+> node --env-file=.env scripts/run_pipeline.mjs --group group_white --no-relight --out outputs/catalog_finals --sheet outputs/catalog_sheet.jpg
+
+Pipeline: 6 SKUs · settings=per-group · CLI:[relight=false]
+
+[1/6] group_white/PE722641 [opaque s=0.25] ... ok
+[2/6] group_white/PE727998 [opaque s=0.25] ... ok
+[3/6] group_white/PE729106 [opaque s=0.25] ... ok
+[4/6] group_white/PE774419 [opaque s=0.25] ... ok
+[5/6] group_white/PE932624 [opaque s=0.25] ... ok
+[6/6] group_white/PE960815 [opaque s=0.25] ... ok
+contact sheet → outputs/catalog_sheet_group_white.jpg
+
+Done. 6 ok, 0 failed
+Finals: outputs/finals/  (flat, one image per SKU)
+##### group_flat 15:53:36
+
+> mpp-pipeline@1.0.0 pipeline
+> node --env-file=.env scripts/run_pipeline.mjs --group group_flat --no-relight --out outputs/catalog_finals --sheet outputs/catalog_sheet.jpg
+
+Pipeline: 6 SKUs · settings=per-group · CLI:[relight=false]
+
+[1/6] group_flat/PE419173 [opaque s=0.25] ... ok
+[2/6] group_flat/PE654009 [opaque s=0.25] ... ok
+[3/6] group_flat/PE700145 [opaque s=0.25] ... ok
+[4/6] group_flat/PE960693 [opaque s=0.25] ... ok
+[5/6] group_flat/PE970548 [opaque s=0.25] ... ok
+[6/6] group_flat/PE996250 [opaque s=0.25] ... ok
+contact sheet → outputs/catalog_sheet_group_flat.jpg
+
+Done. 6 ok, 0 failed
+Finals: outputs/finals/  (flat, one image per SKU)
+##### group_open 15:54:54
+
+> mpp-pipeline@1.0.0 pipeline
+> node --env-file=.env scripts/run_pipeline.mjs --group group_open --no-relight --out outputs/catalog_finals --sheet outputs/catalog_sheet.jpg
+
+Pipeline: 7 SKUs · settings=per-group · CLI:[relight=false]
+
+[1/7] group_open/PE692566 [opaque s=0.25] ... ok
+[2/7] group_open/PE704408 [opaque s=0.25] ... ok
+[3/7] group_open/PE727670 [opaque s=0.25] ... ok
+[4/7] group_open/PE727742 [opaque s=0.25] ... ok
+[5/7] group_open/PE727906 [opaque s=0.25] ... ok
+[6/7] group_open/PE828336 [opaque s=0.25] ... ok
+[7/7] group_open/PE957173 [opaque s=0.25] ... ok
+contact sheet → outputs/catalog_sheet_group_open.jpg
+
+Done. 7 ok, 0 failed
+Finals: outputs/finals/  (flat, one image per SKU)
+##### group_offwhite 15:56:07
+
+> mpp-pipeline@1.0.0 pipeline
+> node --env-file=.env scripts/run_pipeline.mjs --group group_offwhite --no-relight --out outputs/catalog_finals --sheet outputs/catalog_sheet.jpg
+
+Pipeline: 7 SKUs · settings=per-group · CLI:[relight=false]
+
+[1/7] group_offwhite/PE1038929 [opaque s=0.25] ... ok
+[2/7] group_offwhite/PE1038931 [opaque s=0.25] ... ok
+[3/7] group_offwhite/PE1038938 [opaque s=0.25] ... ok
+[4/7] group_offwhite/PE1038945 [opaque s=0.25] ... ok
+[5/7] group_offwhite/PE1042241 [opaque s=0.25] ... ok
+[6/7] group_offwhite/PE1042532 [opaque s=0.25] ... ok
+[7/7] group_offwhite/PE1043245 [opaque s=0.25] ... ok
+contact sheet → outputs/catalog_sheet_group_offwhite.jpg
+
+Done. 7 ok, 0 failed
+Finals: outputs/finals/  (flat, one image per SKU)
