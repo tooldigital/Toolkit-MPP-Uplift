@@ -17,6 +17,7 @@ caching and no tests. Production infrastructure is the next phase.
 | Asking "why is this constant this value?" | `docs/decisions.md` |
 | Planning which products are ready | `docs/categories.md` |
 | Looking at a script in `scripts/` | `docs/experiments.md` |
+| Researching better, more consistent lighting | `docs/lighting-research-plan.md` |
 | An AI coding agent | `CLAUDE.md` |
 
 ## Repository map
