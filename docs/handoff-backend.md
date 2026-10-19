@@ -68,7 +68,7 @@ decode; finals are written as sRGB without an embedded profile.
 - **Sequential, single machine,** local disk cache, `.env` secrets.
 - **Deliverables in git.** 128 tracked files under `outputs/`, ~66 MB. The 22 reference finals are a
   usable regression baseline; the repo is not a storage system.
-- **42 scripts, of which 2 are the product.** The rest are experiments and QC utilities, indexed in
+- **44 scripts, of which 2 are the product.** The rest are experiments and QC utilities, indexed in
   `docs/experiments.md`. Read them as notes.
 - **About 1,400 lines of code** in `src/` and the two product scripts, of which 240 are the experimental
   `src/shadow-patch.mjs`. The value is in the invariants and measured constants, not the JavaScript.

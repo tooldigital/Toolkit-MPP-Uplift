@@ -1,7 +1,7 @@
 # Scripts other than the pipeline
 
-`scripts/` holds 42 files. Two are the product: `run_pipeline.mjs` (the pipeline) and `fetch_ikea.mjs`
-(test-image fetcher). The other 40 are listed here. They are notes, not code to port: each answers one
+`scripts/` holds 44 files. Two are the product: `run_pipeline.mjs` (the pipeline) and `fetch_ikea.mjs`
+(test-image fetcher). The other 42 are listed here. They are notes, not code to port: each answers one
 question, and most write only to `outputs/experiments/`.
 
 Status values: **adopted** (became a pipeline feature), **in use** (builds a deliverable or measures
@@ -21,6 +21,7 @@ automated QC gate.
 | `qc_plush_f7f7f7.mjs` | I | in use | Plush deliverables: present, 4000², cast shadow grounded, fringe not blown out. Non-zero exit on failure. |
 | `build_plush_f7f7f7.sh` | I | in use | Builds the plush F7F7F7 deliverables in several versions per SKU. Process in `docs/plush_f7f7f7.md`. |
 | `auto_tune.mjs` | I | record | Solves strength, exposure and shade per SKU against global targets. Not adopted; see `docs/decisions.md` #12. |
+| `qc_relight_direction.mjs` | A | in use | Per SKU: fitted key direction and swing of the applied relight, on the absolute map and on the albedo-cancelled ratio map, with circular statistics. Seed of the lighting harness (`docs/lighting-research-plan.md`). |
 
 ## Framing, matte and Photoroom shadow
 
@@ -46,6 +47,7 @@ automated QC gate.
 |---|---|---|---|
 | `exp_shadow_patch.mjs` | A | dead end | Asking Gemini to improve a shadow crop erases the shadow (three prompt variants). |
 | `exp_shadow_harvest.mjs` | A | record | Full-scene Gemini render, keep only the shadow under the real product. Works; a candidate alternative shadow source. Uses `src/shadow-patch.mjs`. |
+| `exp_relight_repeat.mjs` | A | record | Runs the relight N times on one cached input and compares the maps: 3 of 4 agreed, 1 diverged 25° (2026-10-19). Costs N Gemini calls. |
 | `exp_gemini_scene.mjs` | A | record | One-shot lighting plus shadow from Gemini with a reference image. Outcome not recorded; the pipeline uses Gemini only as a lighting map. |
 | `exp_otter_shadow.mjs` | I | record | Controlling the direction of a Gemini shadow for a flat product that Photoroom leaves shadowless. |
 
