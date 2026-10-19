@@ -21,7 +21,7 @@ automated QC gate.
 | `qc_plush_f7f7f7.mjs` | I | in use | Plush deliverables: present, 4000², cast shadow grounded, fringe not blown out. Non-zero exit on failure. |
 | `build_plush_f7f7f7.sh` | I | in use | Builds the plush F7F7F7 deliverables in several versions per SKU. Process in `docs/plush_f7f7f7.md`. |
 | `auto_tune.mjs` | I | record | Solves strength, exposure and shade per SKU against global targets. Not adopted; see `docs/decisions.md` #12. |
-| `qc_relight_direction.mjs` | A | in use | Per SKU: fitted key direction and swing of the applied relight, on the absolute map and on the albedo-cancelled ratio map, with circular statistics. Seed of the lighting harness (`docs/lighting-research-plan.md`). |
+| `qc_relight_direction.mjs` | A | in use | Per SKU: fitted key direction and swing of the applied relight, on the absolute map and on the ratio map (divided before blurring), with circular statistics, plane-fit R² and the composite's effective gain. Seed of the lighting harness (`docs/lighting-research-plan.md`). |
 
 ## Framing, matte and Photoroom shadow
 

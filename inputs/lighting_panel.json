@@ -1,0 +1,152 @@
+{
+ "purpose": "Frozen lighting panel for docs/lighting-research-plan.md §7. Every candidate method runs on exactly these SKUs; do not add or swap without a dated note here.",
+ "frozen": "2026-10-19",
+ "count": 24,
+ "excluded_by_design": "group_glassware (render-only path, glass prompt; measured separately)",
+ "items": [
+  {
+   "sku": "PE920580",
+   "group": "group_legs",
+   "name": "SKOGSTA",
+   "type": "Chair"
+  },
+  {
+   "sku": "PE920705",
+   "group": "group_legs",
+   "name": "LISABO",
+   "type": "Chair"
+  },
+  {
+   "sku": "PE774419",
+   "group": "group_white",
+   "name": "UPPLAND",
+   "type": "Armchair"
+  },
+  {
+   "sku": "PE932624",
+   "group": "group_white",
+   "name": "GULLABERG",
+   "type": "Nightstand"
+  },
+  {
+   "sku": "PE729964",
+   "group": "group_dark",
+   "name": "NORDVIKEN",
+   "type": "Chair"
+  },
+  {
+   "sku": "PE1004035",
+   "group": "group_reflective",
+   "name": "AFTONHAJ",
+   "type": "Serving bowl"
+  },
+  {
+   "sku": "PE767399",
+   "group": "group_reflective",
+   "name": "LINDBYN",
+   "type": "Mirror"
+  },
+  {
+   "sku": "PE727942",
+   "group": "group_small",
+   "name": "FÄRGRIK",
+   "type": "Mug"
+  },
+  {
+   "sku": "PE817327",
+   "group": "group_small",
+   "name": "GLADELIG",
+   "type": "Mug"
+  },
+  {
+   "sku": "PE382470",
+   "group": "group_textile",
+   "name": "FJÄDRAR",
+   "type": "Inner cushion"
+  },
+  {
+   "sku": "PE783726",
+   "group": "group_textile",
+   "name": "SILVERLÖNN",
+   "type": "Sheer curtains, 1 pair"
+  },
+  {
+   "sku": "PE771436",
+   "group": "group_tall",
+   "name": "TÅGARP",
+   "type": "Floor uplighter"
+  },
+  {
+   "sku": "PE899535",
+   "group": "group_tall",
+   "name": "ÖKENSAND",
+   "type": "Floor lamp"
+  },
+  {
+   "sku": "PE419173",
+   "group": "group_flat",
+   "name": "LOHALS",
+   "type": "Rug, flatwoven"
+  },
+  {
+   "sku": "PE996250",
+   "group": "group_flat",
+   "name": "MARKBLÅMME",
+   "type": "Rug, low pile"
+  },
+  {
+   "sku": "PE692566",
+   "group": "group_open",
+   "name": "OMAR",
+   "type": "1 section shelving unit"
+  },
+  {
+   "sku": "PE957173",
+   "group": "group_open",
+   "name": "RÅSKOG",
+   "type": "Utility cart"
+  },
+  {
+   "sku": "PE840176",
+   "group": "group_plant",
+   "name": "FEJKA",
+   "type": "Artificial potted plant"
+  },
+  {
+   "sku": "PE680644",
+   "group": "group_fur",
+   "name": "ULLERSLEV",
+   "type": "Sheepskin"
+  },
+  {
+   "sku": "PE769703",
+   "group": "group_lit",
+   "name": "VINDKAST",
+   "type": "Pendant lamp"
+  },
+  {
+   "sku": "PE1038931",
+   "group": "group_offwhite",
+   "name": "LAIVA",
+   "type": "Bookcase"
+  },
+  {
+   "sku": "PE1016720",
+   "group": "originals",
+   "name": "Yellow armchair (from group_all)",
+   "type": "Armchair"
+  },
+  {
+   "sku": "PE935669",
+   "group": "originals",
+   "name": null,
+   "type": null
+  },
+  {
+   "sku": "PE979531",
+   "group": "originals",
+   "name": "(from inputs/group_all)",
+   "type": "Sofa"
+  }
+ ]
+}

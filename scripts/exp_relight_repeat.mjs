@@ -35,5 +35,5 @@ for (const s of S) console.log(`${s.name.padEnd(7)} product mean ${s.mean.toFixe
 for (let i = 0; i < maps.length; i++) for (let j = i + 1; j < maps.length; j++) {
   const a = maps[i].lm, b = maps[j].lm, ma = S[i].mean, mb = S[j].mean; let d = 0, mx = 0, n = 0;
   for (let p = 0; p < a.length; p++) { if (alpha[p] < 200) continue; const fa = 1 + ((a[p] - ma) / 128) * 0.25, fb = 1 + ((b[p] - mb) / 128) * 0.25; const e = Math.abs(fa - fb); d += e; if (e > mx) mx = e; n++; }
-  console.log(`${maps[i].name} vs ${maps[j].name}: relight factor MAD ${(100 * d / n).toFixed(2)}%  max ${(100 * mx).toFixed(1)}%  angle diff ${Math.abs(S[i].angle - S[j].angle).toFixed(1)}°`);
+  console.log(`${maps[i].name} vs ${maps[j].name}: relight factor MAD ${(100 * d / n).toFixed(2)}%  max ${(100 * mx).toFixed(1)}%  angle diff ${(() => { const d = Math.abs(S[i].angle - S[j].angle) % 360; return (d > 180 ? 360 - d : d).toFixed(1); })()}°`);
 }

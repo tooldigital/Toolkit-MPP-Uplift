@@ -5,8 +5,9 @@
 key-to-fill ratio, same softness, run after run. Measured, not judged by eye. And one description of
 that studio that any renderer can obey: our 2D pipeline, a Blender scene, an Omniverse scene.
 
-**Constraint:** IKEA production will not use 3D scenes or 3D assets. Anything 3D in this plan is a
-calibration tool or an automatic by-product of the photo, never something an artist builds per SKU.
+**Constraint:** IKEA production will not use 3D scenes or 3D assets. In this plan, 3D is a calibration
+tool only: one scene we author, used to define and measure the look. Method E, which would generate a
+3D proxy per product, is research only under this constraint (§6).
 
 Written 2026-10-17, revised 2026-10-19 with measurements. Pipeline facts: `docs/pipeline.md`. Measured results:
 `docs/categories.md`.
@@ -31,6 +32,7 @@ What that means for consistency:
 | Spread between SKUs | Measured in §2 | Products in one catalogue page look lit differently |
 | Shape awareness | Gemini infers the shape; the σ 20 blur then removes folds, legs and edges | The map is a broad gradient, not shading of the actual form |
 | Albedo in the map | The map is the relit image's luminance, so the product's own light and dark areas are in it (measured in §2) | Pale parts get brighter and dark parts darker regardless of where the light is |
+| Gain depends on product brightness | `f = 1 + ((L − mean)/128)·strength` equals `1 + (L/mean − 1)·(mean/128·strength)`, so the effective gain is proportional to the product's mean luminance | A black cabinet gets a quarter of the relight a white shelf gets, at the same `strength` (measured in §2) |
 | Existing studio light | The IKEA photo's own lighting stays; ours multiplies on top | Two lights stacked, never one coherent rig |
 | Shadow | From Photoroom, direction set separately (`behindRight`) | Key and shadow agree by convention, not by construction |
 | Model | A preview model with no stability guarantee | The look can drift without notice |
@@ -40,35 +42,45 @@ left and above, gentle falloff to the right, low-contrast floor shadow behind ri
 
 ## 2. Measured starting point
 
-Measured 2026-10-19 from cached stages on Ariel's machine, with `scripts/qc_relight_direction.mjs` and
-`scripts/exp_relight_repeat.mjs` (both committed; the first makes no API calls). Angle convention:
-bright side of the product, 0° = right, 90° = up, 180° = left, so the intended front-left key is in
-the 90° to 180° quadrant.
+Measured 2026-10-19 on Ariel's machine from cached stages, with `scripts/qc_relight_direction.mjs`
+(no API calls) and `scripts/exp_relight_repeat.mjs` (costs Gemini calls). **Indicative, not a survey:**
+the 50 SKUs are the ones that happened to have a cached relight (18 of the 22 originals, two or three
+hand-picked representatives per category, three glassware rendered with the glass prompt); products
+with fewer than 500 opaque pixels at 1000² are skipped; only the default-variant cache is read.
 
-**The lighting map carries the product's own colours.** The pipeline's map is the luminance of
-Gemini's relit image. Mean-normalisation removes the overall level, but a pale leg under a dark seat
-still reads as "light from below": VEDBO (PE638683) measures a bright side at −90°, straight down, and
-its relight brightens the legs further (the 2.2% clip in `docs/categories.md`). Dividing the map by the
-input's own luminance (relit ÷ shadow render) cancels this and leaves only the change Gemini made.
+Angle convention: bright side of the product, 0° = right, 90° = up, 180° = left; the intended
+front-left key is the 90° to 180° quadrant. "Plane fit" means a least-squares plane through the map
+over product pixels; its R² says how well one direction describes the map at all.
 
 | Measurement | Result | n |
 |---|---|---|
-| Key direction, as applied (absolute map) | circular mean 142°, circular sd **49°**; upper-left quadrant 38/50 | 50 SKUs |
-| Key direction, albedo cancelled (ratio map) | circular mean 155°, circular sd **26°**; upper-left 41/50 | 50 |
-| Applied relight swing at strength 0.25 (absolute) | mean 13.8%, sd 7.5%, **CV 54%** | 50 |
-| Same, Iman's single-category sofa set | 14.4% ± 2.6, CV 18% (`docs/categories.md`) | 12 |
-| Repeatability, same input, same prompt, temperature 0 | 3 of 4 maps agree (factor MAD ≤ 0.6%, angle within 1°); **1 of 4 diverged** (angle 25° off, MAD 1.6%, max 6.5%) | 1 SKU, 4 maps |
-| Reference image, upper body left third : right third | 1.14 : 1 | — |
+| Effective relight gain, `mean/128 · 0.25` | **0.11 to 0.47**, a 4.3× spread, set by product brightness alone (black cabinet PE935669: 0.11; white shelf PE704973: 0.47) | 50 |
+| Applied relight swing across the product, at strength 0.25 | mean 13.8%, sd 7.5%, **CV 54%** | 50 |
+| Key direction, as applied (absolute map) | circular mean 142°, circular sd **49°**; upper-left quadrant 38/50; plane-fit R² median 0.33, **21 of 50 below 0.3** | 50 |
+| Key direction, input shading divided out (ratio map, divided before blurring) | circular mean 154°, circular sd **31°**; upper-left 41/50; R² median 0.54, 14 of 50 below 0.3 | 50 |
+| Same swing inside one category, earlier script | 14.4% ± 2.6 on 12 sofas (`qc_sofa_consistency.mjs`; different fit and luma, not comparable, quoted as a hint only) | 12 |
+| Repeatability, same input and prompt, temperature 0 | three of four maps agree (relight-factor MAD ≤ 0.6%, angle within 1°); one diverged (angle 25° off, MAD 1.6%, max 6.5%). **One SKU; the four maps are three new calls plus the cached one; pairwise figures are not independent.** | 1 SKU |
+| Reference image, upper body, left third : right third luminance | 1.14 : 1. A luminance ratio across different materials and surface angles, **not** a key:fill ratio. Says only that the key is soft and from the left. | — |
 | Reference image, floor shadow | darkest background pixel 245 of 255, lower left: shadow nearly absent | — |
 
-Reading: within one category the look is fairly consistent (CV 18%). Across categories it is not
-(CV 54%, direction sd 49°). Roughly half the direction spread is the products' own tonal layout, which
-the absolute map passes into the relight; the rest, sd 26°, is Gemini. Gemini is usually repeatable at
-temperature 0 but not always. The 50 SKUs are those with cached relights: the 22 originals, two to four
-per category from the 2026-10-15 run, and the dark group.
+What this shows, and no more:
 
-The reference image's own key is soft (1.14 : 1) and its shadow is far fainter than the Photoroom `long`
-preset produces. Whichever is the house look, the spec must say so.
+- **The relight is not applied consistently, by construction.** The gain row is arithmetic, not sampling:
+  the same `strength` gives a dark product a quarter of the relight a pale one gets. This alone explains
+  much of the swing spread and is fixable in the composite without any new method (§5).
+- **The map carries product colour.** VEDBO (PE638683, dark seat, pale birch legs) has its bright side at
+  −90°, straight down, and the relight brightens the legs further (the 2.2% clip in `docs/categories.md`).
+  Dividing the map by the input's own luminance narrows the direction spread from 49° to 31° and raises
+  the plane-fit R². That is consistent with albedo leaking into the map; it does not prove how much of the
+  remaining 31° is Gemini, geometry or residual albedo. Blurred-ratio cancellation is approximate.
+- **A single direction does not describe many maps.** With R² below 0.3 on 21 of 50 absolute maps, "the
+  key direction" is often not a meaningful summary of what was applied. Direction must be measured on the
+  calibration sphere (§7), where geometry is known; on photos the plane fit is a consistency proxy, gated
+  on R².
+- **Gemini at temperature 0 is not reliably repeatable.** One divergent map in four, on one SKU, is enough
+  to say it must be measured, not assumed.
+- The reference image's shadow is far fainter than the Photoroom `long` preset produces. Whichever is the
+  house look, the spec must say so.
 
 ## 3. What already exists to build on
 
@@ -100,10 +112,24 @@ Write the studio down once, as data.
 }
 ```
 
-Values above are placeholders; phase 0 sets them from §2. The coordinate frame is fixed here on purpose:
+Values above are placeholders; phase 0 sets them. The coordinate frame is fixed here on purpose:
 camera-relative, so it means the same thing for a photo, a Blender camera and an Omniverse camera.
 Blender and Omniverse place their lights in world space; a ten-line script converts from this frame
 given the camera transform.
+
+Directions and ratios alone do not pin down a rig. Version 1 of the spec must also state, or the two
+renderers will disagree for reasons that have nothing to do with lighting:
+
+| Field | Why |
+|---|---|
+| Light type and angular size as seen from the product (for example "rect area light subtending 40°"), and distance | Softness is a property of angular extent; "softness 0.6" means nothing to a renderer |
+| Intensity convention | `ratio_to_key` defined as irradiance at the product centre; absolute level fixed by a target: the 18% gray sphere's lit side renders at a stated value |
+| Exposure and tone | Fixed camera exposure; linear render; sRGB output with a named transfer function, no filmic or AgX look |
+| Materials for calibration | 18% gray Lambertian for the sphere and primitives; stated roughness for any glossy test |
+| Background | White cyclorama with a stated albedo, so bounce fill is the same in both renderers |
+
+USD carries lights with photometric and exposure conventions (UsdLux), so the rig can live in the
+USD scene itself; the JSON above is the human-readable source it is generated from.
 
 **One calibration scene, authored by us.** A gray 18%-reflectance sphere, a cube, a cylinder, and three
 or four product-like shapes (a chair with thin legs, a box cabinet, a flat rug, a vase), on a white
@@ -125,8 +151,16 @@ And the calibration renders become the **ground truth for what the 2D pipeline s
 Any candidate must fit stage 4 without touching the rest of the pipeline:
 
 ```
-lightmap(shadow_render, matte, light_spec) -> L   # 4000² grayscale, float
+lightmap(shadow_render, matte, light_spec) -> M   # 4000², float, dimensionless
 ```
+
+**Map contract.** `M` is a relative lighting map: alpha-weighted mean 1 over the product, values above 1
+brighten, below 1 darken. The composite applies `f = 1 + (M − 1) · gain`, with `gain` set by the spec,
+the same for every product. Today's path, written in this form, is `M = L / mean(L)` with
+`gain = mean(L)/128 · strength`, which is where the brightness-dependent gain in §2 comes from. Moving to
+a fixed gain is a one-line composite change and should be the first experiment, before any new method.
+The truth maps in §7 and the ratio map in A0 are already in these units; the absolute Gemini map is not,
+so **raw-map errors are only comparable after conversion to `M`.** Compare composited outputs as well.
 
 Rules, from the pipeline invariants (`docs/pipeline.md` §4):
 
@@ -139,18 +173,20 @@ Rules, from the pipeline invariants (`docs/pipeline.md` §4):
   would change invariant 4 and is a decision for the owners.
 
 The backend engineer should make stage 4 pluggable (a `relight_method` setting) so methods can be
-switched per category. That is a small change to one stage.
+switched per category. That is a small change to one stage. The method name, its version and the prompt
+or model version must go into the cache key for `relit*` and `final*`; otherwise two methods silently
+share one cached map (`docs/pipeline.md` §7, invariant 6).
 
 ## 6. Candidate methods
 
 | | Method | How it gets the light | Strength | Risk |
 |---|---|---|---|---|
-| A0 | **Ratio map** (zero-cost change) | Same Gemini call; use relit ÷ shadow render instead of relit alone as the map, so only the change Gemini made is applied | Cancels the product's own albedo; halves the measured direction spread (§2); no new calls | The `relit − base` variant was tried for glass and "fried at strength"; untested on opaque at 0.25; still Gemini's direction |
+| A0 | **Fixed gain, then ratio map** (zero-cost changes) | Same Gemini call. First, apply the map with a fixed gain instead of one proportional to product brightness. Second, use relit ÷ shadow render (divided per pixel, then blurred) as `M`, so only the change Gemini made is applied | Removes the 4.3× gain spread outright; the ratio map reduces albedo leakage (direction sd 49° → 31° in §2); no new calls | Ratio of blurs is not the blur of ratios: divide first. A `relit − base` variant was tried for glass and "fried at strength"; untested on opaque. Still Gemini's direction and Gemini's repeatability |
 | A | **Gemini, tightened** (baseline) | Current prompt, plus: numeric direction in the prompt; the reference image as a second input (`scripts/exp_gemini_scene.mjs` exists); average of N runs | Already works on every category tested | Direction still a text instruction; preview model; cost per call |
 | B | **Normals + analytic shading** | Estimate surface normals from the photo (MoGe-2, Marigold normals, newer object-specific models), then shade them under the spec: Lambert key plus fill plus ambient, optional ambient occlusion from estimated depth | Deterministic; direction exact by construction; a simplified version of what a path tracer computes, so directly comparable to the calibration renders; cheap on one GPU | Normal quality on thin legs, wire, glass and fur; flat-lay items; no cast shadow |
 | C | **Remove the photo's own lighting first** | Intrinsic decomposition (Adobe RGB↔X; Careaga and Aksoy's colourful diffuse decomposition) splits the photo into albedo and shading; replace the shading with B's or A's | Fixes the stacked-lights problem in §1 | Changes product pixels: needs an owner decision against invariant 2; albedo errors on prints and patterns |
 | D | **Diffusion relighters as lighting maps** | IC-Light; NVIDIA DiffusionRenderer, which relights from estimated surface buffers and an environment map | Can take an HDRI, so the spec can be expressed as an environment map shared with the 3D renderers | Redraws pixels, so lighting map only; heavy GPU; **licences unverified for commercial use** |
-| E | **3D proxy from the photo** | Image-to-3D (for example TRELLIS, Hunyuan3D, Meta SAM 3D), proxy placed in the calibration scene under the spec, render shading and shadow passes | Light and shadow from one rig; could solve hanging items and missing shadows (`docs/categories.md`) | Slowest; proxy quality varies by category; must stay fully automatic to meet the no-3D constraint |
+| E | **3D proxy from the photo** (research only) | Image-to-3D (for example TRELLIS, Hunyuan3D, Meta SAM 3D), proxy placed in the calibration scene under the spec, render shading and shadow passes | Light and shadow from one rig; could solve hanging items and missing shadows (`docs/categories.md`) | **Creates a per-product 3D asset, which the production constraint rules out**; automatic generation does not change that. Stays a research comparison unless the owners change the constraint. Slowest; proxy quality varies by category |
 
 Licence terms for C, D and E models must be checked from their official repositories before any
 commercial use. Search results on 2026-10-17 found only second-hand claims (for example that IC-Light v1
@@ -180,22 +216,33 @@ reflective, small, textile and tall. Every method runs on the whole panel.
 
 | Metric | Definition | Target |
 |---|---|---|
-| Direction error | Angle between the fitted gradient of the applied relight and the spec's key direction projected to the image | Set in phase 0 |
-| Direction spread | Standard deviation of that angle across the panel | Lower than Gemini's (§2) |
-| Swing spread | Coefficient of variation of edge-to-edge relight strength across the panel | Lower than Gemini's (§2) |
-| Repeatability | Mean absolute difference between two runs' relight factors over the product | 0 for deterministic methods; Gemini's in §2 |
-| Truth error | Mean absolute error against the calibration truth map | Lowest wins |
+| Truth error | Mean absolute error of `M` against the calibration truth map, per shape; and the same on composited output | Lowest wins; must beat both baselines below |
+| Direction error (calibration only) | On the gray sphere, the angle between the fitted shading direction and the spec's key | Within the renderer gap |
+| Direction consistency (photos) | Circular sd of the plane-fit angle on the ratio map across the panel, counting only maps with R² ≥ 0.3, and the count below 0.3 | Lower sd and fewer low-R² maps than today (§2); this is a consistency proxy, not a physical direction |
+| Swing spread | CV of applied swing (`(M − 1)·gain` across the product) across the panel | Below today's 54% |
+| Repeatability | Mean absolute difference of `f` between two runs on the same input, on ≥ 5 panel SKUs | 0 for deterministic methods; Gemini's in §2 |
 | Fidelity | Clipped share and p01/p90 shift (`docs/categories.md` Metrics) | No worse than today |
 | Cost | GPU seconds and API calls per SKU | Recorded, not ranked |
+
+Two baselines every method must beat on truth error: **no-op** (`M ≡ 1`, no relight) and a **fixed
+screen gradient** (a plane tilted toward the spec's key, the same for every product). The second is
+trivially consistent; a method that cannot beat it on the calibration shapes is adding nothing a
+gradient would not.
+
+Acceptance gates (numbers for the targets above) are set by the owners at the end of phase 0, written
+into this document, and not moved afterwards without a dated note.
 
 Plus a **blind side-by-side review**: the team picks between methods on the same SKU without knowing
 which is which.
 
-Direction and swing come from `scripts/qc_relight_direction.mjs`, which fits a plane over product pixels
-on both the absolute and the ratio map, with circular statistics. Measure direction on the **ratio**
-map, so a method is not blamed for the product's colours. Use that one implementation for every method
-so numbers compare. (`scripts/qc_sofa_consistency.mjs` is an earlier fit at 500² with Rec. 709 luma;
-its numbers are not comparable.)
+Direction, swing, gain and R² come from `scripts/qc_relight_direction.mjs`. Use that one implementation
+for every method so numbers compare, extending it rather than writing a second one.
+(`scripts/qc_sofa_consistency.mjs` is an earlier fit at 500² with Rec. 709 luma; its numbers are not
+comparable.)
+
+**The panel is frozen** in `inputs/lighting_panel.json`: 24 SKUs, all with cached stages today, so
+every method has day-one inputs and baselines without new Photoroom calls. Changes to the panel get a
+dated note in that file.
 
 ## 8. Phases
 
@@ -204,8 +251,8 @@ Sizes assume one person part-time; the owners set dates.
 | Phase | Work | Deliverable | Decision at the end |
 |---|---|---|---|
 | 0. Spec | Turn §2's measurements of the reference image and the shipped finals into `light_spec.json` v1; author the calibration scene; render the gray sphere in Blender and Omniverse | Spec v1; two sphere renders that match within a stated tolerance | Is this the house look? (owners) |
-| 1. Harness | Synthetic pairs from the calibration scene; extend `qc_relight_direction.mjs` with truth error and fidelity; lighting panel chosen | Baseline numbers for method A, today's prompt, on the panel and the synthetic set | — |
-| 2. Cheap methods | A variants; B with two normal estimators | Panel and synthetic results; review sheet | Does B beat A on consistency without losing on look? |
+| 1. Harness | Synthetic pairs from the calibration scene; extend `qc_relight_direction.mjs` with truth error, fidelity and the two baselines; `relight_method` and version in the cache key | Baseline numbers for today's path, no-op and fixed gradient, on the frozen panel and the synthetic set | Acceptance gates (owners) |
+| 2. Cheap methods | A0 (fixed gain; ratio map), A variants; B with two normal estimators | Panel and synthetic results; review sheet | Does B beat A on consistency without losing on look? |
 | 3. Deeper methods | C, then D and E as exploration | Same results, plus cost per SKU | Which methods continue, per category |
 | 4. Handoff | Chosen method(s) written up as a stage-4 spec for the backend engineer | Method spec, routing by category, test set | Adoption (owners) |
 
@@ -217,6 +264,8 @@ Sizes assume one person part-time; the owners set dates.
   changes product pixels.
 - **Should key and shadow come from one rig?** Today they are set separately. One rig (method E, or B with
   a derived Photoroom direction) would make them agree by construction.
+- **Fixed gain.** Changing the composite to a brightness-independent gain alters every shipped final.
+  Who approves that, and against which reference?
 - **Per-category methods** are acceptable if they produce the same measured look.
 - The bright-pixel issue in `docs/decisions.md` #16 affects any relight method; settle it first or measure
   around it.
