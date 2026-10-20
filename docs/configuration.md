@@ -1,7 +1,7 @@
 # Configuration reference
 
 Every setting the pipeline reads, how it resolves, and what it invalidates. Verified against
-`scripts/run_pipeline.mjs` at commit `5236c2b` on 2026-10-15. What the settings do to pixels:
+`scripts/run_pipeline.mjs` at commit `5236c2b` on 2026-10-15 and unchanged by the 2026-10-19 refactor. What the settings do to pixels:
 `docs/pipeline.md`. Why the defaults are what they are: `docs/decisions.md`.
 
 ## Resolution

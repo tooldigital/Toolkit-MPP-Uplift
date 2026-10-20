@@ -1,6 +1,5 @@
-import { readFile } from "node:fs/promises";
-import { basename } from "node:path";
 import { logCall } from "./debuglog.mjs";
+import { toBlob } from "./photoroom.mjs";
 
 const ENDPOINT = "https://image-api.photoroom.com/v2/edit";
 
@@ -25,18 +24,7 @@ export async function cutout(opts) {
   if (!image) throw new Error("image required");
 
   const fd = new FormData();
-  let blob, name;
-  if (typeof image === "string") {
-    const buf = await readFile(image);
-    blob = new Blob([buf]);
-    name = basename(image);
-  } else if (image instanceof Blob) {
-    blob = image;
-    name = filename ?? "image.png";
-  } else {
-    blob = new Blob([image]);
-    name = filename ?? "image.png";
-  }
+  const { blob, name } = await toBlob(image, filename);
   fd.append("imageFile", blob, name);
   fd.append("removeBackground", "true");
   fd.append("outputSize", outputSize);

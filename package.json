@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
-    "pipeline": "node --env-file=.env scripts/run_pipeline.mjs"
+    "pipeline": "node --env-file=.env scripts/run_pipeline.mjs",
+    "check": "for f in scripts/*.mjs src/*.mjs; do node --check \"$f\" || exit 1; done; echo syntax ok"
   },
   "dependencies": {
     "@google/genai": "^1.0.0",

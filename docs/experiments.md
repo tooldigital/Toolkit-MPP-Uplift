@@ -1,7 +1,7 @@
 # Scripts other than the pipeline
 
-`scripts/` holds 44 files. Two are the product: `run_pipeline.mjs` (the pipeline) and `fetch_ikea.mjs`
-(test-image fetcher). The other 42 are listed here. They are notes, not code to port: each answers one
+`scripts/` holds 45 files. Two are the product: `run_pipeline.mjs` (the pipeline) and `fetch_ikea.mjs`
+(test-image fetcher). The other 43 are listed here. They are notes, not code to port: each answers one
 question, and most write only to `outputs/experiments/`.
 
 Status values: **adopted** (became a pipeline feature), **in use** (builds a deliverable or measures
@@ -21,6 +21,7 @@ automated QC gate.
 | `qc_plush_f7f7f7.mjs` | I | in use | Plush deliverables: present, 4000², cast shadow grounded, fringe not blown out. Non-zero exit on failure. |
 | `build_plush_f7f7f7.sh` | I | in use | Builds the plush F7F7F7 deliverables in several versions per SKU. Process in `docs/plush_f7f7f7.md`. |
 | `auto_tune.mjs` | I | record | Solves strength, exposure and shade per SKU against global targets. Not adopted; see `docs/decisions.md` #12. |
+| `check_composite.sh` | A | in use | Byte-for-byte regression of every composite path on cached stages, fake API keys, `baseline` then `compare`. |
 | `qc_relight_direction.mjs` | A | in use | Per SKU: fitted key direction and swing of the applied relight, on the absolute map and on the ratio map (divided before blurring), with circular statistics, plane-fit R² and the composite's effective gain. Seed of the lighting harness (`docs/lighting-research-plan.md`). |
 
 ## Framing, matte and Photoroom shadow

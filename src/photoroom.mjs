@@ -5,6 +5,13 @@ import { logCall } from "./debuglog.mjs";
 const ENDPOINT = "https://image-api.photoroom.com/v2/edit";
 const MODEL_VERSION = "2026-04-15";
 
+/** File path, Buffer or Blob → { blob, name } for a multipart upload. Shared by both Photoroom calls. */
+export async function toBlob(image, filename) {
+  if (typeof image === "string") return { blob: new Blob([await readFile(image)]), name: basename(image) };
+  if (image instanceof Blob) return { blob: image, name: filename ?? "image.png" };
+  return { blob: new Blob([image]), name: filename ?? "image.png" };
+}
+
 /**
  * Generate a shadow on an image via Photoroom v2/edit.
  *
@@ -44,18 +51,7 @@ export async function generateShadow(opts) {
 
   const fd = new FormData();
 
-  let blob, name;
-  if (typeof image === "string") {
-    const buf = await readFile(image);
-    blob = new Blob([buf]);
-    name = basename(image);
-  } else if (image instanceof Blob) {
-    blob = image;
-    name = filename ?? "image.png";
-  } else {
-    blob = new Blob([image]);
-    name = filename ?? "image.png";
-  }
+  const { blob, name } = await toBlob(image, filename);
   fd.append("imageFile", blob, name);
 
   fd.append("shadow.mode", shadow.mode ?? "ai.auto-with-overrides");

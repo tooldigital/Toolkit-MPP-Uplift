@@ -1,7 +1,8 @@
 # Pipeline specification
 
 What the pipeline does, stated so it can be re-implemented in any language. Verified against
-`scripts/run_pipeline.mjs` and `src/*.mjs` at commit `5236c2b` on 2026-10-15.
+`scripts/run_pipeline.mjs` and `src/*.mjs` at commit `5236c2b` on 2026-10-15; the code was refactored on
+2026-10-19 with byte-identical output on all eleven composite paths (`scripts/check_composite.sh`).
 
 "Must" marks behaviour the output depends on. "Prototype" marks a choice of this implementation
 that a re-implementation may change. Why each constant has its value: `docs/decisions.md`.

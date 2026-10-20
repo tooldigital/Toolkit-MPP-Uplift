@@ -23,7 +23,7 @@ caching and no tests. Production infrastructure is the next phase.
 ## Repository map
 
 ```
-scripts/run_pipeline.mjs   the pipeline (one file, ~500 lines)
+scripts/run_pipeline.mjs   the pipeline (one file, ~330 lines)
 scripts/fetch_ikea.mjs     downloads test images listed in a selection file
 scripts/exp_*, qc_*        experiments and QC utilities (docs/experiments.md)
 src/                       plate, Photoroom and Gemini clients, debug logger
@@ -83,6 +83,16 @@ npm run pipeline -- --group group_legs --no-relight
 ```
 
 Every flag and `group.json` key: `docs/configuration.md`.
+
+## Checks
+
+```bash
+npm run check
+```
+
+Syntax-checks every script and module. For a behaviour check with no API calls, `scripts/check_composite.sh`
+re-renders every composite path from cached stages and diffs the finals byte for byte against a recorded
+baseline (`baseline` once, then `compare` after a change).
 
 ## When something looks wrong
 
