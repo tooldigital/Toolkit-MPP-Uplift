@@ -12,6 +12,7 @@ caching and no tests. Production infrastructure is the next phase.
 
 | If you are | Read |
 |---|---|
+| Building the foundation for the whole pipeline (Artem) | `docs/foundation.md` |
 | Designing the production system | `docs/handoff-backend.md`, then `docs/pipeline.md` |
 | Re-implementing a stage | `docs/pipeline.md` (behaviour and maths), `docs/configuration.md` (every setting) |
 | Asking "why is this constant this value?" | `docs/decisions.md` |
