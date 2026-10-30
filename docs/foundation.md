@@ -1,30 +1,30 @@
-# MPP Uplift: handoff to Artem
+# MPP Uplift: platform handoff
 
-Artem, this pipeline is yours now. Iman and I built it as research. It shows the look works, and it
-won the proposal. But it is a prototype: it runs one photo at a time on one laptop, and someone has to
-watch it. Your job is to turn it into a platform: something that runs reliably at IKEA volumes, and
-that Iman and I can keep experimenting on without copying code out of it. How you build it, in what
-language, and where it runs are your calls.
+The pipeline is a working prototype. It runs one photo at a time on a single machine, with a local
+cache, and needs supervision. The next phase is a platform that runs reliably at catalogue volume and
+supports ongoing experiments without copying code out of the pipeline. Architecture, language,
+storage and hosting are open.
 
 ## What it does
 
-One IKEA product photo goes in (one product on white). One 4000×4000 JPEG comes out. The product's
-own pixels are kept, with a soft front-left relight, a neutral cast shadow and a 400 px margin. Each
-photo goes through five stages:
+Input: one IKEA product photo, one product on white. Output: one 4000×4000 JPEG with the product's
+original pixels, a soft front-left relight, a neutral cast shadow and a 400 px margin. Each photo goes
+through five stages:
 
 1. **Plate** (local): cleans the white backdrop.
 2. **Shadow** (Photoroom): returns the product with a cast shadow.
 3. **Matte** (Photoroom): returns a cut-out mask.
-4. **Relight** (Gemini): returns a relit image. We blur it and use it only as a lighting map. Its
+4. **Relight** (Gemini): returns a relit image, which is blurred and used only as a lighting map. Its
    pixels never reach the final.
-5. **Composite** (local): puts the pieces together. It needs no API calls, so changing the
-   background, shadow strength or tone is free once stages 1–4 are cached.
+5. **Composite** (local): combines the stages. It makes no API calls, so a change of background,
+   shadow strength or tone costs nothing once stages 1–4 are cached.
 
-A full run takes about 33 s per photo and costs 2 Photoroom calls and 1 Gemini call.
+A full run takes about 33 s per photo: 2 Photoroom calls and 1 Gemini call.
 
-## Run it first
+## Running it
 
-Node 20 or later. Ask me for API keys: the old ones must be rotated first (see below).
+Node 20 or later. API keys are not in the repo, and the current keys must be rotated before use (see
+Constraints).
 
 ```bash
 npm install
@@ -32,74 +32,73 @@ cp .env.example .env        # add PHOTOROOM_KEY and GEMINI_KEY
 npm run pipeline -- --skus PE979531
 ```
 
-The final lands in `outputs/finals/PE979531.jpg` and its cached stages in `outputs/work/PE979531/`.
-Run the command again and it makes no API calls. The README has more examples.
+The final is written to `outputs/finals/PE979531.jpg` and its cached stages to
+`outputs/work/PE979531/`. A second run makes no API calls. More examples are in the README.
 
-## What to keep, and what you can change
+## Fixed and open
 
-**Keep the output.** The look rests on a set of rules and measured values: product pixels are never
-generated, the product's long side is held to 3200 px, and the padding, shadow and relight settings
-were each measured. Each one is explained in
-`docs/decisions.md`. If a change would alter the finals, check it with Iman or me first.
-`scripts/check_composite.sh` diffs every composite path byte for byte against a recorded baseline, so
-you can refactor and prove nothing moved.
+**Fixed: the output.** The look depends on a set of rules and measured values. Product pixels are
+never generated. The product's long side is held to 3200 px. The padding, shadow and relight settings
+were each measured. `docs/decisions.md` explains each one. A change that alters the finals is a
+product decision, not a refactor. `scripts/check_composite.sh` diffs every composite path byte for byte
+against a recorded baseline, which shows whether a refactor changed the output.
 
-**Everything else is open:** code structure, storage, orchestration, concurrency, hosting, and which of
-the 45 scripts survive. Only `run_pipeline.mjs` and `fetch_ikea.mjs` are the product. The rest are
-experiment notes, indexed in `docs/experiments.md`.
+**Open: everything else.** Code structure, storage, orchestration, concurrency and hosting are all
+open, and so is which scripts to keep. Of the 45 scripts, only `run_pipeline.mjs` and `fetch_ikea.mjs`
+are the product. The rest are experiment notes, indexed in `docs/experiments.md`.
 
-## What hurts today
+## Known problems
 
-These are the known problems, roughly in the order they will bite at volume:
+Roughly in the order they will matter at volume:
 
-- **No retries.** A rate limit (429) from either service stops the whole run. Failed photos still
-  exit 0.
-- **The cache can serve stale results.** The cache key misses the source file, some settings, and the
-  model, prompt and code versions, and writes aren't atomic (`docs/pipeline.md` §7).
-- **Settings are per folder.** You can't say "this product needs flat-lay pose" or "this photo needs
-  highlights on" and have it stick. IKEA's product type is saved with each download, but nothing uses
-  it. For real batches this is the biggest missing piece. `docs/categories.md` says which kind of
-  product needs which settings.
-- **"SKU" means the photo, not the product.** It's the PE number in the image filename, so one product
-  with several photos looks like several products.
-- **Photoroom is non-deterministic.** Now and then a leg's shadow points the wrong way, or a thin white
-  frame gets no shadow at all. Today a person spots these on a contact sheet and re-runs the photo.
-- **Sequential, single machine,** local disk cache, secrets in `.env`, no CI. The cached stages the
-  regression baseline needs exist on one machine only.
-- **Experiments copy code.** Research scripts copy parts of `run_pipeline.mjs` instead of running
-  stages through it, so they drift.
+- **No retries.** A rate limit (429) from either service stops the whole run. Failed photos still exit 0.
+- **Stale cache hits.** The cache key leaves out the source file, some settings, and the model, prompt
+  and code versions. Writes are not atomic (`docs/pipeline.md` §7).
+- **Settings are per folder.** There is no way to store a setting for one product or one photo. IKEA's
+  product type is saved with each download but not used. For production batches this is the largest
+  gap. `docs/categories.md` lists which product categories need which settings.
+- **"SKU" identifies the photo, not the product.** It is the PE number in the image filename, so one
+  product with several photos counts as several products.
+- **Photoroom is non-deterministic.** Occasionally a leg's shadow points the wrong way, or a thin white
+  frame gets no shadow. Today these are caught by eye on contact sheets and fixed by re-running.
+- **Single machine.** Processing is sequential, secrets live in `.env`, and there is no CI. The cached
+  stages that the regression baseline depends on exist on one machine only.
+- **Duplicated code.** Experiment scripts copy parts of `run_pipeline.mjs` instead of calling its
+  stages, so they drift.
 - **Images in git.** About 66 MB of outputs are tracked.
 
-## Hard constraints
+## Constraints
 
-- **Gemini only through Freepik (now Magnific).** IKEA allows its data to go to Photoroom, and to
+- **Gemini only through Freepik (now Magnific).** IKEA permits its data to go to Photoroom, and to
   Gemini only through Freepik's API. The code calls Google directly today. Freepik's Nano Banana Pro
-  route has no temperature setting (we tuned the relight at temperature 0), takes images as URLs, and
-  runs jobs asynchronously. **Test this first:** run the lighting panel (`inputs/lighting_panel.json`)
-  through Freepik and compare against the cached Google results. If the relight doesn't hold up, the
-  plan changes, and that becomes a conversation with IKEA.
-- **Images by URL must stay private.** Serve them from your own storage with short-lived signed URLs.
-- **Rotate the keys.** The Photoroom and Gemini keys appeared in a chat transcript on 2026-10-15.
+  endpoint differs from the direct Google API in three ways:
+  - it has no temperature setting, and the relight was tuned at temperature 0;
+  - it takes images as URLs;
+  - it runs jobs asynchronously.
 
-## Not engineering calls
+  This should be tested first. Run the lighting panel (`inputs/lighting_panel.json`) through Freepik
+  and compare against the cached Google results. If the relight does not hold up, the approach changes.
+- **Private images.** Images sent by URL must come from private storage through short-lived signed URLs.
+- **Key rotation.** The Photoroom and Gemini keys were exposed in a chat transcript on 2026-10-15.
 
-These belong to IKEA and us, and some of them change what you build: how bright highlights are treated
-(`docs/decisions.md` #16), which categories and backgrounds launch, the delivery format, volume,
-turnaround, budget, how long files are kept, and whether a person may fix images by hand. Ask before
-you build around an assumption.
+## Open product decisions
 
-## Where to look
+These affect what gets built:
+
+- how bright highlights are treated (`docs/decisions.md` #16);
+- launch categories and backgrounds;
+- delivery format;
+- volume, turnaround and budget;
+- how long files are kept;
+- whether manual retouching is allowed.
+
+## Reference
 
 | For | Read |
 |---|---|
-| The prototype in depth: costs, dependencies, limits | `docs/handoff-backend.md` |
-| Exact behaviour and maths of each stage | `docs/pipeline.md` |
+| Prototype detail: costs, dependencies, limits | `docs/handoff-backend.md` |
+| Behaviour and maths of each stage | `docs/pipeline.md` |
 | Every flag and `group.json` key | `docs/configuration.md` |
-| Why a value is what it is | `docs/decisions.md` |
+| Rationale for each value | `docs/decisions.md` |
 | Which product categories pass | `docs/categories.md` |
-| The lighting research in progress | `docs/lighting-research-plan.md` |
-
-Ask Iman or me about the look, the research, or why anything is the way it is.
-
-You don't need the old repo, `aklevecz/danish-traitors.v2`. Iman's `code-only` work is all in `main`.
-One leftover commit on another branch is probably superseded, and Iman is confirming.
+| Lighting research in progress | `docs/lighting-research-plan.md` |
