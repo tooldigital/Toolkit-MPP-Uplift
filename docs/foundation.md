@@ -12,7 +12,10 @@ original pixels, a soft front-left relight, a neutral cast shadow and a 400 px m
 through five stages:
 
 1. **Plate** (local): cleans the white backdrop.
-2. **Shadow** (Photoroom): returns the product with a cast shadow.
+2. **Shadow** (Photoroom): returns the product with a cast shadow. Gemini is an alternative shadow
+   source: "harvest" (`src/shadow-patch.mjs`) renders the full scene with Gemini and keeps only the
+   shadow under the real product, with consistent per-leg direction. It works in experiments
+   (`docs/decisions.md` #6) but is not yet in `run_pipeline.mjs`.
 3. **Matte** (Photoroom): returns a cut-out mask.
 4. **Relight** (Gemini): returns a relit image, which is blurred and used only as a lighting map. Its
    pixels never reach the final.
