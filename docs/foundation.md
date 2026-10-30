@@ -1,80 +1,105 @@
-# Foundation brief
+# MPP Uplift: handoff to Artem
 
-For Artem. The first job is a good foundation for the whole pipeline: the one system that research
-experiments and IKEA batches both run on. You decide how to build it. This file gives the goals, the
-facts and the known gaps. `docs/handoff-backend.md` describes the prototype; `docs/pipeline.md` is the
-spec.
+Artem, this pipeline is yours now. Iman and I built it as research. It shows the look works, and it
+won the proposal. But it is a prototype: it runs one photo at a time on one laptop, and someone has to
+watch it. Your job is to turn it into a platform: something that runs reliably at IKEA volumes, and
+that Iman and I can keep experimenting on without copying code out of it. How you build it, in what
+language, and where it runs are your calls.
 
-Written 2026-10-29 against `main` at `baf8ada`. Worked through with Codex.
+## What it does
 
-## Goals
+One IKEA product photo goes in (one product on white). One 4000×4000 JPEG comes out. The product's
+own pixels are kept, with a soft front-left relight, a neutral cast shadow and a 400 px margin. Each
+photo goes through five stages:
 
-The foundation should make five things easy:
+1. **Plate** (local): cleans the white backdrop.
+2. **Shadow** (Photoroom): returns the product with a cast shadow.
+3. **Matte** (Photoroom): returns a cut-out mask.
+4. **Relight** (Gemini): returns a relit image. We blur it and use it only as a lighting map. Its
+   pixels never reach the final.
+5. **Composite** (local): puts the pieces together. It needs no API calls, so changing the
+   background, shadow strength or tone is free once stages 1–4 are cached.
 
-| # | Goal | What's missing today |
-|---|---|---|
-| 1 | **Group products and pick settings per product.** Research selections and batches use the same product records. Groups are folders; no grouping by product data, and no saved settings per product or photo (below). |
-| 2 | **Run experiments through the pipeline itself.** Run one stage, swap a method, sweep a setting, re-composite from cached stages. | Orchestration and compositing live inside `scripts/run_pipeline.mjs`. Experiment scripts copy parts of it. |
-| 3 | **Explain and reuse every result.** Each output records its source, resolved settings, code, model, prompt and Photoroom model versions, and keeps its stage outputs. | Cache keys miss inputs and versions; writes aren't atomic (`pipeline.md` §7). |
-| 4 | **Compare results fairly.** Frozen-stage regression, the same metrics everywhere, contact sheets for review. | Reference finals are committed, but the cached stage files the regression needs are on one machine; the category-run metric scripts aren't in the repo; QC scripts use different conventions. |
-| 5 | **Recover paid runs.** Retries, resume, honest failure reporting, cost per call. | 429 stops the run; exit code 0 even when SKUs fail; `--debug` logging is off by default. |
+A full run takes about 33 s per photo and costs 2 Photoroom calls and 1 Gemini call.
 
-## Product grouping
+## Run it first
 
-**Today:**
-- A group is a folder (`inputs/group_legs/`, `group_glass/`, …), created by `scripts/fetch_ikea.mjs` from the hand-picked `inputs/catalog_selection.json`.
-- Settings apply to a whole top-level folder through `group.json` (`scripts/run_pipeline.mjs:123`). A single product can only be changed by a re-run with `--skus` and flags, which nothing saves. HD and framing are set for the whole run.
-- Most folders' `manifest.json` records IKEA's product type (field `type`, from `typeName`; `scripts/fetch_ikea.mjs:32`), but nothing in the pipeline reads it. `group_glass` and `group_plush` have no manifest.
-- `docs/categories.md` says which difficulty needs which setting, measured on 14 groups. Only the glassware (render-only) and fur (strength) settings are in a `group.json`; the pose and highlight findings aren't applied (`docs/configuration.md:76`).
-- `scripts/auto_tune.mjs` tunes settings per SKU as an experiment; nothing keeps its results.
+Node 20 or later. Ask me for API keys: the old ones must be rotated first (see below).
 
-**A starting design (a suggestion; change it as you see fit):**
+```bash
+npm install
+cp .env.example .env        # add PHOTOROOM_KEY and GEMINI_KEY
+npm run pipeline -- --skus PE979531
+```
 
-- **Product and photo are different things.** Today's "SKU" is the PE number in the image URL (`scripts/fetch_ikea.mjs:24`), which names a photo, not a product. Two images with the same filename share every cache entry (`docs/pipeline.md:23`). Settle identity before building records.
+The final lands in `outputs/finals/PE979531.jpg` and its cached stages in `outputs/work/PE979531/`.
+Run the command again and it makes no API calls. The README has more examples.
 
-- **Product:** SKU, IKEA `typeName`, group, tags, overrides.
-- **Photo:** image ID, product, source hash, properties (pose `upright` / `flatlay` / unknown), overrides. One product can have several photos.
-- **Group:** a processing family pointing to a versioned settings profile (mode, pose, matte, shadow, relight, tone).
-- **Tags** for difficulties that cut across groups: glass, fur, thin white frame, reflective, off-white backdrop, hanging. Tags don't multiply folders.
+## What to keep, and what you can change
 
-**How settings resolve:**
-- Order: defaults → group profile → tag rules → product override → photo override → run override.
-- Conflicting rules are reported, not silently resolved.
-- Each run saves the resolved settings, so later edits don't change past results.
+**Keep the output.** The look rests on a set of rules and measured values: product pixels are never
+generated, the product's long side is held to 3200 px, and the padding, shadow and relight settings
+were each measured. Each one is explained in
+`docs/decisions.md`. If a change would alter the finals, check it with Iman or me first.
+`scripts/check_composite.sh` diffs every composite path byte for byte against a recorded baseline, so
+you can refactor and prove nothing moved.
 
-**Where assignments come from:**
-- A hand-curated `typeName → group` table, seeded from `categories.md`.
-- Photo properties set by a person for now; simple image measurements where they help.
-- **The photo decides pose.** Product type can suggest a default, but a rug can be shot flat or angled.
-- No ML classifier needed yet.
+**Everything else is open:** code structure, storage, orchestration, concurrency, hosting, and which of
+the 45 scripts survive. Only `run_pipeline.mjs` and `fetch_ikea.mjs` are the product. The rest are
+experiment notes, indexed in `docs/experiments.md`.
 
-**Unknown types stay visibly unmapped.** A run either skips them or names a fallback profile explicitly.
+## What hurts today
 
-Researchers add groups, mappings and profiles as ordinary data, with example SKUs and the reason.
+These are the known problems, roughly in the order they will bite at volume:
 
-## Constraints
+- **No retries.** A rate limit (429) from either service stops the whole run. Failed photos still
+  exit 0.
+- **The cache can serve stale results.** The cache key misses the source file, some settings, and the
+  model, prompt and code versions, and writes aren't atomic (`docs/pipeline.md` §7).
+- **Settings are per folder.** You can't say "this product needs flat-lay pose" or "this photo needs
+  highlights on" and have it stick. IKEA's product type is saved with each download, but nothing uses
+  it. For real batches this is the biggest missing piece. `docs/categories.md` says which kind of
+  product needs which settings.
+- **"SKU" means the photo, not the product.** It's the PE number in the image filename, so one product
+  with several photos looks like several products.
+- **Photoroom is non-deterministic.** Now and then a leg's shadow points the wrong way, or a thin white
+  frame gets no shadow at all. Today a person spots these on a contact sheet and re-runs the photo.
+- **Sequential, single machine,** local disk cache, secrets in `.env`, no CI. The cached stages the
+  regression baseline needs exist on one machine only.
+- **Experiments copy code.** Research scripts copy parts of `run_pipeline.mjs` instead of running
+  stages through it, so they drift.
+- **Images in git.** About 66 MB of outputs are tracked.
 
-- **Vendors:** IKEA data goes only to Photoroom and to Gemini **through Freepik's API** (now Magnific,
-  `api.magnific.com`). `src/gemini.mjs` calls Google directly today.
-- **Freepik's Gemini route differs** ([Nano Banana Pro reference](https://docs.magnific.com/api-reference/text-to-image/post-nano-banana-pro), read 2026-10-29):
-  - no temperature setting, and the relight was tuned at temperature 0 (`decisions.md` #5);
-  - images go in as URLs, not uploads;
-  - jobs are asynchronous.
-  - **First test:** run the lighting panel (`lighting-research-plan.md` §7, `inputs/lighting_panel.json`) through Freepik against the cached direct-Google results, with repeat runs. If the relight fails there, that's a conversation with IKEA or Freepik.
-- **Image URLs** come from our own private storage: signed, short-lived, deleted once the job finishes,
-  signatures kept out of logs.
-- **Keys** appeared in a chat transcript on 2026-10-15 (`handoff-backend.md` §7.6). Rotate before any new runs.
-- **Hosting** is your call.
+## Hard constraints
 
-## Housekeeping
+- **Gemini only through Freepik (now Magnific).** IKEA allows its data to go to Photoroom, and to
+  Gemini only through Freepik's API. The code calls Google directly today. Freepik's Nano Banana Pro
+  route has no temperature setting (we tuned the relight at temperature 0), takes images as URLs, and
+  runs jobs asynchronously. **Test this first:** run the lighting panel (`inputs/lighting_panel.json`)
+  through Freepik and compare against the cached Google results. If the relight doesn't hold up, the
+  plan changes, and that becomes a conversation with IKEA.
+- **Images by URL must stay private.** Serve them from your own storage with short-lived signed URLs.
+- **Rotate the keys.** The Photoroom and Gemini keys appeared in a chat transcript on 2026-10-15.
 
-- 66 MB of images in `outputs/` are tracked in git.
-- Old repo `aklevecz/danish-traitors.v2`:
-  - `code-only` (Iman) is fully in `main`;
-  - `pipeline-groups-glass-plush` (Iman) has one commit not in `main` (`34ab516`), probably superseded by `af781d7`; Iman to confirm;
-  - `edge-patch-and-harvest` (Ariel) was left out on purpose.
+## Not engineering calls
 
-## Still open, for the owners
+These belong to IKEA and us, and some of them change what you build: how bright highlights are treated
+(`docs/decisions.md` #16), which categories and backgrounds launch, the delivery format, volume,
+turnaround, budget, how long files are kept, and whether a person may fix images by hand. Ask before
+you build around an assumption.
 
-- **The look:** highlight policy (`decisions.md` #16), launch categories and backgrounds, delivery format.
-- **Targets:** volume, turnaround, budget, retention, whether manual fixes are allowed.
+## Where to look
+
+| For | Read |
+|---|---|
+| The prototype in depth: costs, dependencies, limits | `docs/handoff-backend.md` |
+| Exact behaviour and maths of each stage | `docs/pipeline.md` |
+| Every flag and `group.json` key | `docs/configuration.md` |
+| Why a value is what it is | `docs/decisions.md` |
+| Which product categories pass | `docs/categories.md` |
+| The lighting research in progress | `docs/lighting-research-plan.md` |
+
+Ask Iman or me about the look, the research, or why anything is the way it is.
+
+You don't need the old repo, `aklevecz/danish-traitors.v2`. Iman's `code-only` work is all in `main`.
+One leftover commit on another branch is probably superseded, and Iman is confirming.
